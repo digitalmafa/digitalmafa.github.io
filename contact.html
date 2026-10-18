@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White Navbar</title>
+
+<!--CSS Styles-->
+<link href="css/novbar.css" rel="stylesheet">
+
+<link href="css/contact.css" rel="stylesheet">
+<link href="css/footer.css" rel="stylesheet">
+
+
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo"><img src="images/20261018_125713.png" width="100% height=100%"></div>
+
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+    </ul>
+
+    <button class="menu-btn"
+      aria-label="Open menu"
+      aria-controls="sidebar"
+      aria-expanded="false"
+      onclick="openMenu()">☰</button>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Mobile navigation">
+    <button class="close-btn"
+      aria-label="Close menu"
+      onclick="closeMenu()">×</button>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+    <a href="services.html" onclick="closeMenu()">Services</a>
+    <a href="contact.html" onclick="closeMenu()">Contact</a>
+  </aside>
+
+
+<section class="mafa-contact">
+
+    <div class="contact-container">
+
+        <!-- HEADER -->
+        <div class="contact-header">
+            <span class="contact-label">GET IN TOUCH</span>
+
+            <h1>Let's Talk About <span>Your Project</span></h1>
+
+            <p>
+                Have an idea or need help growing your business online?
+                We'd love to hear from you. Send us a message and let's
+                explore the possibilities together.
+            </p>
+        </div>
+
+        <!-- CONTACT CONTENT -->
+        <div class="contact-layout">
+
+            <!-- LEFT SIDE -->
+            <div class="contact-info">
+
+                <h2>Let's Connect</h2>
+
+                <p class="contact-info-text">
+                    Tell us a little about your business and your goals.
+                    We'll get back to you as soon as we can.
+                </p>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div>
+                        <h3>Email Us</h3>
+                        <p>digitalmafa.contact@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+
+                    <div>
+                        <h3>Call Us</h3>
+                        <p>+91 98735 46839</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div>
+                        <h3>Our Location</h3>
+                        <p>Delhi, India</p>
+                    </div>
+                </div>
+
+                <div class="contact-note">
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                    <p>
+                        Great things start with a conversation.
+                        Let's discuss your next big idea!
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE: CONTACT FORM -->
+            <div class="contact-form-box">
+
+                <h2>Send Us a Message</h2>
+
+                <p class="form-subtitle">
+                    Fill out the form below and tell us how we can help.
+                </p>
+
+                <form
+                    class="mafa-contact-form"
+                    action="https://formsubmit.co/your-email@example.com"
+                    method="POST"
+                >
+
+                    <!-- EMAIL SETTINGS -->
+                    <input type="hidden" name="_subject"
+                           value="New Inquiry - DigitalMAFA Website">
+
+                    <input type="hidden" name="_template"
+                           value="table">
+
+                    <input type="hidden" name="_captcha"
+                           value="true">
+
+                    <!-- OPTIONAL: REDIRECT AFTER SUCCESS -->
+                    <!-- Apni thank-you page ka filename yahan set kar sakte ho -->
+                    <!-- <input type="hidden" name="_next"
+                         value="https://yourwebsite.com/thank-you.html"> -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="contact-name">Full Name</label>
+
+                            <input
+                                type="text"
+                                id="contact-name"
+                                name="name"
+                                placeholder="Enter your name"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-email">Email Address</label>
+
+                            <input
+                                type="email"
+                                id="contact-email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-phone">Phone Number</label>
+
+                        <input
+                            type="tel"
+                            id="contact-phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-service">
+                            Service Interested In
+                        </label>
+
+                        <select
+                            id="contact-service"
+                            name="service"
+                            required
+                        >
+                            <option value="" disabled selected>
+                                Select a service
+                            </option>
+
+                            <option value="Digital Marketing">
+                                Digital Marketing
+                            </option>
+
+                            <option value="Social Media Marketing">
+                                Social Media Marketing
+                            </option>
+
+                            <option value="Website Development">
+                                Website Development
+                            </option>
+
+                            <option value="SEO Optimization">
+                                SEO Optimization
+                            </option>
+
+                            <option value="Content Strategy">
+                                Content Strategy
+                            </option>
+
+                            <option value="Google Ads">
+                                Google Ads
+                            </option>
+
+                            <option value="Content Marketing">
+                                Content Marketing
+                            </option>
+
+                            <option value="Starter Plan">
+                                Starter Plan
+                            </option>
+
+                            <option value="Growth Plan">
+                                Growth Plan
+                            </option>
+
+                            <option value="Premium Plan">
+                                Premium Plan
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            placeholder="Tell us about your project..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="contact-submit">
+                        Send Message
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <p class="form-disclaimer">
+                        We respect your privacy and will use your details
+                        to respond to your inquiry.
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="digitalmafa-footer">
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+            <!-- Company Info -->
+            <div class="footer-about">
+                <div class="footer-logo">
+                    Digital<span>MAFA</span>
+                </div>
+
+                <p>
+                    We help businesses grow with creative digital
+                    marketing strategies, powerful branding and
+                    result-focused online solutions.
+                </p>
+
+                <div class="footer-socials">
+                    <a href="https://www.youtube.com/@DigitalMAFA" aria-label="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h3>Our Services</h3>
+                <ul>
+                    <li>SEO Optimization</a></li>
+                    <li>Social Media Marketing</a></li>
+                    <li>Google Ads & PPC</a></li>
+                    <li>Website Design</a></li>
+                    <li>Branding & Strategy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-column footer-contact">
+                <h3>Get In Touch</h3>
+
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    digitalmafa.contact@gmail.com
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+                    +91 98735 46839 ( Whatsapp only)
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Delhi, India
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>
+                &copy; <span id="footer-year"></span>
+                DigitalMAFA. All rights reserved.
+            </p>
+
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                &nbsp; | &nbsp;
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const messageBox = document.getElementById("message");
+
+    if (!messageBox) return;
+
+    const plan = params.get("plan");
+    const price = params.get("price");
+    const features = params.get("features");
+
+    const service = params.get("service");
+    const category = params.get("category");
+    const description = params.get("description");
+
+    if (plan) {
+        messageBox.value =
+            "I'm interested in the " + plan + " Plan.\n" +
+            "Price: " + (price || "") + "\n\n" +
+            "Plan Features:\n" + (features || "") +
+            "\n\nMy Business Requirements:\n";
+    } else if (service) {
+        messageBox.value =
+            "Service: " + service +
+            "\nCategory: " + (category || "") +
+            "\n\nProject Details:\n" + (description || "") +
+            "\n\nMy Requirements:\n";
+    }
+});
+</script>
+
+
+<script src="js/footer.js"></script>
+<script src="js/menu-bar.js"></script>
+
+</body>
+</html>

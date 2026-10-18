@@ -1,0 +1,52 @@
+/* Scrolling Slider */
+.scroll-section {
+    background: #101827;
+    color: #ffffff;
+    padding: 22px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.scroll-track {
+    display: flex;
+    width: max-content;
+    animation: scroll 25s linear infinite;
+}
+
+.scroll-item {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.scroll-item span {
+    color: #60a5fa;
+    font-size: 25px;
+}
+
+/* Continuous Animation */
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover */
+.scroll-section:hover .scroll-track {
+    animation-play-state: paused;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .scroll-item {
+        font-size: 16px;
+        padding: 0 18px;
+    }
+}

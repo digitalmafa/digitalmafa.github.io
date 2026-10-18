@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White Navbar</title>
+  
+<!--CSS Styles-->
+<link href="css/novbar.css" rel="stylesheet">
+<link href="css/hero.css" rel="stylesheet">
+<link href="css/about.css" rel="stylesheet">
+<link href="css/footer.css" rel="stylesheet">
+<link href="css/premium-section.css" rel="stylesheet">
+<link href="css/only-desktop.css" rel="stylesheet">
+
+
+
+ <!-- Bootstrap CSS -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+  <nav class="navbar">
+     <div class="logo"><img src="images/20261018_125713.png" width="100% height=100%"></div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+    </ul>
+
+    <button class="menu-btn"
+      aria-label="Open menu"
+      aria-controls="sidebar"
+      aria-expanded="false"
+      onclick="openMenu()">☰</button>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Mobile navigation">
+    <button class="close-btn"
+      aria-label="Close menu"
+      onclick="closeMenu()">×</button>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+    <a href="services.html" onclick="closeMenu()">Services</a>
+    <a href="contact.html" onclick="closeMenu()">Contact</a>
+  </aside>
+
+  <div class="container">
+<div class="colum">
+<section class="about-content">
+
+    <div class="about-container">
+
+        <h1>About DigitalMAFA</h1>
+
+        <h2>We Turn Ideas Into Digital Growth.</h2>
+
+        <p>
+            At <strong>DigitalMAFA</strong>, we believe every business has
+            the potential to grow online. Our goal is to help brands build
+            a strong digital presence through creative ideas, smart
+            strategies, and effective digital marketing solutions.
+        </p>
+
+        <p>
+            We focus on understanding your business, connecting you with
+            the right audience, and helping you take the next step toward
+            online growth.
+        </p>
+
+        <h2>Who We Are</h2>
+
+        <p>
+            DigitalMAFA is a digital marketing agency built around
+            creativity, innovation, and a passion for helping businesses
+            grow in the digital world.
+        </p>
+
+        <p>
+            We understand that building an online presence can be
+            challenging. That's why we aim to make the process simple,
+            practical, and focused on your business goals.
+        </p>
+
+        <p>
+            Whether you're a startup, a small business, or an emerging
+            brand, we're here to help you explore new opportunities and
+            strengthen your digital identity.
+        </p>
+
+        <h2>Our Mission</h2>
+
+        <p>
+            Our mission is to help businesses grow online by making
+            digital marketing more accessible, creative, and
+            result-oriented. We aim to build meaningful connections
+            between brands and their audiences through thoughtful
+            strategies and continuous improvement.
+        </p>
+
+        <h2>Our Vision</h2>
+
+        <p>
+            Our vision is to become a trusted digital growth partner
+            for businesses by delivering creative solutions, building
+            long-term relationships, and adapting to the ever-changing
+            digital landscape.
+        </p>
+
+
+        <h2>Why Choose DigitalMAFA?</h2>
+
+        <ul>
+            <li>
+                <strong>Creative Thinking:</strong>
+                We believe in fresh ideas that help your brand stand out.
+            </li>
+
+            <li>
+                <strong>Strategic Approach:</strong>
+                We focus on your goals and plan our efforts accordingly.
+            </li>
+
+            <li>
+                <strong>Client-First Mindset:</strong>
+                Your business needs and priorities matter to us.
+            </li>
+
+            <li>
+                <strong>Growth-Focused:</strong>
+                We aim to help your brand build a stronger online presence.
+            </li>
+
+            <li>
+                <strong>Transparent Communication:</strong>
+                We value honesty, clarity, and collaboration.
+            </li>
+
+            <li>
+                <strong>Continuous Learning:</strong>
+                We keep improving our knowledge and approach as digital
+                trends evolve.
+            </li>
+        </ul>
+
+
+
+        <h2>Let's Grow Together</h2>
+
+        <p>
+            Your business deserves an online presence that reflects its
+            potential. At DigitalMAFA, we're excited to help you take
+            that journey forward, one step at a time.
+        </p>
+
+        <p>
+            <strong>
+                Let's turn your ideas into digital possibilities.
+            </strong>
+        </p>
+
+
+
+    </div>
+</section>
+</div>
+<div class="desktop-only">
+    <div class="colum">
+<form class="about-contact-form"
+      action="https://formsubmit.co/digitalmafa.contact@gmail.com"
+      method="POST">
+
+    <input type="hidden" name="_subject"
+           value="New DigitalMAFA Inquiry">
+
+    <input type="hidden" name="_template"
+           value="table">
+
+    <div class="about-form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name"
+               placeholder="Enter your full name" required>
+    </div>
+
+    <div class="about-form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email"
+               placeholder="Enter your email" required>
+    </div>
+
+    <div class="about-form-group">
+        <label for="service">Service Interested In</label>
+        <select id="service" name="service" required>
+            <option value="" disabled selected>
+                Choose a service
+            </option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Social Media Marketing">Social Media Marketing</option>
+            <option value="Website Development">Website Development</option>
+            <option value="SEO">SEO Optimization</option>
+            <option value="Content Strategy">Content Strategy</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <div class="about-form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" rows="5"
+                  placeholder="Tell us about your project..."
+                  required></textarea>
+    </div>
+
+    <button type="submit" class="about-form-submit">
+        Send Message <i class="fa-solid fa-arrow-right"></i>
+    </button>
+
+</form>
+</div>
+</div>
+  </div>
+
+
+<footer class="digitalmafa-footer">
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+            <!-- Company Info -->
+            <div class="footer-about">
+                <div class="footer-logo">
+                    Digital<span>MAFA</span>
+                </div>
+
+                <p>
+                    We help businesses grow with creative digital
+                    marketing strategies, powerful branding and
+                    result-focused online solutions.
+                </p>
+
+                <div class="footer-socials">
+                   </a>
+                    <a href="https://www.youtube.com/@DigitalMAFA" aria-label="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h3>Our Services</h3>
+                <ul>
+                    <li>SEO Optimization</a></li>
+                    <li>Social Media Marketing</a></li>
+                    <li>Google Ads & PPC</a></li>
+                    <li>Website Design</a></li>
+                    <li>Branding & Strategy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-column footer-contact">
+                <h3>Get In Touch</h3>
+
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    digitalmafa.contact@gmail.com
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+                    +91 98735 46839 ( Whatsapp only)
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Delhi, India
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>
+                &copy; <span id="footer-year"></span>
+                DigitalMAFA. All rights reserved.
+            </p>
+
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                &nbsp; | &nbsp;
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<script src="js/footer.js"></script>
+<script src="js/menu-bar.js"></script>
+
+</body>
+</html>

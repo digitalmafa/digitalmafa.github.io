@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White Navbar</title>
+
+<!--CSS Styles-->
+<link href="css/novbar.css" rel="stylesheet">
+<link href="css/hero.css" rel="stylesheet">
+<link href="css/services.css" rel="stylesheet">
+<link href="css/footer.css" rel="stylesheet">
+
+
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo"><img src="images/20261018_125713.png" width="100% height=100%"></div>
+
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+    </ul>
+
+    <button class="menu-btn"
+      aria-label="Open menu"
+      aria-controls="sidebar"
+      aria-expanded="false"
+      onclick="openMenu()">☰</button>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Mobile navigation">
+    <button class="close-btn"
+      aria-label="Close menu"
+      onclick="closeMenu()">×</button>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+    <a href="services.html" onclick="closeMenu()">Services</a>
+    <a href="contact.html" onclick="closeMenu()">Contact</a>
+  </aside>
+
+
+<section class="mafa-services">
+
+    <div class="services-container">
+
+        <!-- HERO SECTION -->
+        <div class="services-header">
+            <span class="services-label">WHAT WE DO</span>
+
+            <h1>Our <span>Services</span></h1>
+
+            <p>
+                Smart digital solutions to help your business build
+                a stronger online presence and reach more customers.
+            </p>
+        </div>
+
+        <!-- SERVICES GRID -->
+        <div class="services-grid">
+
+            <!-- SERVICE 1 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+
+                <h2>Digital Marketing</h2>
+
+                <p>
+                    Build brand awareness and connect with your target
+                    audience through thoughtful digital marketing strategies.
+                </p>
+
+                <a href="search.html">Let's Discuss <span>→</span></a>
+            </div>
+
+            <!-- SERVICE 2 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+
+                <h2>Social Media Marketing</h2>
+
+                <p>
+                    Strengthen your social media presence and help your
+                    brand connect with the right audience.
+                </p>
+
+                <a href="search.html">Let's Discuss <span>→</span></a>
+            </div>
+
+            <!-- SERVICE 3 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+
+                <h2>Website Development</h2>
+
+                <p>
+                    Create responsive, user-friendly websites that
+                    introduce your business and showcase your services.
+                </p>
+
+                <a href="search.html">Let's Discuss <span>→</span></a>
+            </div>
+
+            <!-- SERVICE 4 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                </div>
+
+                <h2>SEO Optimization</h2>
+
+                <p>
+                    Improve your website's search visibility and help
+                    potential customers discover your business online.
+                </p>
+
+                <a href="search.html">Let's Discuss <span>→</span></a>
+            </div>
+
+            <!-- SERVICE 5 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+
+                <h2>Content Strategy</h2>
+
+                <p>
+                    Plan useful and engaging content that communicates
+                    your brand message clearly to your audience.
+                </p>
+
+                <a href="search.html">Let's Discuss <span>→</span></a>
+            </div>
+
+            <!-- SERVICE 6 -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <h2>Growth Strategy</h2>
+
+                <p>
+                    Identify opportunities, understand your audience,
+                    and plan practical steps toward business growth.
+                </p>
+
+                <a href="search.html">Let's Discuss <span>→</span></a>
+            </div>
+
+        </div>
+
+        <!-- CTA SECTION -->
+        <div class="services-cta" id="contact">
+
+            <h2>Ready to Grow Your Business?</h2>
+
+            <p>
+                Let's discuss your goals and find the right digital
+                solutions for your brand.
+            </p>
+
+            <a href="contact.html" class="services-btn">
+                Get In Touch <span>→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+<hr>
+
+<footer class="digitalmafa-footer">
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+            <!-- Company Info -->
+            <div class="footer-about">
+                <div class="footer-logo">
+                    Digital<span>MAFA</span>
+                </div>
+
+                <p>
+                    We help businesses grow with creative digital
+                    marketing strategies, powerful branding and
+                    result-focused online solutions.
+                </p>
+
+                <div class="footer-socials">
+                    </a>
+                    <a href="https://www.youtube.com/@DigitalMAFA" aria-label="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h3>Our Services</h3>
+                <ul>
+                    <li>SEO Optimization</a></li>
+                    <li>Social Media Marketing</a></li>
+                    <li>Google Ads & PPC</a></li>
+                    <li>Website Design</a></li>
+                    <li>Branding & Strategy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-column footer-contact">
+                <h3>Get In Touch</h3>
+
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    digitalmafa.contact@gmail.com
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+                    +91 98735 46839 ( Whatsapp only)
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Delhi, India
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>
+                &copy; <span id="footer-year"></span>
+                DigitalMAFA. All rights reserved.
+            </p>
+
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                &nbsp; | &nbsp;
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+
+<script src="js/footer.js"></script>
+<script src="js/menu-bar.js"></script>
+</body>
+</html>
