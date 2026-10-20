@@ -1,19 +1,4 @@
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup,
-      sendPasswordResetEmail,
-      onAuthStateChanged,
-      updateProfile,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
     const firebaseConfig = {
       apiKey: "AIzaSyDERtju4FYjQMq1WOCAa6bHQfWM--OQ6Ps",
       authDomain: "digitalmafa-82068.firebaseapp.com",
