@@ -13,6 +13,36 @@
 
     const $ = id => document.getElementById(id);
 
+    
+function continueAfterSignIn() {
+  const savedForm = sessionStorage.getItem("digitalmafa_contact_form");
+
+  if (!savedForm) return;
+
+  try {
+    const data = JSON.parse(savedForm);
+    const whatsappNumber = "919873546839";
+
+    const whatsappMessage =
+      "New Inquiry - DigitalMAFA\n\n" +
+      "Name: " + (data.name || "") + "\n" +
+      "Email: " + (data.email || "") + "\n" +
+      "Phone: " + (data.phone || "Not provided") + "\n" +
+      "Service: " + (data.service || "") + "\n" +
+      "Message: " + (data.message || "");
+
+    const whatsappURL =
+      "https://wa.me/" + whatsappNumber +
+      "?text=" + encodeURIComponent(whatsappMessage);
+
+    window.location.href = whatsappURL;
+  } catch (error) {
+    console.error("Could not restore contact form data:", error);
+    window.location.href = "contact.html";
+  }
+}
+
+
     const authPanel = $("authPanel");
     const accountPanel = $("accountPanel");
     const authForm = $("authForm");
@@ -142,8 +172,14 @@
 
           showMessage("Account created successfully!", "success");
         } else {
-          await signInWithEmailAndPassword(auth, email, password);
-          showMessage("Signed in successfully!", "success");
+         
+await signInWithEmailAndPassword(auth, email, password);
+showMessage("Signed in successfully!", "success");
+
+if (sessionStorage.getItem("digitalmafa_contact_form")) {
+  continueAfterSignIn();
+}
+
         }
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
@@ -159,8 +195,15 @@
         setBusy(true);
         showMessage("");
 
-        await signInWithPopup(auth, googleProvider);
-        showMessage("Google sign-in successful!", "success");
+        
+        
+await signInWithPopup(auth, googleProvider);
+showMessage("Google sign-in successful!", "success");
+
+if (sessionStorage.getItem("digitalmafa_contact_form")) {
+  continueAfterSignIn();
+}
+
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
       } finally {
