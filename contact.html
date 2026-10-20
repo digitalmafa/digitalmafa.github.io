@@ -73,16 +73,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </head>
 
 <body>
-
+    
   <nav class="navbar">
-   <div class="logo"><b>Digital</b><b style="color: #2563eb;">MAFA</b></div>
+    <div class="logo"><b>Digital</b><b style="color: #2563eb;">MAFA</b></div>
 
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="contact.html">Contact</a></li>
-        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+      <li><a href="sign-in.html">Sign In</a></li>
+      <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+      
     </ul>
 
     <button class="menu-btn"
@@ -103,6 +105,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <a href="about.html" onclick="closeMenu()">About</a>
     <a href="services.html" onclick="closeMenu()">Services</a>
     <a href="contact.html" onclick="closeMenu()">Contact</a>
+    <a href="sign-in.html" onclick="closeMenu()">Sign In</a>
   </aside>
 
 
@@ -140,7 +143,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     <div class="contact-icon">
                         <i class="fa-solid fa-envelope"></i>
                     </div>
-
                     <div>
                         <h3>Email Us</h3>
                         <p>digitalmafa.contact@gmail.com</p>
@@ -151,10 +153,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     <div class="contact-icon">
                         <i class="fa-solid fa-phone"></i>
                     </div>
-
                     <div>
-                        <h3>Call Us</h3>
-                        <p>+91 98735 46839 (Whatsapp only)</p>
+                        <h3>WhatsApp Us</h3>
+                        <p>+91 98735 46839</p>
                     </div>
                 </div>
 
@@ -162,7 +163,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     <div class="contact-icon">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
-
                     <div>
                         <h3>Our Location</h3>
                         <p>Delhi, India</p>
@@ -171,7 +171,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
                 <div class="contact-note">
                     <i class="fa-solid fa-lightbulb"></i>
-
                     <p>
                         Great things start with a conversation.
                         Let's discuss your next big idea!
@@ -180,7 +179,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             </div>
 
-            <!-- RIGHT SIDE: CONTACT FORM -->
+            <!-- RIGHT SIDE: WHATSAPP CONTACT FORM -->
             <div class="contact-form-box">
 
                 <h2>Send Us a Message</h2>
@@ -189,48 +188,30 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     Fill out the form below and tell us how we can help.
                 </p>
 
-                <form
-                    class="mafa-contact-form"
-                    action="https://formsubmit.co/digitalmafa.contact@gmail.com"
-                    method="POST">
-
-                    <!-- EMAIL SETTINGS -->
-                    <input type="hidden" name="_subject"
-                           value="New Inquiry - DigitalMAFA Website">
-
-                    <input type="hidden" name="_template"
-                           value="table">
-
-                    <input type="hidden" name="_captcha"
-                           value="true">
-
-                    <!-- OPTIONAL: REDIRECT AFTER SUCCESS -->
-                    <!-- Apni thank-you page ka filename yahan set kar sakte ho -->
-                    <!-- <input type="hidden" name="_next"
-                         value="https://yourwebsite.com/thank-you.html"> -->
+                <form class="mafa-contact-form" id="whatsapp-contact-form">
 
                     <div class="form-row">
 
                         <div class="form-group">
                             <label for="contact-name">Full Name</label>
-
                             <input
                                 type="text"
                                 id="contact-name"
                                 name="name"
                                 placeholder="Enter your name"
+                                autocomplete="name"
                                 required
                             >
                         </div>
 
                         <div class="form-group">
                             <label for="contact-email">Email Address</label>
-
                             <input
                                 type="email"
                                 id="contact-email"
                                 name="email"
                                 placeholder="Enter your email"
+                                autocomplete="email"
                                 required
                             >
                         </div>
@@ -239,12 +220,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
                     <div class="form-group">
                         <label for="contact-phone">Phone Number</label>
-
                         <input
                             type="tel"
                             id="contact-phone"
                             name="phone"
                             placeholder="Enter your phone number"
+                            autocomplete="tel"
                         >
                     </div>
 
@@ -261,56 +242,22 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                             <option value="" disabled selected>
                                 Select a service
                             </option>
-
-                            <option value="Digital Marketing">
-                                Digital Marketing
-                            </option>
-
-                            <option value="Social Media Marketing">
-                                Social Media Marketing
-                            </option>
-
-                            <option value="Website Development">
-                                Website Development
-                            </option>
-
-                            <option value="SEO Optimization">
-                                SEO Optimization
-                            </option>
-
-                            <option value="Content Strategy">
-                                Content Strategy
-                            </option>
-
-                            <option value="Google Ads">
-                                Google Ads
-                            </option>
-
-                            <option value="Content Marketing">
-                                Content Marketing
-                            </option>
-
-                            <option value="Starter Plan">
-                                Starter Plan
-                            </option>
-
-                            <option value="Growth Plan">
-                                Growth Plan
-                            </option>
-
-                            <option value="Premium Plan">
-                                Premium Plan
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
+                            <option value="Digital Marketing">Digital Marketing</option>
+                            <option value="Social Media Marketing">Social Media Marketing</option>
+                            <option value="Website Development">Website Development</option>
+                            <option value="SEO Optimization">SEO Optimization</option>
+                            <option value="Content Strategy">Content Strategy</option>
+                            <option value="Google Ads">Google Ads</option>
+                            <option value="Content Marketing">Content Marketing</option>
+                            <option value="Starter Plan">Starter Plan</option>
+                            <option value="Growth Plan">Growth Plan</option>
+                            <option value="Premium Plan">Premium Plan</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="message">Your Message</label>
-
                         <textarea
                             id="message"
                             name="message"
@@ -322,12 +269,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
                     <button type="submit" class="contact-submit">
                         Send Message
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-brands fa-whatsapp"></i>
                     </button>
 
                     <p class="form-disclaimer">
-                        We respect your privacy and will use your details
-                        to respond to your inquiry.
+                        Your message will open in WhatsApp.
+                        Please press Send in WhatsApp to submit your inquiry.
                     </p>
 
                 </form>
@@ -339,6 +286,45 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     </div>
 
 </section>
+
+<!-- WHATSAPP FORM SCRIPT -->
+<script>
+(function () {
+    const form = document.getElementById("whatsapp-contact-form");
+
+    if (!form) return;
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        const name = document.getElementById("contact-name").value.trim();
+        const email = document.getElementById("contact-email").value.trim();
+        const phone = document.getElementById("contact-phone").value.trim();
+        const service = document.getElementById("contact-service").value;
+        const message = document.getElementById("message").value.trim();
+
+        // WhatsApp number in international format, without + or spaces
+        const whatsappNumber = "919873546839";
+
+        const whatsappMessage =
+            "New Inquiry - DigitalMAFA\n\n" +
+            "Name: " + name + "\n" +
+            "Email: " + email + "\n" +
+            "Phone: " + (phone || "Not provided") + "\n" +
+            "Service: " + service + "\n" +
+            "Message: " + message;
+
+        const whatsappURL =
+            "https://wa.me/" + whatsappNumber +
+            "?text=" + encodeURIComponent(whatsappMessage);
+
+        window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    });
+})();
+</script>
+
 
 <footer class="digitalmafa-footer">
     <div class="footer-container">
@@ -373,6 +359,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Our Services</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
+                     <li><a href="sign-in.html">Sign in</a></li>
                 </ul>
             </div>
 
