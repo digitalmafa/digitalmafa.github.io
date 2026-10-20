@@ -287,75 +287,43 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 </section>
 
-
-<!-- CONTACT FORM SCRIPT -->
+<!-- WHATSAPP FORM SCRIPT -->
 <script>
 (function () {
     const form = document.getElementById("whatsapp-contact-form");
 
     if (!form) return;
 
-    const fields = {
-        name: document.getElementById("contact-name"),
-        email: document.getElementById("contact-email"),
-        phone: document.getElementById("contact-phone"),
-        service: document.getElementById("contact-service"),
-        message: document.getElementById("message")
-    };
-
-    const storageKey = "digitalmafa_contact_form";
-
-    // Restore saved form data when returning to this page
-    try {
-        const saved = sessionStorage.getItem(storageKey);
-
-        if (saved) {
-            const data = JSON.parse(saved);
-
-            fields.name.value = data.name || "";
-            fields.email.value = data.email || "";
-            fields.phone.value = data.phone || "";
-
-            if (data.service) {
-                fields.service.value = data.service;
-            }
-
-            // Don't overwrite a message prefilled from a plan/service URL
-            if (data.message) {
-                fields.message.value = data.message;
-            }
-        }
-    } catch (error) {
-        console.warn("Could not restore contact form data.", error);
-    }
-
     form.addEventListener("submit", function (event) {
         event.preventDefault();
 
         if (!form.reportValidity()) return;
 
-        const formData = {
-            name: fields.name.value.trim(),
-            email: fields.email.value.trim(),
-            phone: fields.phone.value.trim(),
-            service: fields.service.value,
-            message: fields.message.value
-        };
+        const name = document.getElementById("contact-name").value.trim();
+        const email = document.getElementById("contact-email").value.trim();
+        const phone = document.getElementById("contact-phone").value.trim();
+        const service = document.getElementById("contact-service").value;
+        const message = document.getElementById("message").value.trim();
 
-        // Save the complete form before navigating away
-        try {
-            sessionStorage.setItem(storageKey, JSON.stringify(formData));
-        } catch (error) {
-            alert("Could not save your form. Please try again.");
-            return;
-        }
+        // WhatsApp number in international format, without + or spaces
+        const whatsappNumber = "919873546839";
 
-        // Open sign-in page directly, without a popup
-        window.location.href = "sign-in.html";
+        const whatsappMessage =
+            "New Inquiry - DigitalMAFA\n\n" +
+            "Name: " + name + "\n" +
+            "Email: " + email + "\n" +
+            "Phone: " + (phone || "Not provided") + "\n" +
+            "Service: " + service + "\n" +
+            "Message: " + message;
+
+        const whatsappURL =
+            "https://wa.me/" + whatsappNumber +
+            "?text=" + encodeURIComponent(whatsappMessage);
+
+        window.open(whatsappURL, "_blank", "noopener,noreferrer");
     });
 })();
 </script>
-
 
 
 <footer class="digitalmafa-footer">
