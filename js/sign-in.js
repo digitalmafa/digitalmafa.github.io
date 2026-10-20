@@ -1,19 +1,3 @@
-    
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup,
-      sendPasswordResetEmail,
-      onAuthStateChanged,
-      updateProfile,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
     const firebaseConfig = {
       apiKey: "AIzaSyDERtju4FYjQMq1WOCAa6bHQfWM--OQ6Ps",
       authDomain: "digitalmafa-82068.firebaseapp.com",
@@ -28,36 +12,6 @@
     const googleProvider = new GoogleAuthProvider();
 
     const $ = id => document.getElementById(id);
-
-    
-function continueAfterSignIn() {
-  const savedForm = sessionStorage.getItem("digitalmafa_contact_form");
-
-  if (!savedForm) return;
-
-  try {
-    const data = JSON.parse(savedForm);
-    const whatsappNumber = "919873546839";
-
-    const whatsappMessage =
-      "New Inquiry - DigitalMAFA\n\n" +
-      "Name: " + (data.name || "") + "\n" +
-      "Email: " + (data.email || "") + "\n" +
-      "Phone: " + (data.phone || "Not provided") + "\n" +
-      "Service: " + (data.service || "") + "\n" +
-      "Message: " + (data.message || "");
-
-    const whatsappURL =
-      "https://wa.me/" + whatsappNumber +
-      "?text=" + encodeURIComponent(whatsappMessage);
-
-    window.location.href = whatsappURL;
-  } catch (error) {
-    console.error("Could not restore contact form data:", error);
-    window.location.href = "contact.html";
-  }
-}
-
 
     const authPanel = $("authPanel");
     const accountPanel = $("accountPanel");
@@ -188,14 +142,8 @@ function continueAfterSignIn() {
 
           showMessage("Account created successfully!", "success");
         } else {
-          
-await signInWithEmailAndPassword(auth, email, password);
-showMessage("Signed in successfully!", "success");
-
-if (sessionStorage.getItem("digitalmafa_contact_form")) {
-  continueAfterSignIn();
-}
-
+          await signInWithEmailAndPassword(auth, email, password);
+          showMessage("Signed in successfully!", "success");
         }
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
@@ -211,14 +159,8 @@ if (sessionStorage.getItem("digitalmafa_contact_form")) {
         setBusy(true);
         showMessage("");
 
-        
-await signInWithPopup(auth, googleProvider);
-showMessage("Google sign-in successful!", "success");
-
-if (sessionStorage.getItem("digitalmafa_contact_form")) {
-  continueAfterSignIn();
-}
-
+        await signInWithPopup(auth, googleProvider);
+        showMessage("Google sign-in successful!", "success");
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
       } finally {
@@ -278,4 +220,3 @@ if (sessionStorage.getItem("digitalmafa_contact_form")) {
 
       return errors[code] || "Something went wrong. Please try again.";
     }
-
