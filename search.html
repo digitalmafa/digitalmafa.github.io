@@ -73,13 +73,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
   <nav class="navbar">
     <div class="logo"><b>Digital</b><b style="color: #2563eb;">MAFA</b></div>
 
-
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li><a href="sign-in.html">Sign In</a></li>
       <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+      
     </ul>
 
     <button class="menu-btn"
@@ -100,6 +101,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <a href="about.html" onclick="closeMenu()">About</a>
     <a href="services.html" onclick="closeMenu()">Services</a>
     <a href="contact.html" onclick="closeMenu()">Contact</a>
+    <a href="sign-in.html" onclick="closeMenu()">Sign In</a>
   </aside>
 
 
@@ -133,11 +135,89 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         <span class="modal-category" id="modalCategory"></span>
         <h2 id="modalTitle"></h2>
         <p id="modalDescription"></p>
-        <a href="contact.html" id="modalContactBtn" class="modal-contact-btn">
+        <a href="contact.html" id="modalContactBtn" class="contact-now-btn">
     Contact Now
 </a>
+
+  <button type="button" class="reviews-open-btn"
+            onclick="toggleReviews()">
+        ⭐ Reviews
+    </button>
+    </div>
+
+ 
+
+  
+
+    
+
+</div>
+
+<!-- Reviews Panel -->
+<div class="reviews-drawer" id="reviewsDrawer">
+
+    <div class="reviews-header">
+        <div>
+            <h2>⭐ Customer Reviews</h2>
+            <p>Share your experience with DigitalMAFA</p>
+        </div>
+
+        <button type="button" class="reviews-close"
+                onclick="toggleReviews()">✕</button>
+    </div>
+
+    <div class="reviews-content">
+
+        <!-- Reviews List -->
+        <div class="reviews-list" id="reviewsList"></div>
+
+        <!-- Review Form -->
+        <form id="reviewForm" class="review-form">
+
+            <h3 id="reviewFormTitle">Write a Review</h3>
+
+            <label for="reviewName">Your Name</label>
+            <input type="text" id="reviewName"
+                   placeholder="Enter your name" required>
+
+            <label>Your Rating</label>
+
+            <div class="star-rating" id="starRating">
+                <button type="button" data-rating="1" aria-label="1 star">★</button>
+                <button type="button" data-rating="2" aria-label="2 stars">★</button>
+                <button type="button" data-rating="3" aria-label="3 stars">★</button>
+                <button type="button" data-rating="4" aria-label="4 stars">★</button>
+                <button type="button" data-rating="5" aria-label="5 stars">★</button>
+            </div>
+
+            <label for="reviewFeedback">Your Feedback</label>
+            <textarea id="reviewFeedback" rows="3"
+                      placeholder="Write your review..."
+                      required></textarea>
+
+            <div class="review-form-actions">
+                <button type="submit" class="review-submit"
+                        id="reviewSubmit">
+                    Submit Review
+                </button>
+
+                <button type="button" class="review-cancel"
+                        id="reviewCancel" hidden>
+                    Cancel Edit
+                </button>
+            </div>
+
+            <p class="review-notice">
+                Reviews are saved in this browser only.
+            </p>
+        </form>
+
     </div>
 </div>
+
+
+
+
 
 
 
@@ -178,6 +258,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="services.html">Our Services</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
+                     <li><a href="sign-in.html">Sign in</a></li>
                 </ul>
             </div>
 
@@ -235,6 +316,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     </div>
 </footer>
 
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+
+
+<script src="js/firebase-config.js"></script>
 
 <script src="js/search.js"></script>
 <script src="js/footer.js"></script>
