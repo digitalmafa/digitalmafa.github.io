@@ -1,0 +1,205 @@
+    body {
+      min-height: 100vh;
+      display: grid;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b1020;
+      color: #f8fafc;
+    }
+
+     .main{
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .card {
+    
+      width: 100%;
+      max-width: 430px;
+      padding: 34px 28px;
+      background: #131c30;
+      border: 1px solid #293650;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px #0005;
+      margin:auto;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .brand h1 {
+      font-size: 30px;
+      color: #60a5fa;
+      margin-bottom: 10px;
+    }
+
+    .brand p {
+      color: #a8b4c8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 5px;
+      background: #0b1020;
+      border-radius: 10px;
+      margin-bottom: 22px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 12px 6px;
+      color: #b9c4d8;
+      background: transparent;
+      border: none;
+      border-radius: 7px;
+      font-size: 14px;
+    }
+
+    .tabs button.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 8px;
+      font-size: 14px;
+      color: #dbeafe;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #34435d;
+      border-radius: 9px;
+      background: #0b1020;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #60a5fa;
+    }
+
+    .forgot-row {
+      margin-top: 12px;
+      text-align: right;
+    }
+
+    .text-btn, .back-link {
+      color: #93c5fd;
+      background: none;
+      border: none;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .text-btn:hover, .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .primary, .google-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .primary {
+      color: white;
+      background: #2563eb;
+      border: none;
+    }
+
+    .primary:hover {
+      background: #1d4ed8;
+    }
+
+    .google-btn {
+      color: white;
+      background: transparent;
+      border: 1px solid #475569;
+      margin-top: 14px;
+    }
+
+    .google-btn:hover {
+      background: #202c42;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #8795ac;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #34435d;
+    }
+
+    #message {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    #message.error {
+      color: #fca5a5;
+    }
+
+    #message.success {
+      color: #86efac;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .account-panel {
+      padding: 18px;
+      background: #0b1020;
+      border-radius: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .account-panel p {
+      color: #cbd5e1;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        padding: 28px 20px;
+      }
+    }
+ 
