@@ -4,23 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b1020">
-  <title>Login | DigitalMAFA</title>
 
-<link href="css/novbar.css" rel="stylesheet">
-<link href="css/footer.css" rel="stylesheet">
-<link href="css/sign.css" rel="stylesheet">
+  <!--title & description-->
+<title>Sign In to DigitalMAFA | Access Your Account</title>
+<meta name="description" content="Sign in to your DigitalMAFA account to access your profile and explore digital marketing, branding, SEO, and online growth solutions. New here? Create your account today.">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PG7W6HLJ6Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PG7W6HLJ6Y');
+</script>
+
+<!-- logo icon -->
+<link rel="icon" href="images/20261020_102235.png" type="image/png">
 
 
-  <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+<!-- Link Preview Image -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sign In to DigitalMAFA | Access Your Account">
+<meta property="og:description" content="Explore our digital services designed to strengthen your online presence, attract more customers, and grow your business.">
+<meta property="og:image" content="https://digitalmafa.github.io/images/WhatsApp Image 2026-10-20 at 11.10.28 AM.jpeg">
+<meta property="og:url" content="https://digitalmafa.github.io/sign-in.html">
+<meta property="og:site_name" content="DigitalMAFA">
+
+<!-- X / Twitter Preview -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Our Services | DigitalMAFA – Digital Solutions for Your Business">
+<meta name="twitter:description" content="Explore our digital services designed to strengthen your online presence, attract more customers, and grow your business.">
+<meta name="twitter:image" content="https://digitalmafa.github.io/images/WhatsApp Image 2026-10-20 at 11.10.28 AM.jpeg">
+
+<!--Schema markup-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://digitalmafa.github.io/sign-in.html#webpage",
+  "url": "https://digitalmafa.github.io/sign-in.html",
+  "name": "Sign In to DigitalMAFA | Access Your Account",
+  "description": "Explore our digital services designed to strengthen your online presence, attract more customers, and grow your business.",
+  "isPartOf": {
+    "@id": "https://digitalmafa.github.io/#website"
+  },
+  "about": {
+    "@id": "https://digitalmafa.github.io/#organization"
+  },
+  "inLanguage": "en"
+}
+</script>
+
+
+  <link href="css/novbar.css" rel="stylesheet">
+  <link href="css/footer.css" rel="stylesheet">
+  <link href="css/sign.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
+
 <body>
 
-
-    <nav class="navbar">
-    <div class="logo"><b>Digital</b><b style="color: #2563eb;">MAFA</b></div>
+  <nav class="navbar">
+    <div class="logo"><b>Digital</b><b style="color:#2563eb;">MAFA</b></div>
 
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -29,7 +79,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <li><a href="contact.html">Contact</a></li>
       <li><a href="sign-in.html">Sign In</a></li>
       <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
-      
     </ul>
 
     <button class="menu-btn"
@@ -53,102 +102,98 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <a href="sign-in.html" onclick="closeMenu()">Sign In</a>
   </aside>
 
-
   <div class="main">
-  <main class="card">
-    <header class="brand">
-      <h1>DigitalMAFA</h1>
-      <p id="subtitle">Welcome back! Sign in to your account.</p>
-    </header>
+    <main class="card">
+      <header class="brand">
+        <h1>DigitalMAFA</h1>
+        <p id="subtitle">Welcome back! Sign in to your account.</p>
+      </header>
 
-    <section id="authPanel">
-      <div class="tabs" id="tabs">
-        <button type="button" id="loginTab" class="active">
-          Sign In
-        </button>
-        <button type="button" id="signupTab">
-          Sign Up
-        </button>
-      </div>
-
-      <form id="authForm">
-        <div id="nameField" hidden>
-          <label for="name">Full Name</label>
-          <input
-            id="name"
-            type="text"
-            maxlength="80"
-            autocomplete="name"
-          >
-        </div>
-
-        <label for="email">Email Address</label>
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          required
-        >
-<div class="password-wrapper">
-        <div id="passwordField">
-          <label for="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            minlength="6"
-            autocomplete="current-password"
-            required
-          >
-           <button
-    type="button"
-    id="togglePassword"
-    class="password-toggle"
-    aria-label="Show password"
-    aria-pressed="false"
-  >
-    <i class="fa-solid fa-eye" aria-hidden="true"></i>
-  </button>
-</div>
-</div>
-
-        <div class="forgot-row" id="forgotRow">
-          <button type="button" class="text-btn" id="forgotBtn">
-            Forgot Password?
+      <section id="authPanel">
+        <div class="tabs" id="tabs">
+          <button type="button" id="loginTab" class="active">
+            Sign In
+          </button>
+          <button type="button" id="signupTab">
+            Sign Up
           </button>
         </div>
 
-        <button type="submit" class="primary" id="submitBtn">
-          Sign In
-        </button>
-      </form>
+        <form id="authForm">
+          <div id="nameField" hidden>
+            <label for="name">Full Name</label>
+            <input
+              id="name"
+              type="text"
+              maxlength="80"
+              autocomplete="name">
+          </div>
 
-      <div id="googleArea">
-        <div class="divider">OR</div>
-        <button type="button" class="google-btn" id="googleBtn">
-          Continue with Google
-        </button>
-      </div>
-    </section>
+          <label for="email">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            required>
 
-    <section id="accountPanel" hidden>
-      <div class="account-panel">
-        <h2>You're signed in!</h2>
-        <p id="userName"></p>
-        <p id="userEmail"></p>
-        <button type="button" class="primary" id="logoutBtn">
-          Sign Out
-        </button>
-      </div>
-    </section>
+          <div class="password-wrapper">
+            <div id="passwordField">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                minlength="6"
+                autocomplete="current-password"
+                required>
 
-    <p id="message" role="status" aria-live="polite"></p>
+              <button
+                type="button"
+                id="togglePassword"
+                class="password-toggle"
+                aria-label="Show password"
+                aria-pressed="false">
+                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
 
-    <a href="index.html" class="back-link">
-      ← Back to DigitalMAFA
-    </a>
-  </main>
+          <div class="forgot-row" id="forgotRow">
+            <button type="button" class="text-btn" id="forgotBtn">
+              Forgot Password?
+            </button>
+          </div>
 
-</div>
+          <button type="submit" class="primary" id="submitBtn">
+            Sign In
+          </button>
+        </form>
+
+        <div id="googleArea">
+          <div class="divider">OR</div>
+          <button type="button" class="google-btn" id="googleBtn">
+            Continue with Google
+          </button>
+        </div>
+      </section>
+
+      <section id="accountPanel" hidden>
+        <div class="account-panel">
+          <h2>You're signed in!</h2>
+          <p id="userName"></p>
+          <p id="userEmail"></p>
+          <button type="button" class="primary" id="logoutBtn">
+            Sign Out
+          </button>
+        </div>
+      </section>
+
+      <p id="message" role="status" aria-live="polite"></p>
+
+      <a href="sign-in.html" class="back-link">
+        ← Back
+      </a>
+    </main>
+  </div>
 
   <script type="module">
     import { initializeApp }
@@ -166,17 +211,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       signOut
     } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+    // YOUR NEW FIREBASE PROJECT CONFIGURATION
     const firebaseConfig = {
-      apiKey: "AIzaSyDERtju4FYjQMq1WOCAa6bHQfWM--OQ6Ps",
-      authDomain: "digitalmafa-82068.firebaseapp.com",
-      projectId: "digitalmafa-82068",
-      storageBucket: "digitalmafa-82068.firebasestorage.app",
-      messagingSenderId: "168720557180",
-      appId: "1:168720557180:web:4f18a84d0e5be0c187d5f9"
+      apiKey: "AIzaSyAQ8EIHFOCIuG6CSXjIQukvdYBYHgMCgZs",
+      authDomain: "digitalmafa-c8235.firebaseapp.com",
+      projectId: "digitalmafa-c8235",
+      storageBucket: "digitalmafa-c8235.firebasestorage.app",
+      messagingSenderId: "33066064717",
+      appId: "1:33066064717:web:805829f097ee69b9ad7504"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+
     const googleProvider = new GoogleAuthProvider();
 
     const $ = id => document.getElementById(id);
@@ -212,8 +259,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       busy = value;
 
       [
-        submitBtn, googleBtn, logoutBtn, forgotBtn,
-        loginTab, signupTab
+        submitBtn,
+        googleBtn,
+        logoutBtn,
+        forgotBtn,
+        loginTab,
+        signupTab
       ].forEach(button => {
         button.disabled = value;
       });
@@ -245,6 +296,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
       passwordField.hidden = reset;
       passwordInput.required = !reset;
+
       forgotRow.hidden = signup || reset;
       googleArea.hidden = reset;
 
@@ -263,9 +315,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     loginTab.addEventListener("click", () => setMode("login"));
     signupTab.addEventListener("click", () => setMode("signup"));
-
     forgotBtn.addEventListener("click", () => setMode("reset"));
 
+    // SIGN IN, SIGN UP AND PASSWORD RESET
     authForm.addEventListener("submit", async event => {
       event.preventDefault();
 
@@ -296,12 +348,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             "If an account exists for this email, a password reset email will be sent. Check your inbox and spam folder.",
             "success"
           );
+
           return;
         }
 
         if (mode === "signup") {
           const result = await createUserWithEmailAndPassword(
-            auth, email, password
+            auth,
+            email,
+            password
           );
 
           await updateProfile(result.user, {
@@ -309,10 +364,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
           });
 
           showMessage("Account created successfully!", "success");
+
         } else {
-          await signInWithEmailAndPassword(auth, email, password);
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
           showMessage("Signed in successfully!", "success");
         }
+
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
       } finally {
@@ -320,6 +382,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       }
     });
 
+    // GOOGLE SIGN IN
     googleBtn.addEventListener("click", async () => {
       if (busy) return;
 
@@ -328,7 +391,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         showMessage("");
 
         await signInWithPopup(auth, googleProvider);
+
         showMessage("Google sign-in successful!", "success");
+
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
       } finally {
@@ -336,13 +401,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       }
     });
 
+    // SIGN OUT
     logoutBtn.addEventListener("click", async () => {
       if (busy) return;
 
       try {
         setBusy(true);
+
         await signOut(auth);
+
         showMessage("You have signed out.", "success");
+
       } catch (error) {
         showMessage(friendlyError(error.code), "error");
       } finally {
@@ -350,6 +419,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       }
     });
 
+    // CHECK AUTHENTICATION STATE
     onAuthStateChanged(auth, user => {
       authPanel.hidden = !!user;
       accountPanel.hidden = !user;
@@ -357,159 +427,170 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       if (user) {
         $("userName").textContent =
           "Name: " + (user.displayName || "Not provided");
+
         $("userEmail").textContent =
           "Email: " + (user.email || "Not provided");
       }
     });
 
+    // FRIENDLY ERROR MESSAGES
     function friendlyError(code) {
       const errors = {
         "auth/email-already-in-use":
           "This email already has an account. Please sign in.",
+
         "auth/invalid-email":
           "Please enter a valid email address.",
+
         "auth/weak-password":
           "Use a stronger password with at least 6 characters.",
+
         "auth/invalid-credential":
           "Email or password is incorrect.",
+
         "auth/popup-closed-by-user":
           "The Google sign-in window was closed.",
+
         "auth/popup-blocked":
           "Your browser blocked the popup. Allow popups and try again.",
+
         "auth/unauthorized-domain":
           "Add your website domain in Firebase Authentication settings.",
+
         "auth/operation-not-allowed":
           "Enable this sign-in method in Firebase Console.",
+
         "auth/network-request-failed":
           "Network error. Check your internet connection.",
+
         "auth/too-many-requests":
-          "Too many attempts. Wait a while and try again."
+          "Too many attempts. Wait a while and try again.",
+
+        "auth/invalid-api-key":
+          "Firebase API key is invalid. Check your Firebase configuration.",
+
+        "auth/account-exists-with-different-credential":
+          "An account already exists with this email using another sign-in method."
       };
 
-      return errors[code] || "Something went wrong. Please try again.";
+      return errors[code] ||
+        "Something went wrong. Please try again.";
     }
   </script>
 
-
-<footer class="digitalmafa-footer">
+  <footer class="digitalmafa-footer">
     <div class="footer-container">
+      <div class="footer-grid">
 
-        <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-logo">
+            Digital<span>MAFA</span>
+          </div>
 
-            <!-- Company Info -->
-            <div class="footer-about">
-                <div class="footer-logo">
-                    Digital<span>MAFA</span>
-                </div>
+          <p>
+            We help businesses grow with creative digital
+            marketing strategies, powerful branding and
+            result-focused online solutions.
+          </p>
 
-                <p>
-                    We help businesses grow with creative digital
-                    marketing strategies, powerful branding and
-                    result-focused online solutions.
-                </p>
-
-                <div class="footer-socials">
-                   </a>
-                    <a href="https://www.youtube.com/@DigitalMAFA" aria-label="YouTube">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Our Services</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="sign-in.html">Sign in</a></li>
-                </ul>
-            </div>
-
-            <!-- Services -->
-            <div class="footer-column">
-                <h3>Our Services</h3>
-                <ul>
-                    <li>SEO Optimization</a></li>
-                    <li>Social Media Marketing</a></li>
-                    <li>Google Ads & PPC</a></li>
-                    <li>Website Design</a></li>
-                    <li>Branding & Strategy</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
-            <div class="footer-column footer-contact">
-                <h3>Get In Touch</h3>
-
-                <p>
-                    <i class="fa-solid fa-envelope"></i>
-                    digitalmafa.contact@gmail.com
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-phone"></i>
-                    +91 98735 46839 ( Whatsapp only)
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-location-dot"></i>
-                    Delhi, India
-                </p>
-            </div>
-
+          <div class="footer-socials">
+            <a href="https://www.youtube.com/@DigitalMAFA"
+              aria-label="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- Copyright -->
-        <div class="footer-bottom">
-            <p>
-                &copy; <span id="footer-year"></span>
-                DigitalMAFA. All rights reserved.
-            </p>
-
-            <div>
-                <a href="privacy.html">Privacy Policy</a>
-                &nbsp; | &nbsp;
-                <a href="terms.html">Terms & Conditions</a>
-                 &nbsp; | &nbsp;
-                <a href="faq.html">FAQ</a>
-            </div>
-            
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Our Services</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="sign-in.html">Sign in</a></li>
+          </ul>
         </div>
 
+        <div class="footer-column">
+          <h3>Our Services</h3>
+          <ul>
+            <li>SEO Optimization</li>
+            <li>Social Media Marketing</li>
+            <li>Google Ads &amp; PPC</li>
+            <li>Website Design</li>
+            <li>Branding &amp; Strategy</li>
+          </ul>
+        </div>
+
+        <div class="footer-column footer-contact">
+          <h3>Get In Touch</h3>
+
+          <p>
+            <i class="fa-solid fa-envelope"></i>
+            digitalmafa.contact@gmail.com
+          </p>
+
+          <p>
+            <i class="fa-solid fa-phone"></i>
+            +91 98735 46839 (Whatsapp only)
+          </p>
+
+          <p>
+            <i class="fa-solid fa-location-dot"></i>
+            Delhi, India
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; <span id="footer-year"></span>
+          DigitalMAFA. All rights reserved.
+        </p>
+
+        <div>
+          <a href="privacy.html">Privacy Policy</a>
+          &nbsp; | &nbsp;
+          <a href="terms.html">Terms &amp; Conditions</a>
+          &nbsp; | &nbsp;
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
 
-<script>
-  
-const passwordInput = document.getElementById("password");
-const togglePassword = document.getElementById("togglePassword");
+  <script>
+    // SHOW / HIDE PASSWORD
+    const passwordToggleInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
 
-if (passwordInput && togglePassword) {
-  togglePassword.addEventListener("click", () => {
-    const isHidden = passwordInput.type === "password";
+    if (passwordToggleInput && togglePassword) {
+      togglePassword.addEventListener("click", () => {
+        const isHidden = passwordToggleInput.type === "password";
 
-    passwordInput.type = isHidden ? "text" : "password";
+        passwordToggleInput.type = isHidden ? "text" : "password";
 
-    togglePassword.innerHTML = isHidden
-      ? '<i class="fa-solid fa-eye-slash" aria-hidden="true"></i>'
-      : '<i class="fa-solid fa-eye" aria-hidden="true"></i>';
+        togglePassword.innerHTML = isHidden
+          ? '<i class="fa-solid fa-eye-slash" aria-hidden="true"></i>'
+          : '<i class="fa-solid fa-eye" aria-hidden="true"></i>';
 
-    togglePassword.setAttribute(
-      "aria-label",
-      isHidden ? "Hide password" : "Show password"
-    );
+        togglePassword.setAttribute(
+          "aria-label",
+          isHidden ? "Hide password" : "Show password"
+        );
 
-    togglePassword.setAttribute("aria-pressed", String(isHidden));
-  });
-}
+        togglePassword.setAttribute(
+          "aria-pressed",
+          String(isHidden)
+        );
+      });
+    }
+  </script>
 
-</script>
-<script src="js/footer.js"></script>
-<script src="js/menu-bar.js"></script>
-
+  <script src="js/footer.js"></script>
+  <script src="js/menu-bar.js"></script>
 
 </body>
 </html>
