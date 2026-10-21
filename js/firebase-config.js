@@ -1,4 +1,4 @@
-(() => {
+
 const firebaseConfig = {
   apiKey: "AIzaSyAQ8EIHFOCIuG6CSXjIQukvdYBYHgMCgZs",
   authDomain: "digitalmafa-c8235.firebaseapp.com",
@@ -8,10 +8,13 @@ const firebaseConfig = {
   appId: "1:33066064717:web:805829f097ee69b9ad7504"
 };
 
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-  window.auth = firebase.auth();
-  window.db = firebase.firestore();
-})();
+// Connect Authentication and Firestore
+window.auth = firebase.auth();
+window.db = firebase.firestore();
+
+console.log("DigitalMAFA Firebase connected successfully!");
