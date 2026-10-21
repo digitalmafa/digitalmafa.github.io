@@ -62,7 +62,7 @@
   <link href="css/footer.css" rel="stylesheet">
   <link href="css/sign.css" rel="stylesheet">
 
-  
+
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -223,6 +223,35 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+
+    // Return to the requested page after successful sign-in.
+const params = new URLSearchParams(window.location.search);
+const requestedPage = params.get("returnTo");
+
+const allowedPages = [
+  "search.html"
+];
+
+const returnTo = allowedPages.includes(requestedPage)
+  ? requestedPage
+  : null;
+
+onAuthStateChanged(auth, user => {
+  authPanel.hidden = !!user;
+  accountPanel.hidden = !user;
+
+  if (user) {
+    $("userName").textContent =
+      "Name: " + (user.displayName || "Not provided");
+
+    $("userEmail").textContent =
+      "Email: " + (user.email || "Not provided");
+
+    if (returnTo) {
+      window.location.replace(returnTo);
+    }
+  }
+});
 
     const googleProvider = new GoogleAuthProvider();
 
