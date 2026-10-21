@@ -202,4 +202,37 @@
         padding: 28px 20px;
       }
     }
+
+
+
+
+    
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 69%;
+  right: 12px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #666;
+  font-size: 18px;
+  padding: 6px;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+}
+
  
