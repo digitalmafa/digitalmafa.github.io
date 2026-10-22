@@ -192,9 +192,58 @@
                 serviceModal.classList.add("show");
             });
 
-            body.append(category, title, description, detailsBtn);
+            
+const shareBtn = document.createElement("button");
+shareBtn.type = "button";
+
+shareBtn.className = "share-service-btn";
+shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes" aria-hidden="true"></i>';
+
+shareBtn.setAttribute("aria-label", "Share " + service.name);
+
+shareBtn.addEventListener("click", async () => {
+    const params = new URLSearchParams({
+        service: service.name,
+        category: service.category,
+        description: service.description
+    });
+
+    const shareURL =
+        new URL("contact.html", window.location.href).href +
+        "?" + params.toString();
+
+    const shareText =
+        service.name + "\n\n" +
+        service.description + "\n\n" +
+        "Explore this service at DigitalMAFA:\n" +
+        shareURL;
+
+    try {
+        if (navigator.share) {
+            await navigator.share({
+                title: service.name + " | DigitalMAFA",
+                text: service.description,
+                url: shareURL
+            });
+        } else if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(shareText);
+            alert("Service details and link copied successfully!");
+        } else {
+            window.prompt("Copy this service link and share it:", shareText);
+        }
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            console.error("Unable to share service:", error);
+            alert("Unable to share right now. Please try again.");
+        }
+    }
+});
+
+body.append(category, title, description, detailsBtn, shareBtn);
+
             card.append(top, body);
             shopGrid.appendChild(card);
+            
         });
     }
 
