@@ -7,7 +7,7 @@
 
   <!--title & description-->
 <title>Sign In to DigitalMAFA | Access Your Account</title>
-<meta name="description" content="Sign in to your DigitalMAFA account to access your profile and explore digital marketing, branding, SEO, and online growth solutions. New here? Create your account today.">
+<meta name="description" content="Explore our digital services designed to strengthen your online presence, attract more customers, and grow your business.">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PG7W6HLJ6Y"></script>
@@ -61,8 +61,6 @@
   <link href="css/novbar.css" rel="stylesheet">
   <link href="css/footer.css" rel="stylesheet">
   <link href="css/sign.css" rel="stylesheet">
-
-
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -224,36 +222,35 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Return to the requested page after successful sign-in.
-const params = new URLSearchParams(window.location.search);
-const requestedPage = params.get("returnTo");
-
-const allowedPages = [
-  "search.html"
-];
-
-const returnTo = allowedPages.includes(requestedPage)
-  ? requestedPage
-  : null;
-
-onAuthStateChanged(auth, user => {
-  authPanel.hidden = !!user;
-  accountPanel.hidden = !user;
-
-  if (user) {
-    $("userName").textContent =
-      "Name: " + (user.displayName || "Not provided");
-
-    $("userEmail").textContent =
-      "Email: " + (user.email || "Not provided");
-
-    if (returnTo) {
-      window.location.replace(returnTo);
-    }
-  }
-});
-
     const googleProvider = new GoogleAuthProvider();
+
+    // Return to Contact after successful sign-in.
+function redirectAfterLogin() {
+  const returnTo = new URLSearchParams(
+    window.location.search
+  ).get("returnTo");
+
+  if (!returnTo) return false;
+
+  try {
+    const target = new URL(
+      returnTo,
+      window.location.href
+    );
+
+    // Only allow redirects to this same website.
+    if (target.origin !== window.location.origin) {
+      return false;
+    }
+
+    window.location.replace(target.href);
+    return true;
+
+  } catch (error) {
+    console.error("Invalid return destination:", error);
+    return false;
+  }
+}
 
     const $ = id => document.getElementById(id);
 
@@ -449,19 +446,24 @@ onAuthStateChanged(auth, user => {
     });
 
     // CHECK AUTHENTICATION STATE
-    onAuthStateChanged(auth, user => {
-      authPanel.hidden = !!user;
-      accountPanel.hidden = !user;
+onAuthStateChanged(auth, user => {
 
-      if (user) {
-        $("userName").textContent =
-          "Name: " + (user.displayName || "Not provided");
+  // If Contact sent the user here, return after login.
+  if (user && redirectAfterLogin()) {
+    return;
+  }
 
-        $("userEmail").textContent =
-          "Email: " + (user.email || "Not provided");
-      }
-    });
+  authPanel.hidden = !!user;
+  accountPanel.hidden = !user;
 
+  if (user) {
+    $("userName").textContent =
+      "Name: " + (user.displayName || "Not provided");
+
+    $("userEmail").textContent =
+      "Email: " + (user.email || "Not provided");
+  }
+});
     // FRIENDLY ERROR MESSAGES
     function friendlyError(code) {
       const errors = {
