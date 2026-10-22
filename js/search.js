@@ -373,7 +373,7 @@
         loginMessage.textContent = currentUser
             ? "Signed in as " +
                 (currentUser.displayName || currentUser.email || "User")
-            : "Review likhne ke liye pehle sign in karein.";
+            :"";
 
         reviewsList.appendChild(loginMessage);
 
