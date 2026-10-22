@@ -607,3 +607,81 @@ body{
         min-height: 38px;
     }
 }
+
+
+
+
+/* Share button on service cards */
+.share-service-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    margin-top: 10px;
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    background: transparent;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.share-service-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.share-service-btn:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
+}
+
+.share-service-btn i {
+    font-size: 14px;
+}
+
+
+
+/* Circular share icon at the top-right */
+.share-service-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    border: 1px solid #000;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.share-service-btn:hover {
+    background: #6c3bff;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.share-service-btn:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+}
+
