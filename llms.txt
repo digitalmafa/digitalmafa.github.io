@@ -35,3 +35,7 @@ This llms.txt file is designed to help LLMs better understand and index this web
 ## FAQ
 
 [Frequently Asked Questions | DigitalMAFA](https://digitalmafa.github.io/faq): Find answers to common questions about DigitalMAFA's digital services, pricing, project process, and how to get started.
+
+## Sign In
+
+[Sign In to DigitalMAFA | Access Your Account](https://digitalmafa.github.io/sign-in): Explore our digital services designed to strengthen your online presence, attract more customers, and grow your business.
