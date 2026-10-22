@@ -373,10 +373,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       restoreForm(data);
       return data;
     } catch (error) {
-      sessionStorage.removeItem(STORAGE_KEY);
+      console.error("Could not restore saved contact form:", error);
       return null;
     }
   }
+
+  // Restore the form whenever this page opens, not only with resume=1.
+  restoreSavedForm();
+
+  // Keep the latest form values safe while the visitor fills the form.
+  function saveFormDraft() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(readForm()));
+    } catch (error) {
+      console.error("Could not save contact form draft:", error);
+    }
+  }
+
+  Object.values(fields).forEach(field => {
+    field.addEventListener("input", saveFormDraft);
+    field.addEventListener("change", saveFormDraft);
+  });
 
   // Resume the pending message after successful sign-in.
   if (params.get("resume") === "1") {
@@ -433,10 +450,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         window.location.href =
           "sign-in.html?returnTo=" +
           encodeURIComponent("contact.html?resume=1");
-      } else {
-        sessionStorage.removeItem(STORAGE_KEY);
       }
 
+      // Keep the saved draft even if the visitor chooses not to sign in yet.
       return;
     }
 
