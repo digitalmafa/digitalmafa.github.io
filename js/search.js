@@ -209,8 +209,8 @@ shareBtn.addEventListener("click", async () => {
     });
 
     const shareURL =
-        new URL("contact.html", window.location.href).href +
-        "?" + params.toString();
+    new URL("search.html", window.location.href).href +
+    "?" + params.toString();
 
     const shareText =
         service.name + "\n\n" +
