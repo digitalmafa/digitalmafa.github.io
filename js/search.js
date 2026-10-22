@@ -652,7 +652,49 @@ return;
         renderReviews();
     });
 
-    renderShop();
-    renderReviews();
+
+renderShop();
+renderReviews();
+
+// Open the service popup when someone visits a shared link.
+const sharedParams = new URLSearchParams(window.location.search);
+const sharedServiceName = sharedParams.get("service");
+
+if (sharedServiceName) {
+    const matchedService = shopServices.find(
+        service => service.name.toLowerCase() === sharedServiceName.toLowerCase()
+    );
+
+    if (matchedService) {
+        // Clear search and show all service cards.
+        shopSearch.value = "";
+        activeShopCategory = "All";
+
+        shopFilters.forEach(filter => {
+            filter.classList.toggle(
+                "active",
+                filter.dataset.category === "All"
+            );
+        });
+
+        renderShop();
+
+        // Fill and open the matching service popup.
+        modalCategory.textContent = matchedService.category;
+        modalTitle.textContent = matchedService.name;
+        modalDescription.textContent = matchedService.description;
+
+        const params = new URLSearchParams({
+            service: matchedService.name,
+            category: matchedService.category,
+            description: matchedService.description
+        });
+
+        modalContactBtn.href = "contact.html?" + params.toString();
+
+        setCurrentReviewService(matchedService.name);
+        serviceModal.classList.add("show");
+    }
+}
 
 })();
