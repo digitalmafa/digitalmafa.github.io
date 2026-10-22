@@ -290,38 +290,152 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <!-- WHATSAPP FORM SCRIPT -->
 <script>
 (function () {
-    const form = document.getElementById("whatsapp-contact-form");
+  const form = document.getElementById("whatsapp-contact-form");
+  if (!form) return;
 
-    if (!form) return;
+  const STORAGE_KEY = "digitalmafa_pending_contact_message";
 
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
+  const fields = {
+    name: document.getElementById("contact-name"),
+    email: document.getElementById("contact-email"),
+    phone: document.getElementById("contact-phone"),
+    service: document.getElementById("contact-service"),
+    message: document.getElementById("message")
+  };
 
-        if (!form.reportValidity()) return;
+  const params = new URLSearchParams(window.location.search);
 
-        const name = document.getElementById("contact-name").value.trim();
-        const email = document.getElementById("contact-email").value.trim();
-        const phone = document.getElementById("contact-phone").value.trim();
-        const service = document.getElementById("contact-service").value;
-        const message = document.getElementById("message").value.trim();
+  function readForm() {
+    return {
+      name: fields.name.value.trim(),
+      email: fields.email.value.trim(),
+      phone: fields.phone.value.trim(),
+      service: fields.service.value,
+      message: fields.message.value.trim()
+    };
+  }
 
-        // WhatsApp number in international format, without + or spaces
-        const whatsappNumber = "919873546839";
+  function restoreForm(data) {
+    fields.name.value = data.name || "";
+    fields.email.value = data.email || "";
+    fields.phone.value = data.phone || "";
+    fields.service.value = data.service || "";
+    fields.message.value = data.message || "";
+  }
 
-        const whatsappMessage =
-            "New Inquiry - DigitalMAFA\n\n" +
-            "Name: " + name + "\n" +
-            "Email: " + email + "\n" +
-            "Phone: " + (phone || "Not provided") + "\n" +
-            "Service: " + service + "\n" +
-            "Message: " + message;
+  function buildWhatsAppURL(data) {
+    const whatsappNumber = "919873546839";
 
-        const whatsappURL =
-            "https://wa.me/" + whatsappNumber +
-            "?text=" + encodeURIComponent(whatsappMessage);
+    const whatsappMessage =
+      "New Inquiry - DigitalMAFA\n\n" +
+      "Name: " + data.name + "\n" +
+      "Email: " + data.email + "\n" +
+      "Phone: " + (data.phone || "Not provided") + "\n" +
+      "Service: " + data.service + "\n" +
+      "Message: " + data.message;
 
-        window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    return "https://wa.me/" + whatsappNumber +
+      "?text=" + encodeURIComponent(whatsappMessage);
+  }
+
+  function waitForAuth() {
+    return new Promise(resolve => {
+      let unsubscribe = () => {};
+
+      unsubscribe = window.auth.onAuthStateChanged(
+        user => {
+          unsubscribe();
+          resolve(user);
+        },
+        error => {
+          console.error("Authentication error:", error);
+          unsubscribe();
+          resolve(null);
+        }
+      );
     });
+  }
+
+  function restoreSavedForm() {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (!saved) return null;
+
+    try {
+      const data = JSON.parse(saved);
+      restoreForm(data);
+      return data;
+    } catch (error) {
+      sessionStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+  }
+
+  // Resume the pending message after successful sign-in.
+  if (params.get("resume") === "1") {
+    (async function () {
+      if (!window.auth) return;
+
+      const user = await waitForAuth();
+      if (!user) return;
+
+      const data = restoreSavedForm();
+      if (!data) return;
+
+      sessionStorage.removeItem(STORAGE_KEY);
+
+      // Navigate directly to WhatsApp to avoid popup blocking.
+      window.location.replace(buildWhatsAppURL(data));
+    })();
+  }
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    if (!form.reportValidity()) return;
+
+    const data = readForm();
+    const auth = window.auth;
+
+    if (!auth) {
+      alert(
+        "Sign-in service could not load. " +
+        "Please refresh the page and try again."
+      );
+      return;
+    }
+
+    let user = auth.currentUser;
+
+    if (!user) {
+      user = await waitForAuth();
+    }
+
+    if (!user) {
+      sessionStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+      );
+
+      const goToSignIn = window.confirm(
+        "You must sign in before sending a message. " +
+        "Go to the sign-in page?"
+      );
+
+      if (goToSignIn) {
+        window.location.href =
+          "sign-in.html?returnTo=" +
+          encodeURIComponent("contact.html?resume=1");
+      } else {
+        sessionStorage.removeItem(STORAGE_KEY);
+      }
+
+      return;
+    }
+
+    // User is already signed in.
+    sessionStorage.removeItem(STORAGE_KEY);
+    window.location.href = buildWhatsAppURL(data);
+  });
 })();
 </script>
 
@@ -447,7 +561,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
 
+<!-- Firebase Configuration -->
+<script src="js/firebase-config.js"></script>
 
 <script src="js/footer.js"></script>
 <script src="js/menu-bar.js"></script>
