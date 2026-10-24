@@ -235,8 +235,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </div>
 <div class="desktop-only">
     <div class="colum">
-
-<form class="about-contact-form" id="about-whatsapp-form">
+<form
+    class="about-contact-form"
+    id="about-whatsapp-form"
+    action="https://formsubmit.co/44b589394c710a3c13c071c5c2455fc7"
+    method="POST"
+>
+    <input type="hidden" name="_subject" value="New DigitalMAFA About Page Inquiry">
+    <input type="hidden" name="_captcha" value="true">
+    <input type="hidden" name="_template" value="table">
 
     <div class="about-form-group">
         <label for="about-name">Your Name</label>
@@ -278,32 +285,43 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 </form>
 
+
 <script>
 document.getElementById("about-whatsapp-form")
-.addEventListener("submit", function(event) {
+.addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    if (!this.reportValidity()) return;
+    const form = this;
 
-    const name = document.getElementById("about-name").value.trim();
-    const email = document.getElementById("about-email").value.trim();
-    const service = document.getElementById("about-service").value;
-    const message = document.getElementById("about-message").value.trim();
+    if (!form.reportValidity()) return;
 
-    const whatsappNumber = "919873546839";
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
 
-    const whatsappMessage =
-        "New DigitalMAFA Inquiry\n\n" +
-        "Name: " + name + "\n" +
-        "Email: " + email + "\n" +
-        "Service: " + service + "\n" +
-        "Message: " + message;
+    button.disabled = true;
+    button.textContent = "Sending...";
 
-    const whatsappURL =
-        "https://wa.me/" + whatsappNumber +
-        "?text=" + encodeURIComponent(whatsappMessage);
+    try {
+        const response = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            headers: {
+                "Accept": "application/json"
+            }
+        });
 
-    window.location.href = whatsappURL;
+        if (response.ok) {
+            alert("Your message has been sent successfully!");
+            form.reset();
+        } else {
+            alert("Message could not be sent. Please try again.");
+        }
+    } catch (error) {
+        alert("Network error. Please check your internet and try again.");
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
 });
 </script>
 
