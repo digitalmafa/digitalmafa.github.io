@@ -117,12 +117,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <h2>Explore Our Services</h2>
     <p>Find the perfect digital solution for your business.</p>
 
+    
+<div class="search-box-wrapper">
     <div class="shop-search">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="search" id="shopSearch"
-               placeholder="Search services...">
-        <button id="shopSearchBtn">Search</button>
+        <input
+            type="search"
+            id="shopSearch"
+            placeholder="Search services..."
+            autocomplete="off"
+            aria-label="Search digital services"
+        >
+        <button type="button" id="shopSearchBtn">Search</button>
     </div>
+
+    <div
+        id="searchSuggestions"
+        class="search-suggestions"
+        role="listbox"
+    ></div>
+</div>
+
 
     <div class="shop-categories">
         <button class="shop-filter active" data-category="All">All Services</button>
@@ -137,12 +152,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <!-- Service Details Popup -->
 <div class="service-modal" id="serviceModal">
-    <div class="service-modal-content">
-        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-        <span class="modal-category" id="modalCategory"></span>
-        <h2 id="modalTitle"></h2>
-        <p id="modalDescription"></p>
-        <a href="contact.html" id="modalContactBtn" class="contact-now-btn">
+<div class="service-modal-content">
+<button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+ <span class="modal-category" id="modalCategory"></span>
+<h2 id="modalTitle"></h2>
+<p id="modalDescription"></p>
+
+<p id="modalPrice" class="shop-card-price"></p>
+<ul id="modalFeatures" class="shop-card-features"></ul>
+
+<a href="contact.html" id="modalContactBtn" class="contact-now-btn">
     Contact Now
 </a>
 
