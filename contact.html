@@ -162,7 +162,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     </div>
                     <div>
                         <h3>WhatsApp Us</h3>
-                        <p>+91 98735 46839 (Only WhatsApp)</p>
+                        <p>+91 98735 46839</p>
                     </div>
                 </div>
 
@@ -673,13 +673,20 @@ document.addEventListener("DOMContentLoaded", function () {
             "Price: " + (price || "") + "\n\n" +
             "Plan Features:\n" + (features || "") +
             "\n\nMy Business Requirements:\n";
-    } else if (service) {
-        messageBox.value =
-            "Service: " + service +
-            "\nCategory: " + (category || "") +
-            "\n\nProject Details:\n" + (description || "") +
-            "\n\nMy Requirements:\n";
-    }
+    
+} else if (service) {
+    messageBox.value =
+        "Service: " + service +
+        "\nCategory: " + (category || "") +
+        "\nPrice: " + (price || "Contact for pricing") +
+        "\n\nProject Details:\n" + (description || "") +
+        "\n\nFeatures:\n" +
+        (features
+            ? features.split("|").map(feature => "- " + feature).join("\n")
+            : "Please confirm service features.") +
+        "\n\nMy Requirements:\n";
+}
+
 });
 </script>
 
