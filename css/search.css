@@ -685,3 +685,428 @@ body{
     outline-offset: 3px;
 }
 
+
+
+/* Fix share button position inside service card */
+
+
+
+
+@media (hover: none) and (pointer: coarse) {
+    .share-service-btn,
+    .share-service-btn:hover {
+        
+        transition: none;
+    }
+    .shop-card {
+    position: relative;
+}
+
+}
+
+
+
+
+
+
+
+/* Restore original service card colors */
+.shop-card {
+    background: #fff;
+}
+
+.shop-card-body {
+    color: inherit;
+}
+
+.shop-card-category {
+    
+    background: #f1ebff;
+    border-color: transparent;
+}
+
+.shop-card h3 {
+    color: #222 !important;
+}
+
+.shop-card p {
+    color: #666 !important;
+    ;
+}
+
+/* Price in original purple theme */
+.shop-card .shop-card-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: #6c3bff !important;
+}  
+
+/* Features in original text color */
+.shop-card .shop-card-features li {
+    color: #666 !important;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+
+
+
+/* Restore original modal colors */
+.service-modal-content {
+    background: #fff;
+    color: #222;
+}
+
+.service-modal-content h2 {
+    color: #222;
+}
+
+.service-modal-content p {
+    color: #666;
+}
+
+.shop-card .shop-card-price {
+    margin-bottom: -20px;
+    margin-top: -15px;
+}
+
+.shop-card .shop-card-features {
+    margin-top: -20px;
+}
+
+
+
+/* ===== Service Card Price & Features ===== */
+
+.shop-card .shop-card-price,
+.service-modal-content .shop-card-price {
+    color: #6c3bff;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 12px 0 6px;
+}
+
+.shop-card .shop-card-features,
+.service-modal-content .shop-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 16px;
+}
+
+.shop-card .shop-card-features li,
+.service-modal-content .shop-card-features li {
+    position: relative;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 22px;
+    margin-bottom: 6px;
+}
+
+.shop-card .shop-card-features li::before,
+.service-modal-content .shop-card-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #6c3bff;
+    font-weight: 700;
+}
+
+/* ===== Popup Price & Features ===== */
+
+.service-modal-content .shop-card-price {
+    font-size: 17px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+}
+
+.service-modal-content .shop-card-features {
+    margin-bottom: 20px;
+}
+
+/* ===== Mobile Responsive ===== */
+
+@media (max-width: 480px) {
+    .shop-card .shop-card-price,
+    .service-modal-content .shop-card-price {
+        font-size: 15px;
+    }
+
+    .shop-card .shop-card-features li,
+    .service-modal-content .shop-card-features li {
+        font-size: 13px;
+    }
+}
+
+
+/* ===== Service Card Image ===== */
+
+.shop-card-top {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 14px;
+}
+
+.shop-card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+/* Subtle hover effect */
+.shop-card:hover .shop-card-image {
+    transform: scale(1.04);
+}
+
+/* Keep existing icons centered for services without images */
+.shop-card-top i {
+    font-size: 42px;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .shop-card-top {
+        height: 150px;
+    }
+}
+
+
+
+/* Keep all service cards equal in height */
+.shop-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Make the card content fill available height */
+.shop-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Push View Details buttons to the bottom */
+.shop-card-body .view-details-btn {
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Align all service cards */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+/* Equal height for every card */
+.shop-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Align card content vertically */
+.shop-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Keep titles aligned */
+.shop-card-body h3 {
+    min-height: 48px;
+    margin-bottom: 12px;
+}
+
+/* Keep descriptions aligned */
+.shop-card-body p {
+    min-height: 60px;
+}
+
+/* Keep prices at the same level */
+.shop-card-body .shop-card-price {
+    min-height: 30px;
+    margin-bottom: 20px;
+}
+
+/* Keep feature lists consistent */
+.shop-card-features {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+/* Align View Details buttons at the bottom */
+.shop-card-body .view-details-btn {
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    .shop-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .shop-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+/* Live Search Suggestions */
+.search-box-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-suggestions {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 800;
+    max-height: 280px;
+    overflow-y: auto;
+    
+}
+
+.search-suggestion-item {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: #1f2937;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.search-suggestion-item:hover,
+.search-suggestion-item:focus {
+    background: #eff6ff;
+    color: #2563eb;
+    outline: none;
+}
+
+.search-suggestion-item + .search-suggestion-item {
+    border-top: 1px solid #f1f5f9;
+}
+
+
+
+/* Fix suggestion dropdown width */
+.search-box-wrapper {
+    position: relative;
+    width: min(650px, 100%);
+    margin: 0 auto;
+}
+
+.search-box-wrapper .shop-search {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    z-index: 800;
+}
+
+
+
+.search-suggestion-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.suggestion-service-name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.suggestion-keyword {
+    color: #6c3bff;
+    font-size: 12px;
+    font-weight: 400;
+}
+/* Responsive Service Image */
+.shop-card-top {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    background: #f1ebff;
+}
+
+.shop-card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .shop-card-top {
+        aspect-ratio: 3 / 2;
+    }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1023px) {
+    .shop-card-top {
+        aspect-ratio: 3 / 2;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .shop-card-top {
+        aspect-ratio: 3 / 2;
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+
+    .shop-card-image {
+        object-fit: contain;
+    }
+
+    .shop-card:hover .shop-card-image {
+        transform: none;
+    }
+}
