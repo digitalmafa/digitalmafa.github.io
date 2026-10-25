@@ -6,48 +6,654 @@
     // =====================================
 
     const shopServices = [
+       {
+    name: "SEO Optimization",
+    category: "SEO",
+    image: "images/seo optimization.png",
+    description: "Improve your website's search engine visibility with SEO strategies focused on keyword optimization, on-page improvements, and organic traffic growth.",
+    price: "₹499 onwards",
+    features: [
+        "Website SEO analysis",
+        "Keyword optimization",
+        "On-page SEO improvements",
+        "Meta title and description optimization",
+        "Search engine visibility improvement"
+    ],
+   keywords: [
+    "SEO Optimization",
+    "Search Engine Optimization",
+    "Website SEO",
+    "Keyword Research",
+    "On-Page SEO",
+    "Technical SEO",
+    "Organic Traffic Growth",
+    "Google Search Ranking",
+    "Website SEO Audit",
+    "SEO Services"
+]
+},
+      {
+    name: "Social Media Marketing",
+    category: "Social Media",
+    image: "images/Social Media Marketing.png",
+    description: "Grow your brand's online presence through strategic social media campaigns, audience engagement, and consistent brand communication.",
+    price: "₹999 onwards",
+    features: [
+        "Social media marketing strategy",
+        "Audience targeting",
+        "Brand awareness improvement",
+        "Engagement growth",
+        "Campaign performance monitoring"
+    ],
+    keywords: [
+    "Social Media Marketing",
+    "Social Media Management",
+    "Facebook Marketing",
+    "Instagram Marketing",
+    "Social Media Promotion",
+    "Brand Awareness",
+    "Audience Engagement",
+    "Social Media Strategy",
+    "Digital Marketing",
+    "Social Media Campaigns"
+]
+},
+
+{
+    name: "On-Page SEO Optimization",
+    category: "SEO",
+    image: "images/on-page-seo.png",
+    description: "We improve website page elements to make your content easier for search engines and visitors to understand.",
+    price: "₹999 onwards",
+    features: [
+        "SEO title optimization",
+        "Meta description improvement",
+        "Heading structure review (H1, H2, H3)",
+        "Keyword placement recommendations",
+        "Image alt text suggestions",
+        "Internal linking recommendations",
+        "Optimization for up to 5 pages"
+    ],
+    keywords: [
+    "On-Page SEO Optimization",
+    "On-Page SEO Services",
+    "Website Content Optimization",
+    "Meta Title Optimization",
+    "Meta Description Optimization",
+    "Keyword Placement",
+    "Header Tag Optimization",
+    "Internal Linking",
+    "Image Alt Text Optimization",
+    "SEO-Friendly URLs"
+]
+},
+
+{
+    name: "Technical SEO Management",
+    category: "SEO",
+    image: "images/technical-seo.png",
+    description: "We identify technical issues that may affect your website's crawling, indexing and search performance.",
+    price: "₹2,499 onwards",
+    features: [
+        "Website technical SEO audit",
+        "Broken links and crawlability checks",
+        "XML sitemap and robots.txt review",
+        "Indexing issue identification",
+        "Mobile usability and page speed checks",
+        "Prioritized technical improvement report"
+    ],
+    keywords: [
+    "Technical SEO Management",
+    "Technical SEO Services",
+    "Website Technical Audit",
+    "Website Crawlability",
+    "Website Indexing",
+    "XML Sitemap Optimization",
+    "Robots.txt Optimization",
+    "Core Web Vitals",
+    "Website Speed Optimization",
+    "Structured Data Optimization"
+]},
+
+{
+    name: "High-Quality Backlink Building",
+    category: "SEO",
+    image: "images/backlink-building.png",
+    description: "We help improve your website's backlink profile through relevant link-building opportunities.",
+    price: "₹999 onwards",
+    features: [
+        "Up to 150 backlink opportunities or placements, depending on availability",
+        "Research for relevant websites and link sources",
+        "Focus on relevance and link quality rather than quantity alone",
+        "Delivery report with available backlink details",
+        "No guaranteed rankings or fixed SEO results"
+    ],
+keywords: [
+    "High-Quality Backlink Building",
+    "Backlink Building Services",
+    "Quality Link Building",
+    "White-Hat Link Building",
+    "SEO Link Building",
+    "Website Authority Building",
+    "High-Authority Backlinks",
+    "Relevant Website Backlinks",
+    "Off-Page SEO",
+    "Link Profile Analysis"
+]},
+
+{
+    name: "Competitor SEO Analysis",
+    category: "SEO",
+    image: "images/Competitor SEO Analysis Infographic.png",
+    description: "We analyze competitor websites to identify their visible SEO strategies and potential opportunities for your business.",
+    price: "₹999 onwards",
+    features: [
+        "Analysis of up to 3 competitor websites",
+        "Competitor content and page structure review",
+        "Keyword opportunity comparison",
+        "Backlink profile observations where data is available",
+        "Content gap identification",
+        "Actionable recommendations to improve your website"
+    ],
+keywords: [
+    "Competitor SEO Analysis",
+    "SEO Competitor Analysis",
+    "Competitor Keyword Research",
+    "Competitor Backlink Analysis",
+    "SEO Competitor Audit",
+    "Competitor Ranking Analysis",
+    "Keyword Gap Analysis",
+    "Competitor Website Analysis",
+    "SERP Competitor Research",
+    "SEO Competitive Analysis"
+]},
+
+{
+    name: "Local SEO Optimization",
+    category: "SEO",
+    image: "images/Local SEO Optimization Banner.png",
+    description: "We help eligible local businesses improve their visibility in location-based searches.",
+    price: "₹999 onwards",
+    features: [
+        "Local keyword research",
+        "Business information consistency review",
+        "Google Business Profile optimization guidance",
+        "Local landing-page recommendations",
+        "Local search visibility checklist",
+        "Recommendations for improving local discovery"
+    ],
+keywords: [
+    "Local SEO Optimization",
+    "Local SEO Services",
+    "Google Business Profile Optimization",
+    "Local Search Ranking",
+    "Local Keyword Research",
+    "Google Maps SEO",
+    "Local Business Listings",
+    "NAP Consistency",
+    "Local Citation Building",
+    "Near Me SEO"
+]},
+
+{
+    name: "SEO Blog Writing",
+    category: "SEO",
+    image: "images/SEO Blog Writing Service Infographic.png",
+    description: "We create useful, search-focused blog content based on your business and target audience.",
+    price: "₹799 onwards",
+    features: [
+        "One original article up to 1,000 words",
+        "SEO-friendly title and heading structure",
+        "Relevant keyword integration",
+        "Meta description suggestion",
+        "Readable paragraphs and content formatting",
+        "One revision round"
+    ],
+keywords: [
+    "SEO Blog Writing",
+    "SEO Content Writing",
+    "Blog Writing Services",
+    "SEO-Friendly Blog Posts",
+    "Keyword-Optimized Content",
+    "Website Blog Content",
+    "Blog Content Strategy",
+    "Organic Traffic Growth",
+    "Content Optimization",
+    "Search Engine Friendly Articles"
+]},
+
+{
+    name: "Website Content Optimization",
+    category: "Web Development",
+    image: "images/Website Content Optimization Infographic.png",
+    description: "We review existing website content and suggest improvements to make it clearer, more engaging and more relevant.",
+    price: "₹999 onwards",
+    features: [
+        "Review of up to 5 website pages",
+        "Grammar, spelling and readability suggestions",
+        "Content structure improvement",
+        "Keyword relevance review",
+        "Call-to-action improvement suggestions",
+        "Updated content recommendations"
+    ],
+keywords: [
+    "Website Content Optimization",
+    "Website Content Writing",
+    "SEO Content Optimization",
+    "Keyword Optimization",
+    "Website Copywriting",
+    "Content Readability",
+    "SEO-Friendly Content",
+    "Meta Title Optimization",
+    "Meta Description Optimization",
+    "Website Content Audit"
+]},
+
+{
+    name: "Google Search Console Setup",
+    category: "SEO",
+    image: "images/Google Search Console Setup Guide.png",
+    description: "We help connect your website to Google Search Console and review its search performance.",
+    price: "₹799 onwards",
+    features: [
+        "Website ownership verification assistance",
+        "XML sitemap submission guidance",
+        "Indexing status review",
+        "Search clicks and impressions analysis",
+        "Top search queries and pages review",
+        "Basic search performance report"
+    ],
+keywords: [
+    "Google Search Console Setup",
+    "Google Search Console Services",
+    "Google Search Console Configuration",
+    "Website Verification",
+    "Search Console Integration",
+    "Website Indexing Setup",
+    "Sitemap Submission",
+    "Indexing Issues Monitoring",
+    "Search Performance Tracking",
+    "Google Search Visibility"
+]},
+
+{
+    name: "Google Analytics Setup",
+    category: "SEO",
+    image: "images/Google Analytics Setup Dashboard Infographic.png",
+    description: "We help you understand how visitors reach and interact with your website.",
+    price: "₹999 onwards",
+    features: [
+        "Google Analytics 4 setup or review",
+        "Website tracking configuration assistance",
+        "Traffic source analysis",
+        "User engagement overview",
+        "Basic event tracking for agreed actions, where supported",
+        "Initial analytics testing and report"
+    ],
+keywords: [
+    "Google Analytics Setup",
+    "Google Analytics 4 Setup",
+    "GA4 Configuration",
+    "Website Analytics Integration",
+    "Google Analytics Tracking",
+    "Website Traffic Analysis",
+    "User Behavior Tracking",
+    "Conversion Tracking Setup",
+    "Google Analytics Reporting",
+    "Website Performance Monitoring"
+]},
+
+
+{
+    name: "Landing Page Design",
+    category: "Web Development",
+    image: "images/Landing Page Design Showcase.png",
+    description: "We design a focused landing page to present your offer and encourage visitors to take action.",
+    price: "₹1,999 onwards",
+    features: [
+        "Custom layout for one landing page",
+        "Attractive headline and service sections",
+        "Benefits and features presentation",
+        "Call-to-action placement",
+        "Mobile-friendly design planning",
+        "Up to 2 design revision rounds"
+    ],
+keywords: [
+    "Landing Page Design",
+    "Landing Page Development",
+    "Responsive Landing Page",
+    "Business Landing Page",
+    "Lead Generation Landing Page",
+    "Conversion-Focused Design",
+    "Website UI Design",
+    "Mobile-Friendly Landing Page",
+    "Landing Page Optimization",
+    "Custom Landing Page Design"
+]},
+
+{
+    name: "Website UI/UX Improvement",
+    category: "Web Development",
+    image: "images/Website UI_UX Improvement Banner.png",
+    description: "We review your website's design and user journey to identify opportunities for a better browsing experience.",
+    price: "₹1,499 onwards",
+    features: [
+        "Review of up to 3 website pages",
+        "Navigation and layout evaluation",
+        "Mobile responsiveness review",
+        "Readability and visual hierarchy suggestions",
+        "Button and call-to-action improvement ideas",
+        "Prioritized UI/UX improvement report"
+    ],
+keywords: [
+    "Website UI UX Improvement",
+    "UI UX Design Services",
+    "Website User Experience",
+    "Website Interface Design",
+    "User-Friendly Website Design",
+    "Website Usability Improvement",
+    "Responsive UI Design",
+    "Website Navigation Optimization",
+    "Website Layout Improvement",
+    "Conversion Rate Optimization"
+]},
+
+
+{
+    name: "Social Media Content Management",
+    category: "Social Media",
+    image: "images/Social Media Content Management Strategy.png",
+    description: "We help businesses plan consistent social media content for their target audience.",
+    price: "₹1,999 onwards",
+    features: [
+        "7-day content calendar",
+        "Up to 7 post topics and captions",
+        "Content ideas based on your business",
+        "Suggested posting schedule",
+        "Brand tone and messaging guidance",
+        "Platform-specific content recommendations"
+    ],
+keywords: [
+    "Social Media Content Management",
+    "Social Media Management Services",
+    "Social Media Content Planning",
+    "Content Calendar Management",
+    "Facebook Content Management",
+    "Instagram Content Management",
+    "Social Media Post Scheduling",
+    "Brand Content Strategy",
+    "Audience Engagement",
+    "Social Media Marketing"
+]},
+
+{
+    name: "Social Media Post Design",
+    category: "Social Media",
+    image: "images/Social Media Post Design Services.png",
+    description: "We create branded graphics to help communicate your business message professionally.",
+    price: "₹699 onwards",
+    features: [
+        "3 custom static post designs",
+        "Brand colors and logo integration",
+        "Promotional or informative post layouts",
+        "Platform-appropriate dimensions",
+        "High-quality digital files",
+        "One revision round"
+    ],
+keywords: [
+    "Social Media Post Design",
+    "Social Media Graphic Design",
+    "Instagram Post Design",
+    "Facebook Post Design",
+    "Custom Social Media Graphics",
+    "Creative Post Design",
+    "Branded Social Media Posts",
+    "Promotional Post Design",
+    "Social Media Banner Design",
+    "Business Social Media Design"
+]},
+
+{
+    name: "Google Ads Copywriting",
+    category: "Advertising",
+    image: "images/Google Ads Copywriting Service Infographic.png",
+    description: "We prepare advertising copy designed around your product, audience and campaign objective.",
+    price: "₹599 onwards",
+    features: [
+        "Multiple headline variations",
+        "Ad description writing",
+        "Clear calls to action",
+        "Benefit-focused messaging",
+        "Suggested keyword themes",
+        "Copy recommendations for one campaign",
+        "Ad account management and advertising budget are not included"
+    ],
+keywords: [
+    "Google Ads Copywriting",
+    "Google Ads Copywriting Services",
+    "PPC Ad Copywriting",
+    "Google Search Ads",
+    "High-Converting Ad Copy",
+    "Google Ads Headlines",
+    "Paid Search Advertising",
+    "Ad Description Writing",
+    "Pay Per Click Marketing",
+    "Conversion-Focused Ad Copy"
+]},
+
+{
+    name: "Email Marketing Template Design",
+    category: "Advertising",
+    image: "images/Email Marketing Template Design.png",
+    description: "We create a branded email template for business announcements, promotions or newsletters.",
+    price: "₹799 onwards",
+    features: [
+        "One custom email template",
+        "Brand colors, logo and typography",
+        "Clear headline and message structure",
+        "Call-to-action button design",
+        "Mobile-friendly layout recommendations",
+        "One revision round"
+    ],
+keywords: [
+    "Email Marketing Template Design",
+    "Email Template Design Services",
+    "Responsive Email Design",
+    "Promotional Email Templates",
+    "Newsletter Template Design",
+    "Custom Email Templates",
+    "Email Campaign Design",
+    "HTML Email Templates",
+    "Business Email Design",
+    "Email Newsletter Design"
+]},
+
+{
+    name: "Website Maintenance & Health Check",
+    category: "Web Development",
+    image: "images/Website Maintenance Health Check Infographic.png",
+    description: "We review your website for common issues and provide a practical maintenance checklist.",
+    price: "₹999 onwards",
+    features: [
+        "Broken link checks",
+        "Page loading and usability review",
+        "Missing content or page element checks",
+        "Basic mobile display review",
+        "Visible website issues report",
+        "Prioritized maintenance recommendations"
+    ],
+keywords: [
+    "Website Maintenance",
+    "Website Health Check",
+    "Website Maintenance Services",
+    "Website Error Fixing",
+    "Website Security Check",
+    "Website Performance Optimization",
+    "Website Bug Fixing",
+    "Website Speed Check",
+    "Website Technical Audit",
+    "Website Troubleshooting"
+]},
+
+{
+    name: "SEO & Website Performance Report",
+    category: "SEO",
+    image: "images/SEO Performance Report Infographic.png",
+    description: "We turn available website data into a straightforward report that helps you understand performance and plan improvements.",
+    price: "₹699 onwards",
+    features: [
+        "Website traffic overview, if analytics is available",
+        "Search clicks and impressions, if Search Console is connected",
+        "Top-performing pages and search queries",
+        "Traffic source observations",
+        "Important performance trends",
+        "Recommended next steps for improvement"
+    ],
+keywords: [
+    "SEO Performance Report",
+    "Website Performance Report",
+    "SEO Audit Report",
+    "Website SEO Analysis",
+    "Organic Traffic Analysis",
+    "Google Search Performance",
+    "Keyword Ranking Report",
+    "Website Speed Analysis",
+    "Technical SEO Report",
+    "Website Analytics Report"
+]},
+
         {
-            name: "SEO Optimization",
-            category: "SEO",
-            icon: "fa-chart-line",
-            description: "Improve search engine rankings, optimize website content, and help potential customers discover your business.",
-            keywords: "google ranking search keywords organic traffic"
-        },
+    name: "Basic Website Development",
+    category: "Web Development",
+    image: "images/Basic Website Development Banner.png",
+    description: "Get a simple, professional website for your business with essential pages, a clean layout, and mobile-friendly design.",
+    price: "₹2,999 onwards",
+    features: [
+    "Home, About, and Contact pages",
+    "Mobile-friendly responsive design",
+    "Modern and clean UI",
+    "Contact form integration",
+    "Basic on-page SEO setup",
+    "Social media links integration",
+    "Basic speed optimization"
+],
+    keywords: [
+    "Basic Website Development",
+    "Website Development Services",
+    "Small Business Website",
+    "Responsive Website Design",
+    "Business Website Development",
+    "Custom Website Design",
+    "Mobile-Friendly Website",
+    "Professional Website Design",
+    "Website Design for Startups",
+    "Affordable Website Development"
+]
+},
         {
-            name: "Social Media Marketing",
-            category: "Social Media",
-            icon: "fa-hashtag",
-            description: "Build your brand, plan engaging content, and grow your audience across social media platforms.",
-            keywords: "instagram facebook content followers"
-        },
-        {
-            name: "Website Development",
-            category: "Web Development",
-            icon: "fa-code",
-            description: "Create a professional, responsive website designed to showcase your business and convert visitors.",
-            keywords: "website web design development business"
-        },
-        {
-            name: "Google Ads",
-            category: "Advertising",
-            icon: "fa-bullhorn",
-            description: "Reach relevant audiences with targeted advertising campaigns and track campaign performance.",
-            keywords: "paid ads ppc google advertising"
-        },
-        {
-            name: "Content Marketing",
-            category: "Social Media",
-            icon: "fa-pen-nib",
-            description: "Plan useful, engaging content that communicates your brand message and attracts your target audience.",
-            keywords: "writing blogs posts content creation"
-        },
-        {
-            name: "Digital Marketing Strategy",
-            category: "Advertising",
-            icon: "fa-lightbulb",
-            description: "Build a digital marketing plan around your business goals, audience, and available budget.",
-            keywords: "online marketing strategy business growth"
-        }
+    name: "Google Ads",
+    category: "Advertising",
+    image: "images/Google Ads Growth Campaign.png",
+    description: "Reach potential customers through targeted Google Ads campaigns designed to increase website traffic, generate leads, and promote your business.",
+    price: "₹999 onwards",
+    features: [
+        "Google Ads campaign setup",
+        "Keyword research",
+        "Audience targeting",
+        "Ad copy optimization",
+        "Campaign performance monitoring"
+    ],
+    keywords: [
+    "Google Ads",
+    "Google Ads Management",
+    "Google Ads Services",
+    "Google PPC Advertising",
+    "Google Search Ads",
+    "Pay Per Click Advertising",
+    "Google Ads Campaign Setup",
+    "Keyword Research for Google Ads",
+    "Google Ads Optimization",
+    "Google Ads Lead Generation"
+]
+},
+{
+    name: "Meta Ads",
+    category: "Advertising",
+    image: "images/Meta Ads_ Grow Your Business.png",
+    description: "Promote your business on Facebook and Instagram with targeted Meta Ads campaigns designed to increase brand awareness, generate leads, and drive conversions.",
+    price: "₹999",
+    features: [
+        "Meta Ads campaign setup",
+        "Facebook and Instagram audience targeting",
+        "Ad copy and creative recommendations",
+        "Campaign optimization",
+        "Performance monitoring and reporting"
+    ],
+    keywords: [
+    "Meta Ads",
+    "Meta Ads Management",
+    "Facebook Ads",
+    "Instagram Ads",
+    "Meta Advertising Services",
+    "Facebook Ads Campaign Setup",
+    "Instagram Advertising",
+    "Social Media Advertising",
+    "Meta Ads Optimization",
+    "Meta Ads Lead Generation"
+]
+},
+       {
+    name: "Content Marketing",
+    category: "Social Media",
+    image: "images/Content Marketing Growth Blueprint.png",
+    description: "Build brand awareness and attract your target audience with valuable, engaging content designed to support your digital marketing goals.",
+    price: "₹799",
+    features: [
+        "Content marketing strategy",
+        "Target audience research",
+        "Content topic planning",
+        "Brand awareness improvement",
+        "Content performance recommendations"
+    ],
+    keywords: [
+    "Content Marketing",
+    "Content Marketing Strategy",
+    "Content Creation Services",
+    "Content Marketing Services",
+    "Brand Content Strategy",
+    "Content Planning",
+    "Audience Engagement",
+    "Content Distribution",
+    "Digital Content Marketing",
+    "Content Marketing for Businesses"
+]
+},
+       {
+    name: "Digital Marketing Strategy",
+    category: "Advertising",
+    image: "images/Digital Marketing Strategy Blueprint.png",
+    description: "Build a practical digital marketing strategy to strengthen your online presence, reach your target audience, and support business growth.",
+    price: "₹1,499",
+    features: [
+        "Digital marketing plan",
+        "Target audience research",
+        "Marketing channel recommendations",
+        "Campaign planning",
+        "Performance tracking recommendations"
+    ],
+  keywords: [
+    "Digital Marketing Strategy",
+    "Digital Marketing Services",
+    "Online Marketing Strategy",
+    "Digital Marketing Plan",
+    "Marketing Strategy Consulting",
+    "Target Audience Research",
+    "Marketing Channel Strategy",
+    "Lead Generation Strategy",
+    "Business Growth Strategy",
+    "Digital Campaign Planning"
+]
+},
     ];
 
     // =====================================
@@ -58,6 +664,7 @@
 
     const shopGrid = $("shopGrid");
     const shopSearch = $("shopSearch");
+    const searchSuggestions = $("searchSuggestions");
     const shopSearchBtn = $("shopSearchBtn");
     const shopFilters = document.querySelectorAll(".shop-filter");
 
@@ -67,6 +674,8 @@
     const modalTitle = $("modalTitle");
     const modalDescription = $("modalDescription");
     const modalContactBtn = $("modalContactBtn");
+    const modalPrice = $("modalPrice");
+const modalFeatures = $("modalFeatures");
 
     const reviewsDrawer = $("reviewsDrawer");
     const reviewsList = $("reviewsList");
@@ -111,6 +720,94 @@
     let unsubscribeReviews = null;
     let reviewRequestInProgress = false;
 
+
+    
+    // =====================================
+    // LIVE SEARCH SUGGESTIONS
+    // =====================================
+
+    if (shopSearch && searchSuggestions) {
+        shopSearch.setAttribute("autocomplete", "off");
+
+        shopSearch.addEventListener("input", function () {
+            
+const query = shopSearch.value.trim().toLowerCase();
+searchSuggestions.replaceChildren();
+
+if (!query) {
+    searchSuggestions.style.display = "none";
+    return;
+}
+
+const matches = shopServices.filter(service => {
+    const searchableText = [
+        service.name,
+        service.category,
+        service.description,
+        ...(service.keywords || []),
+        ...(service.features || [])
+    ].join(" ").toLowerCase();
+
+    return searchableText.includes(query);
+}).slice(0, 6);
+
+if (matches.length === 0) {
+    searchSuggestions.style.display = "none";
+    return;
+}
+
+
+matches.forEach(service => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "search-suggestion-item";
+
+    const matchedKeyword = (service.keywords || []).find(keyword =>
+        keyword.toLowerCase().includes(query)
+    );
+
+    const title = document.createElement("span");
+    title.className = "suggestion-service-name";
+    title.textContent = service.name;
+
+    item.appendChild(title);
+
+    if (matchedKeyword) {
+        const keywordText = document.createElement("small");
+        keywordText.className = "suggestion-keyword";
+        keywordText.textContent = "Keyword: " + matchedKeyword;
+        item.appendChild(keywordText);
+    }
+
+    item.addEventListener("click", function () {
+        shopSearch.value = service.name;
+        searchSuggestions.style.display = "none";
+        renderShop();
+    });
+
+    searchSuggestions.appendChild(item);
+});
+
+
+searchSuggestions.style.display = "block";
+
+
+            searchSuggestions.style.display = "block";
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".search-box-wrapper")) {
+                searchSuggestions.style.display = "none";
+            }
+        });
+
+        shopSearch.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                searchSuggestions.style.display = "none";
+            }
+        });
+    }
+
     // =====================================
     // 3. SERVICE SEARCH AND CARDS
     // =====================================
@@ -151,10 +848,21 @@
             const top = document.createElement("div");
             top.className = "shop-card-top";
 
-            const icon = document.createElement("i");
-            icon.className = "fa-solid " + service.icon;
-            icon.setAttribute("aria-hidden", "true");
-            top.appendChild(icon);
+            
+if (service.image) {
+    const image = document.createElement("img");
+    image.src = service.image;
+    image.alt = service.name;
+    image.className = "shop-card-image";
+    image.loading = "lazy";
+    top.appendChild(image);
+} else {
+    const icon = document.createElement("i");
+    icon.className = "fa-solid " + service.icon;
+    icon.setAttribute("aria-hidden", "true");
+    top.appendChild(icon);
+}
+
 
             const body = document.createElement("div");
             body.className = "shop-card-body";
@@ -166,10 +874,29 @@
             const title = document.createElement("h3");
             title.textContent = service.name;
 
-            const description = document.createElement("p");
-            description.textContent = service.description;
+            
+const description = document.createElement("p");
+description.textContent = service.description;
 
-            const detailsBtn = document.createElement("button");
+// Show service price
+const price = document.createElement("p");
+price.className = "shop-card-price";
+price.textContent = service.price
+    ? "Price: " + service.price
+    : "Price: Contact for pricing";
+
+// Show service features
+const featuresList = document.createElement("ul");
+featuresList.className = "shop-card-features";
+
+(service.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    featuresList.appendChild(item);
+});
+
+const detailsBtn = document.createElement("button");
+
             detailsBtn.type = "button";
             detailsBtn.className = "view-details-btn";
             detailsBtn.textContent = "View Details →";
@@ -178,12 +905,29 @@
                 modalCategory.textContent = service.category;
                 modalTitle.textContent = service.name;
                 modalDescription.textContent = service.description;
+                // Show service price in popup
+modalPrice.textContent = service.price
+    ? "Price: " + service.price
+    : "Price: Contact for pricing";
+
+// Show service features in popup
+modalFeatures.replaceChildren();
+
+(service.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    modalFeatures.appendChild(item);
+});
 
                 const params = new URLSearchParams({
-                    service: service.name,
-                    category: service.category,
-                    description: service.description
-                });
+    service: service.name,
+    category: service.category,
+    description: service.description,
+    price: service.price || "",
+    features: (service.features || []).join("|")
+});
+
+modalContactBtn.href = "contact.html?" + params.toString();
 
                 modalContactBtn.href =
                     "contact.html?" + params.toString();
@@ -239,7 +983,15 @@ shareBtn.addEventListener("click", async () => {
     }
 });
 
-body.append(category, title, description, detailsBtn, shareBtn);
+body.append(
+    category,
+    title,
+    description,
+    price,
+    featuresList,
+    detailsBtn,
+    shareBtn
+);
 
             card.append(top, body);
             shopGrid.appendChild(card);
@@ -684,6 +1436,20 @@ if (sharedServiceName) {
         modalTitle.textContent = matchedService.name;
         modalDescription.textContent = matchedService.description;
 
+        // Show service price in shared-link popup
+modalPrice.textContent = matchedService.price
+    ? "Price: " + matchedService.price
+    : "Price: Contact for pricing";
+
+// Show service features in shared-link popup
+modalFeatures.replaceChildren();
+
+(matchedService.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    modalFeatures.appendChild(item);
+});
+
         const params = new URLSearchParams({
             service: matchedService.name,
             category: matchedService.category,
@@ -698,3 +1464,5 @@ if (sharedServiceName) {
 }
 
 })();
+
+
