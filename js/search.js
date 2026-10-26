@@ -962,28 +962,26 @@ shareBtn.addEventListener("click", async () => {
         "Explore this service at DigitalMAFA:\n" +
         shareURL;
 
-   try {
-    if (navigator.share && !/Electron/i.test(navigator.userAgent)) {
-        await navigator.share({
-            title: service.name + " | DigitalMAFA",
-            text: service.description,
-            url: shareURL
-        });
-    } else {
-        await navigator.clipboard.writeText(shareText);
-        alert("Service details and link copied successfully! You can now share it on WhatsApp.");
+    try {
+        if (navigator.share) {
+            await navigator.share({
+                title: service.name + " | DigitalMAFA",
+                text: service.description,
+                url: shareURL
+            });
+        } else if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(shareText);
+            alert("Service details and link copied successfully!");
+        } else {
+            window.prompt("Copy this service link and share it:", shareText);
+        }
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            console.error("Unable to share service:", error);
+            alert("Unable to share right now. Please try again.");
+        }
     }
-} catch (error) {
-    if (error.name !== "AbortError") {
-        console.error("Unable to share service:", error);
-
-        window.prompt(
-            "Copy this service link and share it:",
-            shareText
-        );
-    }
-}
-        });
+});
 
 body.append(
     category,
