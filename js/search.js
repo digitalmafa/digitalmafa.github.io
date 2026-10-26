@@ -1277,41 +1277,73 @@ body.append(
                     });
                 });
 
-                const deleteButton = document.createElement("button");
-                deleteButton.type = "button";
-                deleteButton.className = "review-delete-btn";
-                deleteButton.textContent = "🗑️ Delete";
+               
+const deleteButton = document.createElement("button");
+deleteButton.type = "button";
+deleteButton.className = "review-delete-btn";
+deleteButton.textContent = "🗑️ Delete";
 
-                deleteButton.addEventListener("click", async () => {
-                    if (
-                        !currentUser ||
-                        currentUser.uid !== review.uid
-                    ) {
-                        alert("Sirf apna review delete kar sakte hain.");
-                        return;
-                    }
+deleteButton.addEventListener("click", async () => {
+    if (!currentUser) {
+        alert("Please sign in to delete your review.");
+        return;
+    }
 
-                    if (!confirm(
-                        "Are you sure you want to delete this review?"
-                    )) {
-                        return;
-                    }
+    if (currentUser.uid !== review.uid) {
+        alert("Aap sirf apna review delete kar sakte hain.");
+        return;
+    }
 
-                    try {
-                        await db.collection("reviews")
-                            .doc(review.id)
-                            .delete();
+    const confirmed = confirm(
+        "Kya aap apna review delete karna chahte hain?"
+    );
 
-                        if (editingReviewId === review.id) {
-                            resetReviewForm();
-                        }
-                    } catch (error) {
-                        console.error("Delete failed:", error);
-                        alert(
-                            "Review delete nahi hua. Firestore Rules check karein."
-                        );
-                    }
-                });
+    if (!confirmed) return;
+
+    deleteButton.disabled = true;
+    deleteButton.textContent = "Deleting...";
+
+    try {
+        const reviewRef = db.collection("reviews").doc(review.id);
+
+        // Verify the review still exists and belongs to this user.
+        const reviewDoc = await reviewRef.get();
+
+        if (!reviewDoc.exists) {
+            alert("Ye review pehle hi delete ho chuka hai.");
+            return;
+        }
+
+        if (reviewDoc.data().uid !== currentUser.uid) {
+            alert("Aap sirf apna review delete kar sakte hain.");
+            return;
+        }
+
+        await reviewRef.delete();
+
+        if (editingReviewId === review.id) {
+            resetReviewForm();
+        }
+
+        alert("Review successfully deleted!");
+    } catch (error) {
+        console.error("Review delete failed:", error);
+
+        if (error.code === "permission-denied") {
+            alert(
+                "Delete permission nahi hai. Firebase Firestore Rules check karein."
+            );
+        } else {
+            alert(
+                "Review delete nahi hua. Internet connection aur Firebase login check karein."
+            );
+        }
+    } finally {
+        deleteButton.disabled = false;
+        deleteButton.textContent = "🗑️ Delete";
+    }
+});
+
 
                 actions.append(editButton, deleteButton);
                 card.appendChild(actions);
