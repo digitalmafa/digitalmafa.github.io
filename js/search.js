@@ -962,6 +962,18 @@ shareBtn.addEventListener("click", async () => {
         "Explore this service at DigitalMAFA:\n" +
         shareURL;
 
+        // Use Android's native share menu inside the Android app.
+if (
+    window.AndroidShare &&
+    typeof window.AndroidShare.share === "function"
+) {
+    window.AndroidShare.share(
+        service.name + " | DigitalMAFA",
+        service.description,
+        shareURL
+    );
+    return;
+}
     try {
         if (navigator.share) {
             await navigator.share({
