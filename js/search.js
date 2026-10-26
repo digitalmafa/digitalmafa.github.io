@@ -975,6 +975,19 @@ if (
     return;
 }
     try {
+        
+if (
+  window.DesktopShare &&
+  typeof window.DesktopShare.share === "function"
+) {
+  window.DesktopShare.share(
+    service.name + " | DigitalMAFA",
+    service.description,
+    shareURL
+  );
+  return;
+}
+
         if (navigator.share) {
             await navigator.share({
                 title: service.name + " | DigitalMAFA",
