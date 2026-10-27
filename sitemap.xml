@@ -45,5 +45,9 @@
     <loc>https://digitalmafa.github.io/sign-in.html</loc>
     <priority>0.8</priority>
   </url>
+   <url>
+    <loc>https://digitalmafa.github.io/download.html</loc>
+    <priority>0.8</priority>
+  </url>
 
 </urlset>
