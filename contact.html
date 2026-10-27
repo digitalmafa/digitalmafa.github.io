@@ -202,18 +202,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 </p>
 
                 <form
-                    class="mafa-contact-form"
-                    id="whatsapp-contact-form"
-                    action="https://api.web3forms.com/submit"
-                    method="POST"
-                    >
-    <input type="hidden" name="access_key" value="a70c4795-4c91-4dc1-8d33-514c3c74fa7c">
+    class="mafa-contact-form"
+    id="whatsapp-contact-form"
+    action="https://formsubmit.co/44b589394c710a3c13c071c5c2455fc7"
+    method="POST"
+>
+    <input type="hidden" name="_subject" value="New DigitalMAFA Contact Inquiry">
 
-    <input type="hidden" name="subject" value="New DigitalMAFA Contact Inquiry">
+<input type="hidden" name="_template" value="table">
 
-    <input type="hidden" name="from_name" value="DigitalMAFA Website">
+<input type="hidden" name="_captcha" value="true">
 
-    <input type="checkbox" name="botcheck" style="display:none">
+<input type="hidden" name="_next" value="https://digitalmafa.github.io/contact.html?success=1">
 
 
 
@@ -331,224 +331,76 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <script>
 (function () {
-  const form = document.getElementById("whatsapp-contact-form");
-  if (!form) return;
+    const form = document.getElementById("whatsapp-contact-form");
 
-  const STORAGE_KEY = "digitalmafa_pending_contact_message";
-  const params = new URLSearchParams(window.location.search);
-  const submitButton = form.querySelector('[type="submit"]');
+    if (!form) return;
 
-  const fields = {
-    name: document.getElementById("contact-name"),
-    email: document.getElementById("contact-email"),
-    phone: document.getElementById("contact-phone"),
-    service: document.getElementById("contact-service"),
-    message: document.getElementById("message")
-  };
+    const STORAGE_KEY = "digitalmafa_pending_contact_message";
+    const params = new URLSearchParams(window.location.search);
 
-  let sending = false;
-
-  function readForm() {
-    return {
-      name: fields.name.value.trim(),
-      email: fields.email.value.trim(),
-      phone: fields.phone.value.trim(),
-      service: fields.service.value,
-      message: fields.message.value.trim()
-    };
-  }
-
-  function saveDraft() {
+    // Restore saved form data
     try {
-      sessionStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(readForm())
-      );
-    } catch (error) {
-      console.error("Draft save failed:", error);
-    }
-  }
+        const saved = sessionStorage.getItem(STORAGE_KEY);
 
-  function restoreDraft() {
-    try {
-      const saved = sessionStorage.getItem(STORAGE_KEY);
-      if (!saved) return false;
+        if (saved) {
+            const data = JSON.parse(saved);
 
-      const data = JSON.parse(saved);
+            ["name", "email", "phone", "service", "message"]
+                .forEach(name => {
+                    const field = form.elements.namedItem(name);
 
-      fields.name.value = data.name || "";
-      fields.email.value = data.email || "";
-      fields.phone.value = data.phone || "";
-      fields.service.value = data.service || "";
-      fields.message.value = data.message || "";
-
-      return true;
-    } catch (error) {
-      console.error("Draft restore failed:", error);
-      return false;
-    }
-  }
-
-  function showStatus(text) {
-    let status = document.getElementById("contact-form-status");
-
-    if (!status) {
-      status = document.createElement("p");
-      status.id = "contact-form-status";
-      status.setAttribute("role", "status");
-      status.setAttribute("aria-live", "polite");
-      status.className = "form-disclaimer";
-      form.appendChild(status);
-    }
-
-    status.textContent = text;
-  }
-
-  function waitForAuth() {
-    return new Promise(resolve => {
-      if (!window.auth) {
-        resolve(null);
-        return;
-      }
-
-      let unsubscribe = () => {};
-
-      unsubscribe = window.auth.onAuthStateChanged(
-        user => {
-          unsubscribe();
-          resolve(user);
-        },
-        error => {
-          console.error("Auth error:", error);
-          unsubscribe();
-          resolve(null);
+                    if (field && data[name]) {
+                        field.value = data[name];
+                    }
+                });
         }
-      );
+    } catch (error) {
+        console.error("Could not restore form:", error);
+    }
+
+    // Save form draft
+    form.addEventListener("input", function () {
+        const data = {};
+
+        ["name", "email", "phone", "service", "message"]
+            .forEach(name => {
+                const field = form.elements.namedItem(name);
+                data[name] = field ? field.value : "";
+            });
+
+        try {
+            sessionStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(data)
+            );
+        } catch (error) {
+            console.error("Could not save form:", error);
+        }
     });
-  }
 
-  // Restore form data when the contact page opens.
-  const hasDraft = restoreDraft();
+    // Show success message after redirect
+    if (params.get("success") === "1") {
+        const status = document.createElement("p");
+        status.className = "form-disclaimer";
+        status.setAttribute("role", "status");
+        status.textContent =
+            "Thank you! Your form was submitted. Please check your email for confirmation if needed.";
 
-  Object.values(fields).forEach(field => {
-    field.addEventListener("input", saveDraft);
-    field.addEventListener("change", saveDraft);
-  });
+        form.prepend(status);
 
-  // After returning from sign-in, restore the form.
-  // Do NOT send automatically; user must press Send Message.
-  if (params.get("resume") === "1") {
-    if (hasDraft) {
-      showStatus(
-        "Your saved message has been restored. " +
-        "Review it and press Send Message to submit."
-      );
-    } else {
-      showStatus(
-        "Please fill out the contact form and press Send Message."
-      );
-    }
-  }
-
-  form.addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    if (sending || !form.reportValidity()) return;
-
-    saveDraft();
-
-    if (!window.auth) {
-      showStatus(
-        "Sign-in service is unavailable. Please refresh and try again."
-      );
-      return;
-    }
-
-    let user = window.auth.currentUser;
-
-    if (!user) {
-      user = await waitForAuth();
-    }
-
-    if (!user) {
-      const goToSignIn = window.confirm(
-        "Please sign in before sending your message. " +
-        "Your form will be saved. Go to Sign In?"
-      );
-
-      if (goToSignIn) {
-        window.location.href =
-          "sign-in.html?returnTo=" +
-          encodeURIComponent("contact.html?resume=1");
-      }
-
-      return;
-    }
-
-    sending = true;
-
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = "Sending...";
-    }
-
-    showStatus("Sending your message. Please wait...");
-
-    try {
-      const formData = new FormData(form);
-      const data = readForm();
-
-      // Ensure every contact field is submitted.
-      formData.set("name", data.name);
-      formData.set("email", data.email);
-      formData.set("phone", data.phone);
-      formData.set("service", data.service);
-      formData.set("message", data.message);
-
-      const response = await fetch(
-        "https://api.web3forms.com/submit",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json"
-          },
-          body: formData
+        try {
+            sessionStorage.removeItem(STORAGE_KEY);
+        } catch (error) {
+            console.error(error);
         }
-      );
 
-      const result = await response.json();
-
-      if (!response.ok || result.success !== true) {
-        throw new Error(
-          result.message || "Submission failed."
+        // Remove success parameter from the address bar
+        history.replaceState(
+            {},
+            "",
+            window.location.pathname
         );
-      }
-
-      sessionStorage.removeItem(STORAGE_KEY);
-      form.reset();
-
-      showStatus(
-        "Thank you! Your message was sent successfully."
-      );
-
-    } catch (error) {
-      console.error("Web3Forms error:", error);
-
-      showStatus(
-        "Message could not be sent. Check your internet connection " +
-        "and try again. Your saved form has been kept."
-      );
-
-    } finally {
-      sending = false;
-
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.innerHTML =
-          'Send Message <i class="fa-solid fa-paper-plane"></i>';
-      }
     }
-  });
 })();
 </script>
 
