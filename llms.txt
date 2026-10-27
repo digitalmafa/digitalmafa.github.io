@@ -39,3 +39,7 @@ This llms.txt file is designed to help LLMs better understand and index this web
 ## Sign In
 
 [Sign In to DigitalMAFA | Access Your Account](https://digitalmafa.github.io/sign-in): Explore our digital services designed to strengthen your online presence, attract more customers, and grow your business.
+
+## Download
+
+[Download | DigitalMAFA](https://digitalmafa.github.io/download): Get the DigitalMAFA app and enjoy a smooth, convenient experience with quick access to your favourite digital services.
