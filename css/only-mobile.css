@@ -1,0 +1,11 @@
+/* Desktop par hide */
+.mobile-only {
+    display: none;
+}
+
+/* Mobile par show */
+@media (max-width: 767px) {
+    .mobile-only {
+        display: block;
+    }
+}
