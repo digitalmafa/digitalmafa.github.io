@@ -654,6 +654,114 @@ keywords: [
     "Digital Campaign Planning"
 ]
 },
+
+ 
+{
+    name: "Stater",
+    category: "Premium",
+    image: "images/Stater SEO Package Banner.png",
+    description: "Perfect for beginners and small websites looking to improve their search engine rankings.",
+    price: "₹2,999",
+    features: [
+        "Basic website SEO audit",
+        "Keyword research — up to 5 keywords",
+        "On-page SEO for up to 3 pages",
+        "Title tags & meta descriptions",
+        "Heading structure review",
+        "Internal linking recommendations",
+        "Basic sitemap & indexing checks",
+        "SEO audit summary report"
+    ],
+    keywords: [
+        "Basic SEO Services",
+        "Website SEO Audit",
+        "Keyword Research",
+        "On-Page SEO",
+        "SEO for Small Businesses",
+        "Title Tags Optimization",
+        "Meta Description Optimization",
+        "Heading Structure Review",
+        "Internal Linking Optimization",
+        "Sitemap and Indexing Checks",
+        "SEO Audit Report",
+        "Small Website SEO"
+    ]
+},
+
+
+{
+    name: "Growth",
+    category: "Premium",
+    image: "images/SEO Growth Package Infographic.png",
+    description: "For brands ready to grow their online presence and improve search engine rankings.",
+    price: "₹5,999",
+    features: [
+        "Keyword research — up to 15 keywords",
+        "On-page SEO for up to 7 pages",
+        "Competitor analysis — 2 competitors",
+        "Technical SEO checks & recommendations",
+        "Image alt-text and optimization review",
+        "Google Search Console review (if connected)",
+        "Internal linking improvement plan",
+        "Backlink profile review",
+        "Performance & SEO recommendations report"
+    ],
+    keywords: [
+        "Growth SEO Services",
+        "SEO for Growing Businesses",
+        "Keyword Research up to 15 Keywords",
+        "On-Page SEO Optimization",
+        "Competitor SEO Analysis",
+        "Technical SEO Audit",
+        "Image Alt Text Optimization",
+        "Google Search Console Review",
+        "Internal Linking Strategy",
+        "Backlink Profile Analysis",
+        "SEO Performance Report",
+        "Organic Traffic Growth"
+    ]
+},
+
+
+{
+    name: "Premium",
+    category: "Premium",
+    image: "images/Premium SEO Growth Package.png",
+    description: "For ambitious brands targeting bigger growth through comprehensive SEO optimization and strategic search engine marketing.",
+    price: "₹9,999 / month",
+    features: [
+        "Keyword research — up to 30 keywords",
+        "On-page SEO for up to 10 pages",
+        "Competitor analysis — 3 competitors",
+        "Comprehensive technical SEO audit",
+        "Core Web Vitals & mobile usability review",
+        "Sitemap, robots.txt & indexing review",
+        "Content gap analysis and topic suggestions",
+        "Backlink quality review & link-building plan",
+        "GA4 & Search Console performance review (if connected)",
+        "Priority action plan and final SEO report"
+    ],
+    keywords: [
+        "Premium SEO Services",
+        "Advanced SEO Strategy",
+        "Keyword Research up to 30 Keywords",
+        "On-Page SEO Optimization",
+        "Competitor Analysis",
+        "Comprehensive Technical SEO Audit",
+        "Core Web Vitals Optimization",
+        "Mobile Usability SEO",
+        "Sitemap and Robots.txt Optimization",
+        "Content Gap Analysis",
+        "Backlink Quality Analysis",
+        "Link Building Strategy",
+        "Google Analytics 4 SEO Reporting",
+        "Google Search Console Analysis",
+        "Organic Traffic Growth",
+        "Premium SEO Reporting"
+    ]
+},
+
+
     ];
 
     // =====================================
