@@ -323,7 +323,6 @@ const result = await response.json();
 console.log("FormSubmit response:", result);
 
 if (String(result.success) === "true") {
-  alert("Message sent successfully!");
   form.reset();
 } else {
   alert("Submission failed: " + (result.message || "Please try again."));
