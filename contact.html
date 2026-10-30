@@ -204,7 +204,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 <form
     class="mafa-contact-form"
     id="whatsapp-contact-form"
-    action="https://silentforms.com/api/submit"
+    action="https://silentforms.com/api/6dd03407e09776d25717aa29e6ada48fbe09647dc3ae27fb26e0ef2d5492aaf8"
     method="POST"
 >
     <!-- SilentForms access key: replace with your NEW rotated key -->
@@ -496,10 +496,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         showStatus("Sending your message. Please wait...");
 
         try {
-            showStatus("Submitting your message securely. Please wait...");
+            const response = await fetch(
+                "https://formsubmit.co/ajax/digitalmafa.contact@gmail.com",
+                {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        Accept: "application/json"
+                    }
+                }
+            );
 
-            // Use native POST so SilentForms can process the redirect field.
-            HTMLFormElement.prototype.submit.call(form);
+            const result = await response.json();
+
+            if (
+                !response.ok ||
+                String(result.success).toLowerCase() !== "true"
+            ) {
+                throw new Error(
+                    result.message || "Submission failed."
+                );
+            }
+
+            sessionStorage.removeItem(STORAGE_KEY);
+            form.reset();
+
+            const oldStatus =
+                document.getElementById("contact-form-status");
+
+            if (oldStatus) oldStatus.remove();
+
+            alert("Your message has been sent successfully!");
 
         } catch (error) {
             console.error("SilentForms submission error:", error);
@@ -508,6 +535,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 "internet connection and try again. Your saved form has been kept."
             );
 
+        } finally {
             sending = false;
             if (submitButton) {
                 submitButton.disabled = false;
