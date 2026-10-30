@@ -201,20 +201,20 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     Fill out the form below and tell us how we can help.
                 </p>
 
-<form
+                <form
     class="mafa-contact-form"
     id="whatsapp-contact-form"
-    action="https://silentforms.com/api/6dd03407e09776d25717aa29e6ada48fbe09647dc3ae27fb26e0ef2d5492aaf8"
+    action="https://silentforms.com/api/submit"
     method="POST"
 >
-    <input type="hidden" name="accessKey"
-           value="YOUR_SILENTFORMS_ACCESS_KEY">
+    <!-- SilentForms access key: replace with your NEW rotated key -->
+    <input type="hidden" name="accessKey" value="6dd03407e09776d25717aa29e6ada48fbe09647dc3ae27fb26e0ef2d5492aaf8">
 
-    <input type="hidden" name="redirect"
-           value="https://digitalmafa.github.io/contact.html?success=1">
+    <!-- Redirect after successful submission -->
+    <input type="hidden" name="redirect" value="https://digitalmafa.github.io/contact.html?success=1">
 
-    <input type="checkbox" name="botcheck"
-           style="display:none;" tabindex="-1" autocomplete="off">
+    <!-- Honeypot spam protection -->
+    <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
 
 
 
