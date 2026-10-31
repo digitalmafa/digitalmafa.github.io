@@ -1,0 +1,43 @@
+
+.carousel{
+width:100%;
+overflow:hidden;
+}
+
+.track{
+display:flex;
+gap:20px;
+width:max-content;
+animation:scroll 25s linear infinite;
+}
+
+.track:hover{
+animation-play-state:paused;
+}
+
+.track img{
+width:190px;
+height:140px;
+border-radius:12px;
+object-fit:cover;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+transition:.3s;
+cursor:pointer;
+}
+
+.track img:hover{
+transform:scale(1.08);
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+@keyframes scroll{
+
+0%{
+transform:translateX(0);
+}
+
+100%{
+transform:translateX(-50%);
+}
+
+}
