@@ -768,19 +768,29 @@ keywords: [
 // DIGITALMAFA ADMIN SERVICES
 // =====================================
 
-const adminServices = JSON.parse(
-    localStorage.getItem("digitalmafaServices") || "[]"
-);
-
-const publishedServices = adminServices
-    .filter(service => service.published === true)
-    .map(service => ({
-        ...service,
-        keywords: service.keywords || [],
-        features: service.features || []
-    }));
-
-shopServices.push(...publishedServices);
+// Admin-created services are loaded from Supabase (publicly published rows only).
+async function loadAdminServicesFromSupabase() {
+    try {
+        if (!window.supabaseClient) {
+            throw new Error("Supabase client is not initialized.");
+        }
+        const { data, error } = await window.supabaseClient
+            .from("services")
+            .select("id, name, category, description, price, features, keywords, image, published, created_at")
+            .eq("published", true)
+            .order("created_at", { ascending: false });
+        if (error) throw error;
+        shopServices.push(...(data || []).map(service => ({
+            ...service,
+            createdAt: service.created_at,
+            features: Array.isArray(service.features) ? service.features : [],
+            keywords: Array.isArray(service.keywords) ? service.keywords : []
+        })));
+    } catch (error) {
+        console.error("Could not load admin services from Supabase:", error);
+    }
+    renderShop();
+}
 
     // =====================================
     // 2. GET HTML ELEMENTS
@@ -1588,7 +1598,7 @@ return;
     });
 
 
-renderShop();
+loadAdminServicesFromSupabase();
 renderReviews();
 
 // Open the service popup when someone visits a shared link.
