@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigitalMAFA Admin Panel</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #172033;
+}
+
+header {
+    background: #101c35;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header span {
+    color: #60a5fa;
+}
+
+.container {
+    max-width: 950px;
+    margin: 30px auto;
+    padding: 15px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px #0000000c;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 13px;
+    margin: 8px 0 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+label {
+    font-weight: bold;
+}
+
+button {
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.upload-btn {
+    background: #2563eb;
+    color: white;
+    width: 100%;
+}
+
+.delete-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.status-btn {
+    background: #0f766e;
+    color: white;
+}
+
+.service {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.service img {
+    width: 85px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.service-info {
+    flex: 1;
+}
+
+.service-info p {
+    margin: 6px 0;
+    color: #64748b;
+}
+
+#message {
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+#preview {
+    max-width: 150px;
+    display: none;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+@media(max-width:600px) {
+    .service {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .service img {
+        width: 100%;
+        height: 160px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>Digital<span>MAFA</span></h2>
+    <b>ADMIN PANEL</b>
+</header>
+
+<div class="container">
+
+<div class="panel">
+
+<h2>Add New Service</h2>
+
+<form id="serviceForm">
+
+<label>Service Name</label>
+<input type="text" id="name" required
+placeholder="SEO Optimization">
+
+<label>Category</label>
+<select id="category" required>
+    <option value="">Select Category</option>
+    <option>SEO</option>
+    <option>Social Media</option>
+    <option>Web Development</option>
+    <option>Advertising</option>
+    <option>Premium</option>
+    <option>Other</option>
+</select>
+
+<label>Description</label>
+<textarea id="description" required
+placeholder="Enter service description"></textarea>
+
+<label>Service Price</label>
+<input type="text" id="price"
+placeholder="₹999 onwards">
+
+<label>Service Features</label>
+<textarea id="features"
+placeholder="Enter each feature on a new line"></textarea>
+
+<label>Search Keywords</label>
+<input type="text" id="keywords"
+placeholder="SEO, Google Ranking, Website SEO">
+
+<label>Service Image</label>
+<input type="file" id="image"
+accept="image/*" required>
+
+<img id="preview" alt="Image preview">
+
+<button class="upload-btn" type="submit"
+id="submitBtn">
+Upload Service
+</button>
+
+<p id="message"></p>
+
+</form>
+
+</div>
+
+<br>
+
+<div class="panel">
+
+<h2>Manage Services</h2>
+<div id="serviceList"></div>
+
+</div>
+</div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
