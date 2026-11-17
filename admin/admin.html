@@ -148,9 +148,24 @@ button {
 
 <header>
     <h2>Digital<span>MAFA</span></h2>
-    <b>ADMIN PANEL</b>
+    <div><b>ADMIN PANEL</b> <button id="logoutBtn" type="button" hidden style="margin-left:12px;">Logout</button></div>
 </header>
 
+<div class="container" id="loginSection" hidden>
+<div class="panel" style="max-width:480px;margin:40px auto;">
+<h2>Admin Login</h2>
+<form id="loginForm">
+<label for="adminEmail">Email</label>
+<input type="email" id="adminEmail" autocomplete="username" required placeholder="Admin email">
+<label for="adminPassword">Password</label>
+<input type="password" id="adminPassword" autocomplete="current-password" required placeholder="Admin password">
+<button class="upload-btn" id="loginBtn" type="submit">Login</button>
+<p id="loginMessage" role="status" style="margin-top:14px;"></p>
+</form>
+</div>
+</div>
+
+<div id="adminSection" hidden>
 <div class="container">
 
 <div class="panel">
@@ -192,7 +207,7 @@ placeholder="SEO, Google Ranking, Website SEO">
 
 <label>Service Image</label>
 <input type="file" id="image"
-accept="image/*" required>
+accept="image/*">
 
 <img id="preview" alt="Image preview">
 
@@ -203,6 +218,7 @@ Upload Service
 
 <p id="message"></p>
 
+<button type="button" id="cancelEditBtn" hidden style="margin-top:10px;">Cancel Edit</button>
 </form>
 
 </div>
@@ -217,6 +233,10 @@ Upload Service
 </div>
 </div>
 
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
 <script src="admin.js"></script>
 
 </body>
