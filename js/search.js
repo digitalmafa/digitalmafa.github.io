@@ -764,6 +764,24 @@ keywords: [
 
     ];
 
+// =====================================
+// DIGITALMAFA ADMIN SERVICES
+// =====================================
+
+const adminServices = JSON.parse(
+    localStorage.getItem("digitalmafaServices") || "[]"
+);
+
+const publishedServices = adminServices
+    .filter(service => service.published === true)
+    .map(service => ({
+        ...service,
+        keywords: service.keywords || [],
+        features: service.features || []
+    }));
+
+shopServices.push(...publishedServices);
+
     // =====================================
     // 2. GET HTML ELEMENTS
     // =====================================
