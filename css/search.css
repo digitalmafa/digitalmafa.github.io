@@ -1102,3 +1102,73 @@ body{
         transform: none;
     }
 }
+
+/* ===== Restored service share popup with compact links ===== */
+.share-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(10, 12, 20, .62);
+    backdrop-filter: blur(4px);
+}
+.share-popup-overlay.show { display: flex; }
+.share-popup-card {
+    position: relative;
+    width: min(100%, 440px);
+    padding: 28px 22px 22px;
+    border-radius: 18px;
+    background: #fff;
+    color: #20202a;
+    box-shadow: 0 22px 70px rgba(0,0,0,.28);
+    text-align: center;
+    animation: sharePopupIn .18s ease-out;
+}
+@keyframes sharePopupIn { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.share-popup-close {
+    position: absolute; top: 9px; right: 13px; border: 0; background: transparent;
+    color: #555; font-size: 29px; line-height: 1; cursor: pointer;
+}
+.share-popup-icon {
+    width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%;
+    display: grid; place-items: center; background: #f0eaff; color: #6c3bff; font-size: 20px;
+}
+.share-popup-card h2 { margin: 0 0 6px; font-size: 21px; color: #20202a; }
+.share-popup-service-name { margin: 0 0 20px; color: #666; font-size: 14px; }
+.share-popup-label { display: block; margin: 0 0 7px; text-align: left; font-size: 13px; font-weight: 700; color: #444; }
+.share-url-row { display: flex; gap: 8px; }
+.share-url-row input {
+    min-width: 0; flex: 1; height: 44px; padding: 0 11px; border: 1px solid #ddd;
+    border-radius: 8px; background: #f8f8fb; color: #333; font-size: 13px;
+}
+.share-copy-btn, .share-native-btn, .share-whatsapp-btn {
+    min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 0 14px; border: 0; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+    text-decoration: none;
+}
+.share-copy-btn, .share-native-btn { background: #6c3bff; color: #fff; }
+.share-whatsapp-btn { background: #20b85a; color: #fff; }
+.share-copy-status { min-height: 18px; margin: 8px 0 12px; color: #b45309; font-size: 12px; }
+.share-copy-status.is-success { color: #168044; }
+.share-popup-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+@media (max-width: 420px) {
+    .share-popup-card { padding: 26px 15px 18px; }
+    .share-url-row { flex-direction: column; }
+    .share-copy-btn { width: 100%; }
+}
+
+
+/* Favorites / wishlist controls */
+.favorites-page-link { display:inline-flex; align-items:center; gap:8px; margin:0 auto 24px; padding:10px 16px; border:1px solid #ef4444; border-radius:999px; color:#ef4444; text-decoration:none; font-weight:700; }
+.favorites-page-link:hover { background:#ef4444; color:#fff; }
+.card-favorite-btn { width:100%; padding:11px 12px; margin:0 0 10px; border:1px solid #ef4444; border-radius:7px; background:#fff; color:#ef4444; font-weight:650; cursor:pointer; transition:.2s ease; }
+.card-favorite-btn:hover, .card-favorite-btn.is-favorite { background:#fff1f2; }
+.card-favorite-btn i { margin-right:6px; }
+.modal-action-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+.modal-action-row .reviews-open-btn { flex:1; }
+.modal-favorite-btn { width:43px; height:43px; flex:0 0 43px; border:1px solid #ef4444; border-radius:9px; background:#fff; color:#ef4444; font-size:19px; cursor:pointer; }
+.modal-favorite-btn.is-favorite { background:#fff1f2; }
+.shop-card-delivery { color:#64748b; font-size:13px; margin:0 0 14px; }
