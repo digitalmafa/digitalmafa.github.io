@@ -20,14 +20,6 @@ let services = [];
 let editingId = null;
 let editingImage = "";
 
-// Keep the rupee symbol automatic, even if an admin pastes it into the field.
-function formatRupeePrice(value) {
-    const raw = String(value ?? "").trim();
-    if (!raw) return "";
-    const withoutPrefix = raw.replace(/^(?:₹|INR\s*)+/i, "").trim();
-    return withoutPrefix ? "₹" + withoutPrefix : "";
-}
-
 if (!SUPABASE) {
     loginMessage.textContent = "Supabase did not initialize. Check supabase-config.js and script order.";
     throw new Error("Supabase client is missing.");
@@ -120,7 +112,6 @@ async function migrateLegacyLocalServices() {
         name: service.name || "Untitled service",
         category: service.category || "Other",
         description: service.description || "",
-        note: service.note || null,
         price: service.price || "",
         features: Array.isArray(service.features) ? service.features : [],
         keywords: Array.isArray(service.keywords) ? service.keywords : [],
@@ -172,16 +163,9 @@ function showServices() {
         const title = document.createElement("b");
         title.textContent = service.name;
         const details = document.createElement("p");
-        details.textContent = `${service.category} | ${formatRupeePrice(service.price) || "Price on request"} | Delivery: ${service.delivery_days ?? "Not set"} days`;
+        details.textContent = `${service.category} | ${service.price || "Price on request"}`;
         const status = document.createElement("p");
         status.textContent = service.published ? "Published" : "Draft";
-        if (service.note && service.note.trim()) {
-            const note = document.createElement("p");
-            note.textContent = "Note: " + service.note;
-            info.append(title, details, status, note);
-        } else {
-            info.append(title, details, status);
-        }
 
         const edit = document.createElement("button");
         edit.textContent = "Edit";
@@ -207,7 +191,7 @@ function showServices() {
             if (error) return alert("Could not delete service: " + error.message);
             await loadServices();
         });
-        info.append(edit, toggle, remove);
+        info.append(title, details, status, edit, toggle, remove);
         card.append(img, info);
         serviceList.appendChild(card);
     });
@@ -219,9 +203,7 @@ function startEdit(service) {
     document.getElementById("name").value = service.name || "";
     document.getElementById("category").value = service.category || "";
     document.getElementById("description").value = service.description || "";
-    document.getElementById("note").value = service.note || "";
-    document.getElementById("price").value = String(service.price || "").replace(/^(?:₹|INR\s*)+/i, "").trim();
-    document.getElementById("deliveryDays").value = service.delivery_days ?? "";
+    document.getElementById("price").value = service.price || "";
     document.getElementById("features").value = (service.features || []).join("\n");
     document.getElementById("keywords").value = (service.keywords || []).join(", ");
     preview.src = editingImage;
@@ -284,9 +266,7 @@ form.addEventListener("submit", async (event) => {
             name: document.getElementById("name").value.trim(),
             category: document.getElementById("category").value,
             description: document.getElementById("description").value.trim(),
-            note: document.getElementById("note").value.trim() || null,
-            price: formatRupeePrice(document.getElementById("price").value),
-            delivery_days: Number(document.getElementById("deliveryDays").value),
+            price: document.getElementById("price").value.trim(),
             features: document.getElementById("features").value.split("\n").map(x => x.trim()).filter(Boolean),
             keywords: document.getElementById("keywords").value.split(",").map(x => x.trim()).filter(Boolean),
             image: imageUrl
