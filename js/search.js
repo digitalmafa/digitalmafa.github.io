@@ -1,899 +1,421 @@
-(() => {
-    "use strict";
-const shopServices = [];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-// =====================================
-// DIGITALMAFA ADMIN SERVICES
-// =====================================
 
-// Admin-created services are loaded from Supabase (publicly published rows only).
-async function loadAdminServicesFromSupabase() {
-    try {
-        if (!window.supabaseClient) {
-            throw new Error("Supabase client is not initialized.");
-        }
-        const { data, error } = await window.supabaseClient
-            .from("services")
-            .select("id, name, category, description, note, price, features, keywords, image, published, created_at")
-            .eq("published", true)
-            .order("created_at", { ascending: false });
-        if (error) throw error;
-        shopServices.push(...(data || []).map(service => ({
-            ...service,
-            createdAt: service.created_at,
-            features: Array.isArray(service.features) ? service.features : [],
-            keywords: Array.isArray(service.keywords) ? service.keywords : []
-        })));
-    } catch (error) {
-        console.error("Could not load admin services from Supabase:", error);
-    }
-    renderShop();
+<!--title & description-->
+<title>Search DigitalMAFA | Find Digital Services</title>
+<meta name="description" content="Explore digital services and smart solutions to build your online presence and grow your business.">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8954679280643661"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PG7W6HLJ6Y"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PG7W6HLJ6Y');
+</script>
+
+<!-- Camonical -->
+<link rel="canonical" href="https://digitalmafa.github.io/search.html">
+
+<!-- logo icon -->
+<link rel="icon" href="images/20261020_102235.png" type="image/png">
+
+<!-- Link Preview Image -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Search DigitalMAFA | Find Digital Services">
+<meta property="og:description" content="Explore digital services and smart solutions to build your online presence and grow your business.">
+<meta property="og:image" content="https://digitalmafa.github.io/images/WhatsApp Image 2026-10-20 at 11.10.28 AM.jpeg">
+<meta property="og:url" content="https://digitalmafa.github.io/search.html">
+<meta property="og:site_name" content="DigitalMAFA">
+
+<!-- X / Twitter Preview -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Search DigitalMAFA | Find Digital Services">
+<meta name="twitter:description" content="Explore digital services and smart solutions to build your online presence and grow your business.">
+<meta name="twitter:image" content="https://digitalmafa.github.io/images/WhatsApp Image 2026-10-20 at 11.10.28 AM.jpeg">
+
+<!--Schema markup-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://digitalmafa.github.io/search.html#webpage",
+  "url": "https://digitalmafa.github.io/search.html",
+  "name": "Search DigitalMAFA | Find Digital Services",
+  "description": "Explore digital services and smart solutions to build your online presence and grow your business.",
+  "isPartOf": {
+    "@id": "https://digitalmafa.github.io/#website"
+  },
+  "about": {
+    "@id": "https://digitalmafa.github.io/#organization"
+  },
+  "inLanguage": "en"
 }
+</script>
 
-    // =====================================
-    // 2. GET HTML ELEMENTS
-    // =====================================
+<!--CSS Styles-->
+<link href="css/novbar.css" rel="stylesheet">
+<link href="css/search.css" rel="stylesheet">
+<link href="css/footer.css" rel="stylesheet">
+<link href="css/price.css" rel="stylesheet">
+<link href="css/only-desktop.css" rel="stylesheet">
 
-    const $ = id => document.getElementById(id);
 
-    const shopGrid = $("shopGrid");
-    const shopSearch = $("shopSearch");
-    const searchSuggestions = $("searchSuggestions");
-    const shopSearchBtn = $("shopSearchBtn");
-    const shopFilters = document.querySelectorAll(".shop-filter");
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    const serviceModal = $("serviceModal");
-    const modalClose = $("modalClose");
-    const modalCategory = $("modalCategory");
-    const modalTitle = $("modalTitle");
-    const modalDescription = $("modalDescription");
-    const modalContactBtn = $("modalContactBtn");
-    const modalPrice = $("modalPrice");
-const modalFeatures = $("modalFeatures");
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
 
-    const reviewsDrawer = $("reviewsDrawer");
-    const reviewsList = $("reviewsList");
-    const reviewForm = $("reviewForm");
-    const reviewName = $("reviewName");
-    const reviewFeedback = $("reviewFeedback");
-    const starRating = $("starRating");
-    const reviewFormTitle = $("reviewFormTitle");
-    const reviewSubmit = $("reviewSubmit");
-    const reviewCancel = $("reviewCancel");
+<body>
 
-    if (
-        !shopGrid || !shopSearch || !shopSearchBtn ||
-        !serviceModal || !modalClose || !modalTitle ||
-        !reviewsDrawer || !reviewsList || !reviewForm ||
-        !reviewName || !reviewFeedback || !starRating ||
-        !reviewFormTitle || !reviewSubmit || !reviewCancel
-    ) {
-        console.error(
-            "DigitalMAFA: Required HTML element missing. Check your element IDs."
-        );
-        return;
-    }
+  <nav class="navbar">
+    <div class="logo"><b>Digital</b><b style="color: #2563eb;">MAFA</b></div>
 
-    // Firebase Compat objects from firebase-config.js
-    const auth = window.auth;
-    const db = window.db;
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="sign-in.html">Sign In</a></li>
+      <li><a href="download.html">Download</a></li>
+      <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+      
+    </ul>
 
-    if (!auth || !db) {
-        console.error(
-            "Firebase is not initialized. Check Firebase scripts and firebase-config.js."
-        );
-        return;
-    }
+    <button class="menu-btn"
+      aria-label="Open menu"
+      aria-controls="sidebar"
+      aria-expanded="false"
+      onclick="openMenu()">☰</button>
+  </nav>
 
-    let activeShopCategory = "All";
-    let currentReviewService = "";
-    let selectedRating = 0;
-    let editingReviewId = null;
-    let currentUser = null;
-    let serviceReviews = [];
-    let unsubscribeReviews = null;
-    let reviewRequestInProgress = false;
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
+   <aside class="sidebar" id="sidebar" aria-label="Mobile navigation">
+   
+    <button class="close-btn"
+      aria-label="Close menu"
+      onclick="closeMenu()">×</button>
+
+    <a href="index.html" onclick="closeMenu()"><i class="bi bi-house-door-fill"></i>  Home</a>
+    <hr>
+    <br>
+    <a href="about.html" onclick="closeMenu()"><i class="bi bi-info-circle"></i> About</a>
+    <a href="services.html" onclick="closeMenu()"><i class="bi bi-grid"></i> Services</a>
+    <a href="contact.html" onclick="closeMenu()"><i class="bi bi-telephone"></i> Contact</a>
+    <hr><br>
+    <a href="sign-in.html" onclick="closeMenu()"><i class="bi bi-person-circle"></i> Account</a>
+    <a href="download.html" onclick="closeMenu()"><i class="bi bi-download"></i> Download</a>
+    <hr><br>
+    <a href="faq.html" onclick="closeMenu()"><i class="bi bi-question-circle"></i> FAQ</a>
+    <a href="privacy.html" onclick="closeMenu()"><i class="bi bi-shield-lock"></i> Privacy & Policy</a>
+    <a href="terms.html" onclick="closeMenu()"><i class="bi bi-file-earmark-text"></i> Terms</a>
+</aside>
+
+
+  <!-- APP NOV -->
+<nav class="app-bottom-nav">
+    <a href="index.html" data-page="index.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="services.html" data-page="services.html">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Services</span>
+    </a>
+
+    <a href="search.html" class="search-btn">
+    <i class="fas fa-search"></i>
+    <span>Search</span>
+</a>
+
+    <a href="contact.html" data-page="contact.html">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Contact</span>
+    </a>
+
+    <a href="sign-in.html" data-page="sign-in.html">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>Account</span>
+    </a>
+</nav>
+
+
+<section class="service-shop">
+    <h2>Explore Our Services</h2>
+    <p>Find the perfect digital solution for your business.</p>
 
     
-    // =====================================
-    // LIVE SEARCH SUGGESTIONS
-    // =====================================
+<div class="search-box-wrapper">
+    <div class="shop-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+            type="search"
+            id="shopSearch"
+            placeholder="Search services..."
+            autocomplete="off"
+            aria-label="Search digital services"
+        >
+        <button type="button" id="shopSearchBtn">Search</button>
+    </div>
 
-    if (shopSearch && searchSuggestions) {
-        shopSearch.setAttribute("autocomplete", "off");
+    <div
+        id="searchSuggestions"
+        class="search-suggestions"
+        role="listbox"
+    ></div>
+</div>
 
-        shopSearch.addEventListener("input", function () {
+<div class="desktop-only">
+    <div class="shop-categories">
+        <button class="shop-filter active" data-category="All">All Services</button>
+        <button class="shop-filter" data-category="SEO">SEO</button>
+        <button class="shop-filter" data-category="Social Media">Social Media</button>
+        <button class="shop-filter" data-category="Web Development">Web Development</button>
+        <button class="shop-filter" data-category="Advertising">Advertising</button>
+        <button class="shop-filter" data-category="Premium">Premium</button>
+    </div>
+</div>
+
+
+
+
+
+    <div class="shop-grid" id="shopGrid"></div>
+</section>
+
+
+
+
+
+
+<!-- Service Details Popup -->
+<div class="service-modal" id="serviceModal">
+<div class="service-modal-content">
+<button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+ <span class="modal-category" id="modalCategory"></span>
+<h2 id="modalTitle"></h2>
+<p id="modalDescription"></p>
+
+<p id="modalPrice" class="shop-card-price"></p>
+<ul id="modalFeatures" class="shop-card-features"></ul>
+
+<a href="contact.html" id="modalContactBtn" class="contact-now-btn">
+    Contact Now
+</a>
+
+  <button type="button" class="reviews-open-btn"
+            onclick="toggleReviews()">
+        ⭐ Reviews
+    </button>
+    </div>
+
+ 
+
+  
+
+    
+
+</div>
+
+<!-- Reviews Panel -->
+<div class="reviews-drawer" id="reviewsDrawer">
+
+    <div class="reviews-header">
+        <div>
+            <h2>⭐ Customer Reviews</h2>
+            <p>Share your experience with DigitalMAFA</p>
+        </div>
+
+        <button type="button" class="reviews-close"
+                onclick="toggleReviews()">✕</button>
+    </div>
+
+    <div class="reviews-content">
+
+        <!-- Reviews List -->
+        <div class="reviews-list" id="reviewsList"></div>
+
+        <!-- Review Form -->
+        <form id="reviewForm" class="review-form">
+
+            <h3 id="reviewFormTitle">Write a Review</h3>
+
+            <p>Please right your feedback here</p>
+            <div id="reviewName"></div>
             
-const query = shopSearch.value.trim().toLowerCase();
-searchSuggestions.replaceChildren();
+            <label>Your Rating</label>
 
-if (!query) {
-    searchSuggestions.style.display = "none";
-    return;
-}
+            <div class="star-rating" id="starRating">
+                <button type="button" data-rating="1" aria-label="1 star">★</button>
+                <button type="button" data-rating="2" aria-label="2 stars">★</button>
+                <button type="button" data-rating="3" aria-label="3 stars">★</button>
+                <button type="button" data-rating="4" aria-label="4 stars">★</button>
+                <button type="button" data-rating="5" aria-label="5 stars">★</button>
+            </div>
 
-const matches = shopServices.filter(service => {
-    const searchableText = [
-        service.name,
-        service.category,
-        service.description,
-        ...(service.keywords || []),
-        ...(service.features || [])
-    ].join(" ").toLowerCase();
+            <label for="reviewFeedback">Your Feedback</label>
+            <textarea id="reviewFeedback" rows="3"
+                      placeholder="Write your review..."
+                      required></textarea>
 
-    return searchableText.includes(query);
-}).slice(0, 6);
+            <div class="review-form-actions">
+                <button type="submit" class="review-submit"
+                        id="reviewSubmit">
+                    Submit Review
+                </button>
 
-if (matches.length === 0) {
-    searchSuggestions.style.display = "none";
-    return;
-}
+                <button type="button" class="review-cancel"
+                        id="reviewCancel" hidden>
+                    Cancel Edit
+                </button>
+            </div>
 
+            <p class="review-notice">
+                Reviews are saved in this browser only.
+            </p>
+        </form>
 
-matches.forEach(service => {
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = "search-suggestion-item";
-
-    const matchedKeyword = (service.keywords || []).find(keyword =>
-        keyword.toLowerCase().includes(query)
-    );
-
-    const title = document.createElement("span");
-    title.className = "suggestion-service-name";
-    title.textContent = service.name;
-
-    item.appendChild(title);
-
-    if (matchedKeyword) {
-        const keywordText = document.createElement("small");
-        keywordText.className = "suggestion-keyword";
-        keywordText.textContent = "Keyword: " + matchedKeyword;
-        item.appendChild(keywordText);
-    }
-
-    item.addEventListener("click", function () {
-        shopSearch.value = service.name;
-        searchSuggestions.style.display = "none";
-        renderShop();
-    });
-
-    searchSuggestions.appendChild(item);
-});
+    </div>
+</div>
 
 
-searchSuggestions.style.display = "block";
 
 
-            searchSuggestions.style.display = "block";
-        });
 
-        document.addEventListener("click", function (event) {
-            if (!event.target.closest(".search-box-wrapper")) {
-                searchSuggestions.style.display = "none";
-            }
-        });
 
-        shopSearch.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                searchSuggestions.style.display = "none";
-            }
-        });
-    }
 
-    // =====================================
-    // 3. SERVICE SEARCH AND CARDS
-    // =====================================
 
-    function renderShop() {
-        const query = shopSearch.value.trim().toLowerCase();
 
-        const filtered = shopServices.filter(service => {
-            const categoryMatch =
-                activeShopCategory === "All" ||
-                service.category === activeShopCategory;
+<hr>
 
-            const searchableText = (
-                service.name + " " +
-                service.category + " " +
-                service.description + " " +
-                service.keywords
-            ).toLowerCase();
+<footer class="digitalmafa-footer">
+    <div class="footer-container">
 
-            return categoryMatch && searchableText.includes(query);
-        });
+        <div class="footer-grid">
 
-        shopGrid.replaceChildren();
+            <!-- Company Info -->
+            <div class="footer-about">
+                <div class="footer-logo">
+                    Digital<span>MAFA</span>
+                </div>
 
-        if (filtered.length === 0) {
-            const empty = document.createElement("p");
-            empty.className = "shop-empty";
-            empty.textContent =
-                "No matching services found. Try another search.";
-            shopGrid.appendChild(empty);
-            return;
-        }
+                <p>
+                    We help businesses grow with creative digital
+                    marketing strategies, powerful branding and
+                    result-focused online solutions.
+                </p>
 
-        filtered.forEach(service => {
-            const card = document.createElement("article");
-            card.className = "shop-card";
+              <div class="footer-socials">
+                    <a href="https://www.youtube.com/@DigitalMAFA" aria-label="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
 
-            const top = document.createElement("div");
-            top.className = "shop-card-top";
+                     <a href="https://www.instagram.com/digitalmafa" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
 
+                    <a href="https://www.linkedin.com/in/digitalmafa" aria-label="Linkedin">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    
+                     <a href="https://www.facebook.com/digitalmafa" aria-label="Linkedin">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+              
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                     <li><a href="sign-in.html">Sign in</a></li>
+                     <li><a href="download.html">Download</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-column">
+                <h3>Our Services</h3>
+                <ul>
+                    <li>SEO Optimization</a></li>
+                    <li>Social Media Marketing</a></li>
+                    <li>Google Ads & PPC</a></li>
+                    <li>Website Design</a></li>
+                    <li>Branding & Strategy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-column footer-contact">
+                <h3>Get In Touch</h3>
+
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    digitalmafa.contact@gmail.com
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+                    +91 98735 46839 ( Whatsapp only)
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Delhi, India
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>
+                &copy; <span id="footer-year"></span>
+                DigitalMAFA. All rights reserved.
+            </p>
+
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                &nbsp; | &nbsp;
+                <a href="terms.html">Terms & Conditions</a>
+                 &nbsp; | &nbsp;
+                <a href="faq.html">FAQ</a>
+            </div>
             
-if (service.image) {
-    const image = document.createElement("img");
-    image.src = service.image;
-    image.alt = service.name;
-    image.className = "shop-card-image";
-    image.loading = "lazy";
-    top.appendChild(image);
-} else {
-    const icon = document.createElement("i");
-    icon.className = "fa-solid " + service.icon;
-    icon.setAttribute("aria-hidden", "true");
-    top.appendChild(icon);
-}
+        </div>
 
+    </div>
+</footer>
 
-            const body = document.createElement("div");
-            body.className = "shop-card-body";
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
 
-            const category = document.createElement("span");
-            category.className = "shop-card-category";
-            category.textContent = service.category;
 
-            const title = document.createElement("h3");
-            title.textContent = service.name;
+<script src="js/firebase-config.js"></script>
 
-            
-const description = document.createElement("p");
-description.textContent = service.description;
-
-// Show service price
-const price = document.createElement("p");
-price.className = "shop-card-price";
-price.textContent = service.price
-    ? "Price: " + service.price
-    : "Price: Contact for pricing";
-
-// Show service features
-const featuresList = document.createElement("ul");
-featuresList.className = "shop-card-features";
-
-(service.features || []).forEach(feature => {
-    const item = document.createElement("li");
-    item.textContent = feature;
-    featuresList.appendChild(item);
-});
-
-const detailsBtn = document.createElement("button");
-
-            detailsBtn.type = "button";
-            detailsBtn.className = "view-details-btn";
-            detailsBtn.textContent = "View Details →";
-
-            detailsBtn.addEventListener("click", () => {
-                modalCategory.textContent = service.category;
-                modalTitle.textContent = service.name;
-                modalDescription.textContent = service.description;
-                // Show service price in popup
-modalPrice.textContent = service.price
-    ? "Price: " + service.price
-    : "Price: Contact for pricing";
-
-// Show service features in popup
-modalFeatures.replaceChildren();
-
-(service.features || []).forEach(feature => {
-    const item = document.createElement("li");
-    item.textContent = feature;
-    modalFeatures.appendChild(item);
-});
-
-                const params = new URLSearchParams({
-    service: service.name,
-    category: service.category,
-    description: service.description,
-    price: service.price || "",
-    features: (service.features || []).join("|")
-});
-
-modalContactBtn.href = "contact.html?" + params.toString();
-
-                modalContactBtn.href =
-                    "contact.html?" + params.toString();
-
-                setCurrentReviewService(service.name);
-                serviceModal.classList.add("show");
-            });
-
-            
-const shareBtn = document.createElement("button");
-shareBtn.type = "button";
-
-shareBtn.className = "share-service-btn";
-shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes" aria-hidden="true"></i>';
-
-shareBtn.setAttribute("aria-label", "Share " + service.name);
-
-shareBtn.addEventListener("click", async () => {
-    const params = new URLSearchParams({
-        service: service.name,
-        category: service.category,
-        description: service.description
-    });
-
-    const shareURL =
-    new URL("search.html", window.location.href).href +
-    "?" + params.toString();
-
-    const shareText =
-        service.name + "\n\n" +
-        service.description + "\n\n" +
-        "Explore this service at DigitalMAFA:\n" +
-        shareURL;
-
-        // Use Android's native share menu inside the Android app.
-if (
-    window.AndroidShare &&
-    typeof window.AndroidShare.share === "function"
-) {
-    window.AndroidShare.share(
-        service.name + " | DigitalMAFA",
-        service.description,
-        shareURL
-    );
-    return;
-}
-    try {
-        
-if (
-  window.DesktopShare &&
-  typeof window.DesktopShare.share === "function"
-) {
-  window.DesktopShare.share(
-    service.name + " | DigitalMAFA",
-    service.description,
-    shareURL
-  );
-  return;
-}
-
-        if (navigator.share) {
-            await navigator.share({
-                title: service.name + " | DigitalMAFA",
-                text: service.description,
-                url: shareURL
-            });
-        } else if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(shareText);
-            alert("Service details and link copied successfully!");
-        } else {
-            window.prompt("Copy this service link and share it:", shareText);
-        }
-    } catch (error) {
-        if (error.name !== "AbortError") {
-            console.error("Unable to share service:", error);
-            alert("Unable to share right now. Please try again.");
-        }
-    }
-});
-
-body.append(
-    category,
-    title,
-    description,
-    price,
-    featuresList,
-    detailsBtn,
-    shareBtn
-);
-
-            card.append(top, body);
-            shopGrid.appendChild(card);
-            
-        });
-    }
-
-    shopSearch.addEventListener("input", renderShop);
-    shopSearchBtn.addEventListener("click", renderShop);
-
-    shopSearch.addEventListener("keydown", event => {
-        if (event.key === "Enter") renderShop();
-    });
-
-    shopFilters.forEach(button => {
-        button.addEventListener("click", () => {
-            activeShopCategory = button.dataset.category;
-
-            shopFilters.forEach(filter => {
-                filter.classList.toggle("active", filter === button);
-            });
-
-            renderShop();
-        });
-    });
-
-    // =====================================
-    // 4. SERVICE MODAL
-    // =====================================
-
-    function closeServiceModal() {
-        serviceModal.classList.remove("show");
-    }
-
-    modalClose.addEventListener("click", closeServiceModal);
-
-    serviceModal.addEventListener("click", event => {
-        if (event.target === serviceModal) {
-            closeServiceModal();
-        }
-    });
-
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape") {
-            closeServiceModal();
-            reviewsDrawer.classList.remove("active");
-        }
-    });
-
-    // =====================================
-    // 5. FIRESTORE REVIEW STORAGE
-    // =====================================
-
-    function setCurrentReviewService(serviceName) {
-        currentReviewService = serviceName;
-        resetReviewForm();
-        listenForReviews();
-    }
-
-    function listenForReviews() {
-        if (unsubscribeReviews) {
-            unsubscribeReviews();
-            unsubscribeReviews = null;
-        }
-
-        serviceReviews = [];
-        renderReviews();
-
-        if (!currentReviewService) return;
-
-        unsubscribeReviews = db.collection("reviews")
-            .where("serviceName", "==", currentReviewService)
-            .onSnapshot(snapshot => {
-                serviceReviews = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-
-                serviceReviews.sort((a, b) => {
-                    const timeA = a.createdAt &&
-                        typeof a.createdAt.toMillis === "function"
-                        ? a.createdAt.toMillis() : 0;
-
-                    const timeB = b.createdAt &&
-                        typeof b.createdAt.toMillis === "function"
-                        ? b.createdAt.toMillis() : 0;
-
-                    return timeB - timeA;
-                });
-
-                renderReviews();
-            }, error => {
-                console.error("Unable to load reviews:", error);
-                reviewsList.textContent =
-                    "Reviews load nahi ho paaye. Please try again.";
-            });
-    }
-
-    window.toggleReviews = function () {
-        if (!currentReviewService) {
-            alert("Please select a service first.");
-            return;
-        }
-
-        reviewsDrawer.classList.toggle("active");
-        renderReviews();
-    };
-
-    // =====================================
-    // 6. STAR RATING
-    // =====================================
-
-    const starButtons =
-        starRating.querySelectorAll("button[data-rating]");
-
-    function setRating(rating) {
-        selectedRating = rating;
-
-        starButtons.forEach(star => {
-            const value = Number(star.dataset.rating);
-            const selected = value <= rating;
-
-            star.classList.toggle("selected", selected);
-            star.classList.toggle("active", selected);
-            star.setAttribute(
-                "aria-pressed",
-                value === rating ? "true" : "false"
-            );
-        });
-    }
-
-    starButtons.forEach(star => {
-        star.addEventListener("click", () => {
-            if (!currentUser) {
-                if (confirm("You must sign in to write a review. Go to the sign-in page?")) {
-    window.location.href = "sign-in.html";
-}
-                return;
-            }
-
-            setRating(Number(star.dataset.rating));
-        });
-    });
-
-    // =====================================
-    // 7. RESET REVIEW FORM
-    // =====================================
-
-    function resetReviewForm() {
-        reviewForm.reset();
-        editingReviewId = null;
-        setRating(0);
-
-        reviewFormTitle.textContent = "Write a Review";
-        reviewSubmit.textContent = "Submit Review";
-        reviewCancel.hidden = true;
-        reviewName.readOnly = false;
-        reviewSubmit.disabled = false;
-    }
-
-    reviewCancel.addEventListener("click", resetReviewForm);
-
-    // =====================================
-    // 8. DISPLAY REVIEWS
-    // =====================================
-
-    function renderReviews() {
-        reviewsList.replaceChildren();
-
-        if (!currentReviewService) {
-            const message = document.createElement("p");
-            message.textContent =
-                "Select a service to view its reviews.";
-            reviewsList.appendChild(message);
-            return;
-        }
-
-        const loginMessage = document.createElement("p");
-        loginMessage.className = "review-login-message";
-        loginMessage.textContent = currentUser
-            ? "Signed in as " +
-                (currentUser.displayName || currentUser.email || "User")
-            :"";
-
-        reviewsList.appendChild(loginMessage);
-
-        if (serviceReviews.length === 0) {
-            const empty = document.createElement("p");
-            empty.className = "no-reviews";
-            empty.textContent =
-                "No reviews yet for " + currentReviewService +
-                ". Be the first to write one!";
-            reviewsList.appendChild(empty);
-            return;
-        }
-
-        serviceReviews.forEach(review => {
-            const card = document.createElement("article");
-            card.className = "review-card";
-
-            const name = document.createElement("h4");
-            name.textContent = review.name || "User";
-
-            const stars = document.createElement("div");
-            stars.className = "review-stars";
-
-            const rating = Math.max(
-                0,
-                Math.min(5, Number(review.rating) || 0)
-            );
-
-            stars.textContent =
-                "★".repeat(rating) + "☆".repeat(5 - rating);
-
-            const feedback = document.createElement("p");
-            feedback.textContent = review.feedback || "";
-
-            const date = document.createElement("small");
-            date.textContent = review.date || "";
-
-            card.append(name, stars, feedback, date);
-
-            // Only the owner sees the Edit/Delete buttons.
-            if (currentUser && currentUser.uid === review.uid) {
-                const actions = document.createElement("div");
-                actions.className = "review-actions";
-
-                const editButton = document.createElement("button");
-                editButton.type = "button";
-                editButton.className = "review-edit-btn";
-                editButton.textContent = "✏️ Edit";
-
-                editButton.addEventListener("click", () => {
-                    if (
-                        !currentUser ||
-                        currentUser.uid !== review.uid
-                    ) {
-                        alert("Sirf apna review edit kar sakte hain.");
-                        return;
-                    }
-
-                    reviewName.value = review.name || "";
-                    reviewFeedback.value = review.feedback || "";
-                    editingReviewId = review.id;
-
-                    setRating(Number(review.rating) || 0);
-
-                    reviewFormTitle.textContent = "Edit Your Review";
-                    reviewSubmit.textContent = "Update Review";
-                    reviewCancel.hidden = false;
-
-                    // Name is tied to the signed-in account.
-                    reviewName.readOnly = true;
-
-                    reviewForm.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-                });
-
-               
-const deleteButton = document.createElement("button");
-deleteButton.type = "button";
-deleteButton.className = "review-delete-btn";
-deleteButton.textContent = "🗑️ Delete";
-
-deleteButton.addEventListener("click", async () => {
-    if (!currentUser) {
-        alert("Please sign in to delete your review.");
-        return;
-    }
-
-    if (currentUser.uid !== review.uid) {
-        alert("Aap sirf apna review delete kar sakte hain.");
-        return;
-    }
-
-    const confirmed = confirm(
-        "Kya aap apna review delete karna chahte hain?"
-    );
-
-    if (!confirmed) return;
-
-    deleteButton.disabled = true;
-    deleteButton.textContent = "Deleting...";
-
-    try {
-        const reviewRef = db.collection("reviews").doc(review.id);
-
-        // Verify the review still exists and belongs to this user.
-        const reviewDoc = await reviewRef.get();
-
-        if (!reviewDoc.exists) {
-            alert("Ye review pehle hi delete ho chuka hai.");
-            return;
-        }
-
-        if (reviewDoc.data().uid !== currentUser.uid) {
-            alert("Aap sirf apna review delete kar sakte hain.");
-            return;
-        }
-
-        await reviewRef.delete();
-
-        if (editingReviewId === review.id) {
-            resetReviewForm();
-        }
-
-        alert("Review successfully deleted!");
-    } catch (error) {
-        console.error("Review delete failed:", error);
-
-        if (error.code === "permission-denied") {
-            alert(
-                "Delete permission nahi hai. Firebase Firestore Rules check karein."
-            );
-        } else {
-            alert(
-                "Review delete nahi hua. Internet connection aur Firebase login check karein."
-            );
-        }
-    } finally {
-        deleteButton.disabled = false;
-        deleteButton.textContent = "🗑️ Delete";
-    }
-});
-
-
-                actions.append(editButton, deleteButton);
-                card.appendChild(actions);
-            }
-
-            reviewsList.appendChild(card);
-        });
-    }
-
-    // =====================================
-    // 9. SUBMIT AND EDIT REVIEW
-    // =====================================
-
-    reviewForm.addEventListener("submit", async event => {
-        event.preventDefault();
-
-        if (reviewRequestInProgress) return;
-
-        if (!currentUser) {
-            if (confirm("You must sign in to submit a review. Go to the sign-in page?")) {
-    window.location.href = "sign-in.html";
-}
-return;
-        }
-
-        if (!currentReviewService) {
-            alert("Please select a service first.");
-            return;
-        }
-
-        if (!reviewForm.reportValidity()) return;
-
-        const feedback = reviewFeedback.value.trim();
-
-        if (!feedback) {
-            alert("Please enter your feedback.");
-            return;
-        }
-
-        if (selectedRating < 1 || selectedRating > 5) {
-            alert("Please select a star rating.");
-            return;
-        }
-
-        reviewRequestInProgress = true;
-        reviewSubmit.disabled = true;
-
-        try {
-            if (editingReviewId !== null) {
-                const reviewRef = db.collection("reviews")
-                    .doc(editingReviewId);
-
-                const reviewDoc = await reviewRef.get();
-
-                if (!reviewDoc.exists) {
-                    alert("Review nahi mila. Please dobara try karein.");
-                    resetReviewForm();
-                    return;
-                }
-
-                const existingReview = reviewDoc.data();
-
-                if (existingReview.uid !== currentUser.uid) {
-                    alert("Aap sirf apna review edit kar sakte hain.");
-                    resetReviewForm();
-                    return;
-                }
-
-                await reviewRef.update({
-                    rating: selectedRating,
-                    feedback: feedback,
-                    date: new Date().toLocaleDateString()
-                });
-            } else {
-                await db.collection("reviews").add({
-                    serviceName: currentReviewService,
-                    uid: currentUser.uid,
-                    name: currentUser.displayName ||
-                        currentUser.email ||
-                        "User",
-                    rating: selectedRating,
-                    feedback: feedback,
-                    date: new Date().toLocaleDateString(),
-                    createdAt:
-                        firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }
-
-            resetReviewForm();
-            alert("Review successfully saved!");
-        } catch (error) {
-            console.error("Review save failed:", error);
-            alert(
-                "Review save nahi hua. Firestore Rules aur connection check karein."
-            );
-        } finally {
-            reviewRequestInProgress = false;
-            reviewSubmit.disabled = false;
-        }
-    });
-
-    // =====================================
-    // 10. AUTH STATE + INITIALIZE
-    // =====================================
-
-    auth.onAuthStateChanged(user => {
-        currentUser = user;
-
-        // If the current form is editing a review, reset it on
-        // account changes to prevent stale edit state.
-        if (!user && editingReviewId !== null) {
-            resetReviewForm();
-        }
-
-        renderReviews();
-    });
-
-
-loadAdminServicesFromSupabase();
-renderReviews();
-
-// Open the service popup when someone visits a shared link.
-const sharedParams = new URLSearchParams(window.location.search);
-const sharedServiceName = sharedParams.get("service");
-
-if (sharedServiceName) {
-    const matchedService = shopServices.find(
-        service => service.name.toLowerCase() === sharedServiceName.toLowerCase()
-    );
-
-    if (matchedService) {
-        // Clear search and show all service cards.
-        shopSearch.value = "";
-        activeShopCategory = "All";
-
-        shopFilters.forEach(filter => {
-            filter.classList.toggle(
-                "active",
-                filter.dataset.category === "All"
-            );
-        });
-
-        renderShop();
-
-        // Fill and open the matching service popup.
-        modalCategory.textContent = matchedService.category;
-        modalTitle.textContent = matchedService.name;
-        modalDescription.textContent = matchedService.description;
-
-        // Show service price in shared-link popup
-modalPrice.textContent = matchedService.price
-    ? "Price: " + matchedService.price
-    : "Price: Contact for pricing";
-
-// Show service features in shared-link popup
-modalFeatures.replaceChildren();
-
-(matchedService.features || []).forEach(feature => {
-    const item = document.createElement("li");
-    item.textContent = feature;
-    modalFeatures.appendChild(item);
-});
-
-        const params = new URLSearchParams({
-            service: matchedService.name,
-            category: matchedService.category,
-            description: matchedService.description
-        });
-
-        modalContactBtn.href = "contact.html?" + params.toString();
-
-        setCurrentReviewService(matchedService.name);
-        serviceModal.classList.add("show");
-    }
-}
-
-})();
-
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/search.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/menu-bar.js"></script>
+</body></html>
