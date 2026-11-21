@@ -27,7 +27,10 @@ async function loadAdminServicesFromSupabase() {
     } catch (error) {
         console.error("Could not load admin services from Supabase:", error);
     }
-    renderShop();
+     renderShop();
+
+    // Open shared service only after Supabase services are loaded
+    openSharedServicePopup();
 }
 
     // =====================================
@@ -899,82 +902,89 @@ renderReviews();
 const sharedParams = new URLSearchParams(window.location.search);
 const sharedServiceName = sharedParams.get("service");
 
-if (sharedServiceName) {
+
+function openSharedServicePopup() {
+    const sharedParams = new URLSearchParams(window.location.search);
+    const sharedServiceName = sharedParams.get("service");
+
+    if (!sharedServiceName) return;
+
     const matchedService = shopServices.find(
-        service => service.name.toLowerCase() === sharedServiceName.toLowerCase()
+        service =>
+            service.name.trim().toLowerCase() ===
+            sharedServiceName.trim().toLowerCase()
     );
 
-    if (matchedService) {
-        // Clear search and show all service cards.
-        shopSearch.value = "";
-        activeShopCategory = "All";
-
-        shopFilters.forEach(filter => {
-            filter.classList.toggle(
-                "active",
-                filter.dataset.category === "All"
-            );
-        });
-
-        renderShop();
-
-        // Fill and open the matching service popup.
-        modalCategory.textContent = matchedService.category;
-        modalTitle.textContent = matchedService.name;
-        modalDescription.textContent = matchedService.description;
-        // Show Delivery Days in shared-link popup
-const oldDelivery = document.getElementById("modalDelivery");
-if (oldDelivery) oldDelivery.remove();
-
-if (matchedService.delivery_days != null) {
-    const delivery = document.createElement("p");
-    delivery.id = "modalDelivery";
-    delivery.className = "shop-card-delivery";
-    delivery.textContent =
-        "Delivery: " + matchedService.delivery_days + " Days";
-
-    modalDescription.insertAdjacentElement("afterend", delivery);
-}
-
-// Show Note in shared-link popup
-const oldNote = document.getElementById("modalNote");
-if (oldNote) oldNote.remove();
-
-if (matchedService.note) {
-    const note = document.createElement("p");
-    note.id = "modalNote";
-    note.className = "shop-card-note";
-    note.textContent = "Note: " + matchedService.note;
-
-    modalDescription.insertAdjacentElement("afterend", note);
-}
-
-        // Show service price in shared-link popup
-modalPrice.textContent = matchedService.price
-    ? "Price: " + matchedService.price
-    : "Price: Contact for pricing";
-
-// Show service features in shared-link popup
-modalFeatures.replaceChildren();
-
-(matchedService.features || []).forEach(feature => {
-    const item = document.createElement("li");
-    item.textContent = feature;
-    modalFeatures.appendChild(item);
-});
-
-        const params = new URLSearchParams({
-            service: matchedService.name,
-            category: matchedService.category,
-            description: matchedService.description
-        });
-
-        modalContactBtn.href = "contact.html?" + params.toString();
-
-        setCurrentReviewService(matchedService.name);
-        serviceModal.classList.add("show");
+    if (!matchedService) {
+        console.warn("Shared service not found:", sharedServiceName);
+        return;
     }
+
+    shopSearch.value = "";
+    activeShopCategory = "All";
+
+    shopFilters.forEach(filter => {
+        filter.classList.toggle(
+            "active",
+            filter.dataset.category === "All"
+        );
+    });
+
+    renderShop();
+
+    modalCategory.textContent = matchedService.category;
+    modalTitle.textContent = matchedService.name;
+    modalDescription.textContent = matchedService.description;
+
+    const oldNote = document.getElementById("modalNote");
+    if (oldNote) oldNote.remove();
+
+    if (matchedService.note) {
+        const note = document.createElement("p");
+        note.id = "modalNote";
+        note.className = "shop-card-note";
+        note.textContent = "Note: " + matchedService.note;
+        modalDescription.insertAdjacentElement("afterend", note);
+    }
+
+    const oldDelivery = document.getElementById("modalDelivery");
+    if (oldDelivery) oldDelivery.remove();
+
+    if (matchedService.delivery_days != null &&
+        matchedService.delivery_days !== "") {
+        const delivery = document.createElement("p");
+        delivery.id = "modalDelivery";
+        delivery.className = "shop-card-delivery";
+        delivery.textContent =
+            "Delivery: " + matchedService.delivery_days + " Days";
+
+        modalDescription.insertAdjacentElement("afterend", delivery);
+    }
+
+    modalPrice.textContent = matchedService.price
+        ? "Price: " + matchedService.price
+        : "Price: Contact for pricing";
+
+    modalFeatures.replaceChildren();
+
+    (matchedService.features || []).forEach(feature => {
+        const item = document.createElement("li");
+        item.textContent = feature;
+        modalFeatures.appendChild(item);
+    });
+
+    const params = new URLSearchParams({
+        service: matchedService.name,
+        category: matchedService.category,
+        description: matchedService.description
+    });
+
+    modalContactBtn.href = "contact.html?" + params.toString();
+
+    setCurrentReviewService(matchedService.name);
+    serviceModal.classList.add("show");
 }
+
 
 })();
 
