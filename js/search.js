@@ -14,7 +14,7 @@ async function loadAdminServicesFromSupabase() {
         }
         const { data, error } = await window.supabaseClient
             .from("services")
-            .select("id, name, category, description, note, price, features, keywords, image, published, created_at")
+            .select("id, name, category, description, note, price, delivery_days, features, keywords, image, published, created_at")
             .eq("published", true)
             .order("created_at", { ascending: false });
         if (error) throw error;
@@ -252,6 +252,15 @@ if (service.image) {
 const description = document.createElement("p");
 description.textContent = service.description;
 
+// Show Delivery Days
+const deliveryDays = document.createElement("p");
+deliveryDays.className = "shop-card-delivery";
+deliveryDays.textContent =
+    service.delivery_days != null && service.delivery_days !== ""
+        ? "Delivery: " + service.delivery_days + " Days"
+        : "Delivery time not specified";
+
+// Show Note
 const note = document.createElement("p");
 note.className = "shop-card-note";
 note.textContent = service.note ? "Note: " + service.note : "";
@@ -283,6 +292,21 @@ const detailsBtn = document.createElement("button");
             detailsBtn.addEventListener("click", () => {
                 modalCategory.textContent = service.category;
                 modalTitle.textContent = service.name;
+                const existingDelivery = document.getElementById("modalDelivery");
+if (existingDelivery) existingDelivery.remove();
+
+if (service.delivery_days != null && service.delivery_days !== "") {
+    const modalDelivery = document.createElement("p");
+    modalDelivery.id = "modalDelivery";
+    modalDelivery.className = "shop-card-delivery";
+    modalDelivery.textContent =
+        "Delivery: " + service.delivery_days + " Days";
+
+    modalDescription.insertAdjacentElement(
+        "afterend",
+        modalDelivery
+    );
+}
                 modalDescription.textContent = service.description;
                 const existingModalNote = document.getElementById("modalNote");
                 if (existingModalNote) existingModalNote.remove();
@@ -334,61 +358,74 @@ shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
 
 shareBtn.setAttribute("aria-label", "Share " + service.name);
 
+
+
 shareBtn.addEventListener("click", async () => {
+
+    // Short URL: only service name
     const params = new URLSearchParams({
-        service: service.name,
-        category: service.category,
-        description: service.description
+        service: service.name
     });
 
     const shareURL =
-    new URL("search.html", window.location.href).href +
-    "?" + params.toString();
+        new URL("search.html", window.location.href).href +
+        "?" + params.toString();
 
+    // Share title instead of description
     const shareText =
         service.name + "\n\n" +
-        service.description + "\n\n" +
-        "Explore this service at DigitalMAFA:\n" +
         shareURL;
 
-        // Use Android's native share menu inside the Android app.
-if (
-    window.AndroidShare &&
-    typeof window.AndroidShare.share === "function"
-) {
-    window.AndroidShare.share(
-        service.name + " | DigitalMAFA",
-        service.description,
-        shareURL
-    );
-    return;
-}
     try {
-        
-if (
-  window.DesktopShare &&
-  typeof window.DesktopShare.share === "function"
-) {
-  window.DesktopShare.share(
-    service.name + " | DigitalMAFA",
-    service.description,
-    shareURL
-  );
-  return;
-}
 
+        // Android app sharing
+        if (
+            window.AndroidShare &&
+            typeof window.AndroidShare.share === "function"
+        ) {
+            window.AndroidShare.share(
+                service.name + " | DigitalMAFA",
+                service.name,
+                shareURL
+            );
+            return;
+        }
+
+        // Desktop app sharing
+        if (
+            window.DesktopShare &&
+            typeof window.DesktopShare.share === "function"
+        ) {
+            window.DesktopShare.share(
+                service.name + " | DigitalMAFA",
+                service.name,
+                shareURL
+            );
+            return;
+        }
+
+        // Mobile browser sharing
         if (navigator.share) {
             await navigator.share({
                 title: service.name + " | DigitalMAFA",
-                text: service.description,
+                text: service.name,
                 url: shareURL
             });
-        } else if (navigator.clipboard && window.isSecureContext) {
+
+        } else if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
             await navigator.clipboard.writeText(shareText);
-            alert("Service details and link copied successfully!");
+            alert("Service title and link copied successfully!");
+
         } else {
-            window.prompt("Copy this service link and share it:", shareText);
+            window.prompt(
+                "Copy this service link:",
+                shareText
+            );
         }
+
     } catch (error) {
         if (error.name !== "AbortError") {
             console.error("Unable to share service:", error);
@@ -397,10 +434,13 @@ if (
     }
 });
 
+
+
 body.append(
     category,
     title,
     description,
+    deliveryDays,
     ...(service.note ? [note] : []),
     price,
     featuresList,
@@ -882,6 +922,32 @@ if (sharedServiceName) {
         modalCategory.textContent = matchedService.category;
         modalTitle.textContent = matchedService.name;
         modalDescription.textContent = matchedService.description;
+        // Show Delivery Days in shared-link popup
+const oldDelivery = document.getElementById("modalDelivery");
+if (oldDelivery) oldDelivery.remove();
+
+if (matchedService.delivery_days != null) {
+    const delivery = document.createElement("p");
+    delivery.id = "modalDelivery";
+    delivery.className = "shop-card-delivery";
+    delivery.textContent =
+        "Delivery: " + matchedService.delivery_days + " Days";
+
+    modalDescription.insertAdjacentElement("afterend", delivery);
+}
+
+// Show Note in shared-link popup
+const oldNote = document.getElementById("modalNote");
+if (oldNote) oldNote.remove();
+
+if (matchedService.note) {
+    const note = document.createElement("p");
+    note.id = "modalNote";
+    note.className = "shop-card-note";
+    note.textContent = "Note: " + matchedService.note;
+
+    modalDescription.insertAdjacentElement("afterend", note);
+}
 
         // Show service price in shared-link popup
 modalPrice.textContent = matchedService.price
