@@ -714,6 +714,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const service = params.get("service");
     const category = params.get("category");
     const description = params.get("description");
+    const note = params.get("note");
 
     if (plan) {
         messageBox.value =
@@ -727,6 +728,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "Service: " + service +
         "\nCategory: " + (category || "") +
         "\nPrice: " + (price || "Contact for pricing") +
+        (note ? "\nNote: " + note : "") +
         "\n\nProject Details:\n" + (description || "") +
         "\n\nFeatures:\n" +
         (features
