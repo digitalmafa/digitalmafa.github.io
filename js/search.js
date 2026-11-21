@@ -14,7 +14,7 @@ async function loadAdminServicesFromSupabase() {
         }
         const { data, error } = await window.supabaseClient
             .from("services")
-            .select("id, name, category, description, price, features, keywords, image, published, created_at")
+            .select("id, name, category, description, price, note, delivery_days, features, keywords, image, published, created_at")
             .eq("published", true)
             .order("created_at", { ascending: false });
         if (error) throw error;
@@ -50,6 +50,8 @@ async function loadAdminServicesFromSupabase() {
     const modalContactBtn = $("modalContactBtn");
     const modalPrice = $("modalPrice");
 const modalFeatures = $("modalFeatures");
+const modalNote = $("modalNote");
+const modalDeliveryDays = $("modalDeliveryDays");
 
     const reviewsDrawer = $("reviewsDrawer");
     const reviewsList = $("reviewsList");
