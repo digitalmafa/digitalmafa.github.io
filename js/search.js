@@ -871,61 +871,96 @@ return;
 loadAdminServicesFromSupabase();
 renderReviews();
 
-// Open the service popup when someone visits a shared link.
-const sharedParams = new URLSearchParams(window.location.search);
-const sharedServiceName = sharedParams.get("service");
 
-if (sharedServiceName) {
-    const matchedService = shopServices.find(
-        service => service.name.toLowerCase() === sharedServiceName.toLowerCase()
-    );
+renderReviews();
 
-    if (matchedService) {
-        // Clear search and show all service cards.
-        shopSearch.value = "";
-        activeShopCategory = "All";
+// =====================================
+// OPEN SHARED SERVICE BY SUPABASE ID
+// =====================================
 
-        shopFilters.forEach(filter => {
-            filter.classList.toggle(
-                "active",
-                filter.dataset.category === "All"
-            );
-        });
+async function openSharedServiceFromUrl() {
+    const params = new URLSearchParams(window.location.search);
 
-        renderShop();
+    const serviceId = params.get("s");
+    const legacyName = params.get("service");
 
-        // Fill and open the matching service popup.
-        modalCategory.textContent = matchedService.category;
-        modalTitle.textContent = matchedService.name;
-        modalDescription.textContent = matchedService.description;
-
-        // Show service price in shared-link popup
-modalPrice.textContent = matchedService.price
-    ? "Price: " + matchedService.price
-    : "Price: Contact for pricing";
-
-// Show service features in shared-link popup
-modalFeatures.replaceChildren();
-
-(matchedService.features || []).forEach(feature => {
-    const item = document.createElement("li");
-    item.textContent = feature;
-    modalFeatures.appendChild(item);
-});
-
-        const params = new URLSearchParams({
-            service: matchedService.name,
-            category: matchedService.category,
-            description: matchedService.description
-        });
-
-        modalContactBtn.href = "contact.html?" + params.toString();
-
-        setCurrentReviewService(matchedService.name);
-        serviceModal.classList.add("show");
+    if (!serviceId && !legacyName) {
+        await loadAdminServicesFromSupabase();
+        return;
     }
+
+    // Load services first, then find the shared service.
+    await loadAdminServicesFromSupabase();
+
+    const matchedService = shopServices.find(service => {
+        if (serviceId) {
+            return String(service.id) === serviceId;
+        }
+
+        return String(service.name || "").toLowerCase() ===
+            legacyName.toLowerCase();
+    });
+
+    if (!matchedService) {
+        console.warn("Shared service not found:", serviceId || legacyName);
+        return;
+    }
+
+    shopSearch.value = "";
+    activeShopCategory = "All";
+
+    shopFilters.forEach(filter => {
+        filter.classList.toggle(
+            "active",
+            filter.dataset.category === "All"
+        );
+    });
+
+    renderShop();
+
+    modalCategory.textContent = matchedService.category || "";
+    modalTitle.textContent = matchedService.name || "";
+    modalDescription.textContent = matchedService.description || "";
+
+    const existingModalNote = document.getElementById("modalNote");
+    if (existingModalNote) existingModalNote.remove();
+
+    if (matchedService.note) {
+        const note = document.createElement("p");
+        note.id = "modalNote";
+        note.className = "shop-card-note";
+        note.textContent = "Note: " + matchedService.note;
+        modalDescription.insertAdjacentElement("afterend", note);
+    }
+
+    modalPrice.textContent = matchedService.price
+        ? "Price: " + matchedService.price
+        : "Price: Contact for pricing";
+
+    modalFeatures.replaceChildren();
+
+    (matchedService.features || []).forEach(feature => {
+        const item = document.createElement("li");
+        item.textContent = feature;
+        modalFeatures.appendChild(item);
+    });
+
+    const contactParams = new URLSearchParams({
+        service: matchedService.name,
+        category: matchedService.category || "",
+        description: matchedService.description || "",
+        note: matchedService.note || "",
+        price: matchedService.price || "",
+        features: (matchedService.features || []).join("|")
+    });
+
+    modalContactBtn.href = "contact.html?" + contactParams.toString();
+
+    setCurrentReviewService(matchedService.name);
+    serviceModal.classList.add("show");
 }
 
+openSharedServiceFromUrl();
 })();
 
 
