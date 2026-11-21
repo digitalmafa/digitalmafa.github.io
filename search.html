@@ -156,7 +156,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <section class="service-shop">
     <h2>Explore Our Services</h2>
     <p>Find the perfect digital solution for your business.</p>
-    <a class="favorites-page-link" href="favorites.html"><i class="fa-solid fa-heart" aria-hidden="true"></i> My Favorites</a>
 
     
 <div class="search-box-wrapper">
@@ -211,17 +210,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <p id="modalDescription"></p>
 
 <p id="modalPrice" class="shop-card-price"></p>
-<p id="modalDeliveryDays" class="shop-card-delivery"></p>
 <ul id="modalFeatures" class="shop-card-features"></ul>
 
 <a href="contact.html" id="modalContactBtn" class="contact-now-btn">
     Contact Now
 </a>
 
-  <div class="modal-action-row">
-    <button type="button" class="reviews-open-btn" onclick="toggleReviews()">⭐ Reviews</button>
-    <button type="button" class="modal-favorite-btn" id="modalFavoriteBtn" aria-label="Add to favorites" title="Add to favorites"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
-  </div>
+  <button type="button" class="reviews-open-btn"
+            onclick="toggleReviews()">
+        ⭐ Reviews
+    </button>
     </div>
 
  
@@ -417,7 +415,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
-<script src="js/favorites.js"></script>
 <script src="js/search.js"></script>
 <script src="js/footer.js"></script>
 <script src="js/menu-bar.js"></script>
