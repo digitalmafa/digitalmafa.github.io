@@ -14,7 +14,7 @@ async function loadAdminServicesFromSupabase() {
         }
         const { data, error } = await window.supabaseClient
             .from("services")
-            .select("id, name, category, description, price, note, delivery_days, features, keywords, image, published, created_at")
+            .select("id, name, category, description, note, price, features, keywords, image, published, created_at")
             .eq("published", true)
             .order("created_at", { ascending: false });
         if (error) throw error;
@@ -50,8 +50,6 @@ async function loadAdminServicesFromSupabase() {
     const modalContactBtn = $("modalContactBtn");
     const modalPrice = $("modalPrice");
 const modalFeatures = $("modalFeatures");
-const modalNote = $("modalNote");
-const modalDeliveryDays = $("modalDeliveryDays");
 
     const reviewsDrawer = $("reviewsDrawer");
     const reviewsList = $("reviewsList");
@@ -254,6 +252,11 @@ if (service.image) {
 const description = document.createElement("p");
 description.textContent = service.description;
 
+const note = document.createElement("p");
+note.className = "shop-card-note";
+note.textContent = service.note ? "Note: " + service.note : "";
+note.hidden = !service.note;
+
 // Show service price
 const price = document.createElement("p");
 price.className = "shop-card-price";
@@ -281,6 +284,15 @@ const detailsBtn = document.createElement("button");
                 modalCategory.textContent = service.category;
                 modalTitle.textContent = service.name;
                 modalDescription.textContent = service.description;
+                const existingModalNote = document.getElementById("modalNote");
+                if (existingModalNote) existingModalNote.remove();
+                if (service.note) {
+                    const modalNote = document.createElement("p");
+                    modalNote.id = "modalNote";
+                    modalNote.className = "shop-card-note";
+                    modalNote.textContent = "Note: " + service.note;
+                    modalDescription.insertAdjacentElement("afterend", modalNote);
+                }
                 // Show service price in popup
 modalPrice.textContent = service.price
     ? "Price: " + service.price
@@ -299,6 +311,7 @@ modalFeatures.replaceChildren();
     service: service.name,
     category: service.category,
     description: service.description,
+    note: service.note || "",
     price: service.price || "",
     features: (service.features || []).join("|")
 });
@@ -388,6 +401,7 @@ body.append(
     category,
     title,
     description,
+    ...(service.note ? [note] : []),
     price,
     featuresList,
     detailsBtn,
