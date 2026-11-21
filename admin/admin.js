@@ -191,7 +191,7 @@ function showServices() {
             if (error) return alert("Could not delete service: " + error.message);
             await loadServices();
         });
-        info.append(title, details, status, edit, toggle, remove);
+        info.append(title, details, note, delivery, status, edit, toggle, remove);
         card.append(img, info);
         serviceList.appendChild(card);
     });
