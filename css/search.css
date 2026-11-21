@@ -197,6 +197,15 @@ body{
     position: relative;
     width: 100%;
     max-width: 480px;
+
+    /* Popup position adjustment */
+    transform: translateY(-20px);
+
+    /* Popup height and scrolling */
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
     padding: 35px;
     background: #fff;
     border-radius: 15px;
@@ -1101,4 +1110,24 @@ body{
     .shop-card:hover .shop-card-image {
         transform: none;
     }
+}
+
+.shop-card-delivery {
+    font-size: 14px;
+    font-weight: 600;
+    color: #16a34a;
+    margin: 8px 0;
+}
+
+/* Reduce Delivery Days spacing */
+.shop-card-body .shop-card-delivery {
+    min-height: 0 !important;
+    margin: 15px 0 !important;
+    padding: 0 !important;
+    line-height: 1.4;
+}
+
+/* Reduce gap before View Details */
+.shop-card-body .view-details-btn {
+    margin-top: 8px;
 }
