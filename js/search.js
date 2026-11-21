@@ -3,6 +3,24 @@
 const shopServices = [];
 
 // =====================================
+// SHORT SERVICE SHARE URL
+// =====================================
+
+function buildShortServiceUrl(service) {
+    if (!service.id) {
+        throw new Error("Service ID is missing.");
+    }
+
+    const url = new URL("search.html", window.location.href);
+
+    url.search = new URLSearchParams({
+        s: String(service.id)
+    }).toString();
+
+    return url.href;
+}
+
+// =====================================
 // DIGITALMAFA ADMIN SERVICES
 // =====================================
 
@@ -14,7 +32,7 @@ async function loadAdminServicesFromSupabase() {
         }
         const { data, error } = await window.supabaseClient
             .from("services")
-            .select("id, name, category, description, note, price, delivery_days, features, keywords, image, published, created_at")
+            .select("id, name, category, description, note, price, features, keywords, image, published, created_at")
             .eq("published", true)
             .order("created_at", { ascending: false });
         if (error) throw error;
@@ -28,7 +46,6 @@ async function loadAdminServicesFromSupabase() {
         console.error("Could not load admin services from Supabase:", error);
     }
     renderShop();
-    openSharedServiceFromUrl();
 }
 
     // =====================================
@@ -50,8 +67,6 @@ async function loadAdminServicesFromSupabase() {
     const modalDescription = $("modalDescription");
     const modalContactBtn = $("modalContactBtn");
     const modalPrice = $("modalPrice");
-    const modalDeliveryDays = $("modalDeliveryDays");
-    const modalFavoriteBtn = $("modalFavoriteBtn");
 const modalFeatures = $("modalFeatures");
 
     const reviewsDrawer = $("reviewsDrawer");
@@ -96,7 +111,6 @@ const modalFeatures = $("modalFeatures");
     let serviceReviews = [];
     let unsubscribeReviews = null;
     let reviewRequestInProgress = false;
-    let activeFavoriteService = null;
 
 
     
@@ -187,171 +201,6 @@ searchSuggestions.style.display = "block";
     }
 
     // =====================================
-    // SHARE POPUP + SHORT SERVICE LINKS
-    // =====================================
-    function makeServiceShareCode(service) {
-        // Stable compact code derived from service identity; no external URL shortener needed.
-        const source = String(service.name || "") + "|" + String(service.category || "");
-        let hash = 2166136261;
-        for (let i = 0; i < source.length; i++) {
-            hash ^= source.charCodeAt(i);
-            hash = Math.imul(hash, 16777619);
-        }
-        return (hash >>> 0).toString(36).padStart(7, "0");
-    }
-
-    function buildShortServiceUrl(service) {
-        const url = new URL("search.html", window.location.href);
-        url.search = "?s=" + encodeURIComponent(makeServiceShareCode(service));
-        url.hash = "";
-        return url.href;
-    }
-
-    function openSharePopup(service) {
-        let popup = document.getElementById("serviceSharePopup");
-        if (!popup) {
-            popup = document.createElement("div");
-            popup.id = "serviceSharePopup";
-            popup.className = "share-popup-overlay";
-            popup.setAttribute("aria-hidden", "true");
-            popup.innerHTML = `
-                <div class="share-popup-card" role="dialog" aria-modal="true" aria-labelledby="sharePopupTitle">
-                    <button type="button" class="share-popup-close" aria-label="Close share popup">&times;</button>
-                    <div class="share-popup-icon"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></div>
-                    <h2 id="sharePopupTitle">Share this service</h2>
-                    <p class="share-popup-service-name"></p>
-                    <label class="share-popup-label" for="shareShortUrl">Short service link</label>
-                    <div class="share-url-row">
-                        <input id="shareShortUrl" type="text" readonly>
-                        <button type="button" class="share-copy-btn"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
-                    </div>
-                    <p class="share-copy-status" aria-live="polite"></p>
-                    <div class="share-popup-actions">
-                        <button type="button" class="share-native-btn"><i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Share</button>
-                        <a class="share-whatsapp-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
-                    </div>
-                </div>`;
-            document.body.appendChild(popup);
-            popup.querySelector(".share-popup-close").addEventListener("click", () => closeSharePopup());
-            popup.addEventListener("click", event => {
-                if (event.target === popup) closeSharePopup();
-            });
-            popup.querySelector(".share-copy-btn").addEventListener("click", async () => {
-                const input = popup.querySelector("#shareShortUrl");
-                const status = popup.querySelector(".share-copy-status");
-                try {
-                    if (navigator.clipboard && window.isSecureContext) {
-                        await navigator.clipboard.writeText(input.value);
-                    } else {
-                        input.focus();
-                        input.select();
-                        const copied = document.execCommand("copy");
-                        if (!copied) throw new Error("Copy command was not available");
-                    }
-                    status.textContent = "Link copied successfully!";
-                    status.classList.add("is-success");
-                } catch (error) {
-                    input.focus();
-                    input.select();
-                    status.textContent = "Select the link and copy it.";
-                    status.classList.remove("is-success");
-                }
-            });
-            popup.querySelector(".share-native-btn").addEventListener("click", async () => {
-                const input = popup.querySelector("#shareShortUrl");
-                const title = popup.dataset.serviceTitle || "DigitalMAFA Service";
-                const text = "Check out " + title + " on DigitalMAFA";
-                try {
-                    if (window.AndroidShare && typeof window.AndroidShare.share === "function") {
-                        window.AndroidShare.share(title + " | DigitalMAFA", text, input.value);
-                    } else if (window.DesktopShare && typeof window.DesktopShare.share === "function") {
-                        window.DesktopShare.share(title + " | DigitalMAFA", text, input.value);
-                    } else if (navigator.share) {
-                        await navigator.share({ title: title + " | DigitalMAFA", text, url: input.value });
-                    } else {
-                        await navigator.clipboard.writeText(input.value);
-                        popup.querySelector(".share-copy-status").textContent = "Link copied successfully!";
-                    }
-                } catch (error) {
-                    if (error.name !== "AbortError") console.error("Share failed:", error);
-                }
-            });
-            document.addEventListener("keydown", event => {
-                if (event.key === "Escape") closeSharePopup();
-            });
-        }
-
-        const shortUrl = buildShortServiceUrl(service);
-        popup.querySelector(".share-popup-service-name").textContent = service.name;
-        popup.querySelector("#shareShortUrl").value = shortUrl;
-        popup.querySelector(".share-copy-status").textContent = "";
-        popup.dataset.serviceTitle = service.name;
-        popup.querySelector(".share-whatsapp-btn").href =
-            "https://wa.me/?text=" + encodeURIComponent("Check out " + service.name + " on DigitalMAFA: " + shortUrl);
-        popup.classList.add("show");
-        popup.setAttribute("aria-hidden", "false");
-        popup.querySelector(".share-popup-close").focus();
-    }
-
-    function closeSharePopup() {
-        const popup = document.getElementById("serviceSharePopup");
-        if (!popup) return;
-        popup.classList.remove("show");
-        popup.setAttribute("aria-hidden", "true");
-    }
-
-    function openSharedServiceFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        const shareCode = params.get("s");
-        const legacyName = params.get("service");
-        if (!shareCode && !legacyName) return;
-
-        const matchedService = shopServices.find(service => {
-            if (shareCode) return makeServiceShareCode(service) === shareCode;
-            return String(service.name || "").toLowerCase() === String(legacyName).toLowerCase();
-        });
-        if (!matchedService) return;
-
-        shopSearch.value = "";
-        activeShopCategory = "All";
-        shopFilters.forEach(filter => filter.classList.toggle("active", filter.dataset.category === "All"));
-        renderShop();
-        modalCategory.textContent = matchedService.category || "";
-        modalTitle.textContent = matchedService.name || "";
-        modalDescription.textContent = matchedService.description || "";
-        const oldNote = document.getElementById("modalNote");
-        if (oldNote) oldNote.remove();
-        if (matchedService.note) {
-            const note = document.createElement("p");
-            note.id = "modalNote";
-            note.className = "shop-card-note";
-            note.textContent = "Note: " + matchedService.note;
-            modalDescription.insertAdjacentElement("afterend", note);
-        }
-        modalPrice.textContent = matchedService.price ? "Price: " + matchedService.price : "Price: Contact for pricing";
-        if (modalDeliveryDays) modalDeliveryDays.textContent = matchedService.delivery_days ? "Delivery: " + matchedService.delivery_days + " days" : "";
-        modalFeatures.replaceChildren();
-        (matchedService.features || []).forEach(feature => {
-            const item = document.createElement("li");
-            item.textContent = feature;
-            modalFeatures.appendChild(item);
-        });
-        const contactParams = new URLSearchParams({
-            service: matchedService.name,
-            category: matchedService.category || "",
-            description: matchedService.description || "",
-            note: matchedService.note || "",
-            price: matchedService.price || "",
-            features: (matchedService.features || []).join("|")
-        });
-        modalContactBtn.href = "contact.html?" + contactParams.toString();
-        setCurrentReviewService(matchedService.name);
-        activeFavoriteService = matchedService;
-        if (modalFavoriteBtn) updateFavoriteButton(modalFavoriteBtn, window.favoriteManager?.isSaved(matchedService) || false);
-        serviceModal.classList.add("show");
-    }
-
-    // =====================================
     // 3. SERVICE SEARCH AND CARDS
     // =====================================
 
@@ -433,11 +282,6 @@ price.textContent = service.price
     ? "Price: " + service.price
     : "Price: Contact for pricing";
 
-const delivery = document.createElement("p");
-delivery.className = "shop-card-delivery";
-delivery.textContent = service.delivery_days ? "Delivery: " + service.delivery_days + " days" : "";
-delivery.hidden = !service.delivery_days;
-
 // Show service features
 const featuresList = document.createElement("ul");
 featuresList.className = "shop-card-features";
@@ -447,28 +291,6 @@ featuresList.className = "shop-card-features";
     item.textContent = feature;
     featuresList.appendChild(item);
 });
-
-const favoriteBtn = document.createElement("button");
-favoriteBtn.type = "button";
-favoriteBtn.className = "card-favorite-btn";
-favoriteBtn.innerHTML = '<i class="fa-regular fa-heart" aria-hidden="true"></i> Add to Favorites';
-favoriteBtn.setAttribute("aria-label", "Add " + service.name + " to favorites");
-favoriteBtn.addEventListener("click", async () => {
-    try {
-        favoriteBtn.disabled = true;
-        const saved = await window.favoriteManager.toggle(service);
-        updateFavoriteButton(favoriteBtn, saved);
-        if (activeFavoriteService && activeFavoriteService.id === service.id && modalFavoriteBtn) {
-            updateFavoriteButton(modalFavoriteBtn, saved);
-        }
-    } catch (error) {
-        console.error("Favorite save failed:", error);
-        alert("Favorite save nahi hua. Sign in aur Supabase setup check karein.");
-    } finally {
-        favoriteBtn.disabled = false;
-    }
-});
-updateFavoriteButton(favoriteBtn, window.favoriteManager?.isSaved(service) || false);
 
 const detailsBtn = document.createElement("button");
 
@@ -493,7 +315,6 @@ const detailsBtn = document.createElement("button");
 modalPrice.textContent = service.price
     ? "Price: " + service.price
     : "Price: Contact for pricing";
-if (modalDeliveryDays) modalDeliveryDays.textContent = service.delivery_days ? "Delivery: " + service.delivery_days + " days" : "";
 
 // Show service features in popup
 modalFeatures.replaceChildren();
@@ -519,8 +340,6 @@ modalContactBtn.href = "contact.html?" + params.toString();
                     "contact.html?" + params.toString();
 
                 setCurrentReviewService(service.name);
-                activeFavoriteService = service;
-                if (modalFavoriteBtn) updateFavoriteButton(modalFavoriteBtn, window.favoriteManager?.isSaved(service) || false);
                 serviceModal.classList.add("show");
             });
 
@@ -533,18 +352,74 @@ shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
 
 shareBtn.setAttribute("aria-label", "Share " + service.name);
 
-shareBtn.addEventListener("click", () => {
-    openSharePopup(service);
+shareBtn.addEventListener("click", async () => {
+    const params = new URLSearchParams({
+        service: service.name,
+        category: service.category,
+        description: service.description
+    });
+
+   const shareURL = buildShortServiceUrl(service);
+
+    const shareText =
+        service.name + "\n\n" +
+        service.description + "\n\n" +
+        "Explore this service at DigitalMAFA:\n" +
+        shareURL;
+
+        // Use Android's native share menu inside the Android app.
+if (
+    window.AndroidShare &&
+    typeof window.AndroidShare.share === "function"
+) {
+    window.AndroidShare.share(
+        service.name + " | DigitalMAFA",
+        service.description,
+        shareURL
+    );
+    return;
+}
+    try {
+        
+if (
+  window.DesktopShare &&
+  typeof window.DesktopShare.share === "function"
+) {
+  window.DesktopShare.share(
+    service.name + " | DigitalMAFA",
+    service.description,
+    shareURL
+  );
+  return;
+}
+
+        if (navigator.share) {
+            await navigator.share({
+                title: service.name + " | DigitalMAFA",
+                text: service.description,
+                url: shareURL
+            });
+        } else if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(shareText);
+            alert("Service details and link copied successfully!");
+        } else {
+            window.prompt("Copy this service link and share it:", shareText);
+        }
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            console.error("Unable to share service:", error);
+            alert("Unable to share right now. Please try again.");
+        }
+    }
 });
+
 body.append(
     category,
     title,
     description,
     ...(service.note ? [note] : []),
     price,
-    ...(service.delivery_days ? [delivery] : []),
     featuresList,
-    favoriteBtn,
     detailsBtn,
     shareBtn
 );
@@ -572,44 +447,6 @@ body.append(
 
             renderShop();
         });
-    });
-
-    // =====================================
-    // FAVORITES / WISHLIST UI
-    // =====================================
-    function updateFavoriteButton(button, saved) {
-        if (!button) return;
-        button.classList.toggle("is-favorite", !!saved);
-        const isCardButton = button.classList.contains("card-favorite-btn");
-        button.innerHTML = saved
-            ? '<i class="fa-solid fa-heart" aria-hidden="true"></i>' + (isCardButton ? ' Remove Favorite' : '')
-            : '<i class="fa-regular fa-heart" aria-hidden="true"></i>' + (isCardButton ? ' Add to Favorites' : '');
-        button.setAttribute("aria-label", saved ? "Remove from favorites" : "Add to favorites");
-        button.title = saved ? "Remove from favorites" : "Add to favorites";
-    }
-
-    if (modalFavoriteBtn) {
-        modalFavoriteBtn.addEventListener("click", async () => {
-            if (!activeFavoriteService || !window.favoriteManager) return;
-            try {
-                modalFavoriteBtn.disabled = true;
-                const saved = await window.favoriteManager.toggle(activeFavoriteService);
-                updateFavoriteButton(modalFavoriteBtn, saved);
-                renderShop();
-            } catch (error) {
-                console.error("Favorite save failed:", error);
-                alert("Favorite save nahi hua. Sign in aur Supabase setup check karein.");
-            } finally {
-                modalFavoriteBtn.disabled = false;
-            }
-        });
-    }
-
-    document.addEventListener("digitalmafa:favorites-changed", () => {
-        if (activeFavoriteService && modalFavoriteBtn) {
-            updateFavoriteButton(modalFavoriteBtn, window.favoriteManager?.isSaved(activeFavoriteService) || false);
-        }
-        renderShop();
     });
 
     // =====================================
@@ -1034,7 +871,60 @@ return;
 loadAdminServicesFromSupabase();
 renderReviews();
 
-// Shared service links are opened after Supabase services finish loading.
+// Open the service popup when someone visits a shared link.
+const sharedParams = new URLSearchParams(window.location.search);
+const sharedServiceName = sharedParams.get("service");
+
+if (sharedServiceName) {
+    const matchedService = shopServices.find(
+        service => service.name.toLowerCase() === sharedServiceName.toLowerCase()
+    );
+
+    if (matchedService) {
+        // Clear search and show all service cards.
+        shopSearch.value = "";
+        activeShopCategory = "All";
+
+        shopFilters.forEach(filter => {
+            filter.classList.toggle(
+                "active",
+                filter.dataset.category === "All"
+            );
+        });
+
+        renderShop();
+
+        // Fill and open the matching service popup.
+        modalCategory.textContent = matchedService.category;
+        modalTitle.textContent = matchedService.name;
+        modalDescription.textContent = matchedService.description;
+
+        // Show service price in shared-link popup
+modalPrice.textContent = matchedService.price
+    ? "Price: " + matchedService.price
+    : "Price: Contact for pricing";
+
+// Show service features in shared-link popup
+modalFeatures.replaceChildren();
+
+(matchedService.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    modalFeatures.appendChild(item);
+});
+
+        const params = new URLSearchParams({
+            service: matchedService.name,
+            category: matchedService.category,
+            description: matchedService.description
+        });
+
+        modalContactBtn.href = "contact.html?" + params.toString();
+
+        setCurrentReviewService(matchedService.name);
+        serviceModal.classList.add("show");
+    }
+}
 
 })();
 
