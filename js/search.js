@@ -25,28 +25,54 @@ function buildShortServiceUrl(service) {
 // =====================================
 
 // Admin-created services are loaded from Supabase (publicly published rows only).
+
 async function loadAdminServicesFromSupabase() {
     try {
         if (!window.supabaseClient) {
             throw new Error("Supabase client is not initialized.");
         }
+
         const { data, error } = await window.supabaseClient
             .from("services")
             .select("id, name, category, description, note, price, features, keywords, image, published, created_at")
             .eq("published", true)
             .order("created_at", { ascending: false });
+
         if (error) throw error;
-        shopServices.push(...(data || []).map(service => ({
-            ...service,
-            createdAt: service.created_at,
-            features: Array.isArray(service.features) ? service.features : [],
-            keywords: Array.isArray(service.keywords) ? service.keywords : []
-        })));
+
+        // Remove old loaded records before adding fresh records.
+        // Also prevent duplicate records with the same database ID.
+        const uniqueServices = new Map();
+
+        (data || []).forEach(service => {
+            if (!service.id) return;
+
+            uniqueServices.set(String(service.id), {
+                ...service,
+                createdAt: service.created_at,
+                features: Array.isArray(service.features)
+                    ? service.features : [],
+                keywords: Array.isArray(service.keywords)
+                    ? service.keywords : []
+            });
+        });
+
+        shopServices.splice(
+            0,
+            shopServices.length,
+            ...uniqueServices.values()
+        );
+
     } catch (error) {
-        console.error("Could not load admin services from Supabase:", error);
+        console.error(
+            "Could not load admin services from Supabase:",
+            error
+        );
     }
+
     renderShop();
 }
+
 
     // =====================================
     // 2. GET HTML ELEMENTS
@@ -866,10 +892,6 @@ return;
 
         renderReviews();
     });
-
-
-loadAdminServicesFromSupabase();
-renderReviews();
 
 
 renderReviews();
