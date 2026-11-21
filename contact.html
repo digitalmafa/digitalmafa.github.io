@@ -309,18 +309,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                             <option value="" disabled selected>
                                 Select a service
                             </option>
-                            <option value="Digital Marketing">Digital Marketing</option>
-                            <option value="Social Media Marketing">Social Media Marketing</option>
-                            <option value="Website Development">Website Development</option>
-                            <option value="SEO Optimization">SEO Optimization</option>
-                            <option value="Content Strategy">Content Strategy</option>
-                            <option value="Google Ads">Google Ads</option>
-                            <option value="Content Marketing">Content Marketing</option>
-                            <option value="Starter Plan">Starter Plan</option>
-                            <option value="Growth Plan">Growth Plan</option>
-                            <option value="Premium Plan">Premium Plan</option>
-                            <option value="Other">Other</option>
+                           
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-delivery-days">Delivery Days</label>
+                        <input
+                            type="text"
+                            id="contact-delivery-days"
+                            name="delivery_days"
+                            placeholder="Select a service to see delivery time"
+                            readonly
+                        >
                     </div>
 
                     <div class="form-group">
@@ -370,6 +371,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+
 <script>
 (function () {
     const form = document.getElementById("whatsapp-contact-form");
@@ -379,12 +383,102 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     const params = new URLSearchParams(window.location.search);
     const submitButton = form.querySelector('[type="submit"]');
 
-    const fieldNames = ["name", "email", "phone", "service", "message"];
+    const fieldNames = ["name", "email", "phone", "service", "delivery_days", "message"];
 
     let sending = false;
 
     function getField(name) {
         return form.elements.namedItem(name);
+    }
+
+    const serviceSelect = getField("service");
+    const deliveryField = getField("delivery_days");
+    let publishedServices = [];
+
+    async function loadContactServices() {
+        if (!window.supabaseClient) return;
+
+        try {
+            const { data, error } = await window.supabaseClient
+                .from("services")
+                .select("name, delivery_days")
+                .eq("published", true);
+
+            if (error) throw error;
+            publishedServices = data || [];
+
+            // Add published admin services to the dropdown without removing existing options.
+            if (serviceSelect) {
+                const existingValues = new Set(
+                    Array.from(serviceSelect.options).map(option => option.value)
+                );
+
+                publishedServices.forEach(item => {
+                    if (item.name && !existingValues.has(item.name)) {
+                        const option = document.createElement("option");
+                        option.value = item.name;
+                        option.textContent = item.name;
+                        serviceSelect.appendChild(option);
+                        existingValues.add(item.name);
+                    }
+                });
+            }
+
+            // If the contact page was opened from a service link, select that exact service.
+            // This ensures its saved delivery_days value is shown automatically.
+            const requestedService = params.get("service");
+            if (requestedService && serviceSelect) {
+                const normalizedRequested = requestedService.trim().toLowerCase();
+                let matchingOption = Array.from(serviceSelect.options).find(
+                    option => option.value.trim().toLowerCase() === normalizedRequested
+                );
+
+                // If the service was not in the static dropdown, add it from published Supabase data.
+                if (!matchingOption) {
+                    const matchingService = publishedServices.find(
+                        item => item.name && item.name.trim().toLowerCase() === normalizedRequested
+                    );
+                    if (matchingService) {
+                        matchingOption = document.createElement("option");
+                        matchingOption.value = matchingService.name;
+                        matchingOption.textContent = matchingService.name;
+                        serviceSelect.appendChild(matchingOption);
+                    }
+                }
+
+                if (matchingOption) {
+                    serviceSelect.value = matchingOption.value;
+                }
+            }
+
+            updateDeliveryDays();
+        } catch (error) {
+            console.error("Could not load contact service delivery days:", error);
+        }
+    }
+
+    function updateDeliveryDays() {
+        if (!deliveryField || !serviceSelect) return;
+
+        const selectedName = serviceSelect.value;
+        const matchedService = publishedServices.find(
+            item => item.name === selectedName
+        );
+
+        if (!selectedName) {
+            deliveryField.value = "";
+            deliveryField.placeholder = "Select a service to see delivery time";
+        } else if (matchedService && matchedService.delivery_days !== null && matchedService.delivery_days !== undefined && matchedService.delivery_days !== "") {
+            deliveryField.value = matchedService.delivery_days + " Days";
+        } else {
+            deliveryField.value = "Not specified";
+        }
+
+        saveDraft();
+    }
+
+    if (serviceSelect) {
+        serviceSelect.addEventListener("change", updateDeliveryDays);
     }
 
     function readForm() {
@@ -470,6 +564,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     }
 
     restoreDraft();
+    loadContactServices();
 
     fieldNames.forEach(name => {
         const field = getField(name);
