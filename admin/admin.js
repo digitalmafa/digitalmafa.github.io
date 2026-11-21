@@ -1,299 +1,1661 @@
-const SUPABASE = window.supabaseClient;
-const ADMIN_USER_ID = "69826f4a-5084-48b4-ad2b-259ff5ce96a6";
-const CLOUD_NAME = "ey559uiw";
-const UPLOAD_PRESET = "digitalmafa_upload";
+(() => {
+    "use strict";
 
-const loginSection = document.getElementById("loginSection");
-const adminSection = document.getElementById("adminSection");
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-const logoutBtn = document.getElementById("logoutBtn");
-const form = document.getElementById("serviceForm");
-const imageInput = document.getElementById("image");
-const preview = document.getElementById("preview");
-const message = document.getElementById("message");
-const serviceList = document.getElementById("serviceList");
-const submitButton = document.getElementById("submitBtn");
-const cancelEditBtn = document.getElementById("cancelEditBtn");
+    // =====================================
+    // 1. SERVICES DATA
+    // =====================================
 
-let services = [];
-let editingId = null;
-let editingImage = "";
+    const shopServices = [
+       {
+    name: "SEO Optimization",
+    category: "SEO",
+    image: "images/seo optimization.png",
+    description: "Improve your website's search engine visibility with SEO strategies focused on keyword optimization, on-page improvements, and organic traffic growth.",
+    price: "₹499 onwards",
+    features: [
+        "Website SEO analysis",
+        "Keyword optimization",
+        "On-page SEO improvements",
+        "Meta title and description optimization",
+        "Search engine visibility improvement"
+    ],
+   keywords: [
+    "SEO Optimization",
+    "Search Engine Optimization",
+    "Website SEO",
+    "Keyword Research",
+    "On-Page SEO",
+    "Technical SEO",
+    "Organic Traffic Growth",
+    "Google Search Ranking",
+    "Website SEO Audit",
+    "SEO Services"
+]
+},
+      {
+    name: "Social Media Marketing",
+    category: "Social Media",
+    image: "images/Social Media Marketing.png",
+    description: "Grow your brand's online presence through strategic social media campaigns, audience engagement, and consistent brand communication.",
+    price: "₹999 onwards",
+    features: [
+        "Social media marketing strategy",
+        "Audience targeting",
+        "Brand awareness improvement",
+        "Engagement growth",
+        "Campaign performance monitoring"
+    ],
+    keywords: [
+    "Social Media Marketing",
+    "Social Media Management",
+    "Facebook Marketing",
+    "Instagram Marketing",
+    "Social Media Promotion",
+    "Brand Awareness",
+    "Audience Engagement",
+    "Social Media Strategy",
+    "Digital Marketing",
+    "Social Media Campaigns"
+]
+},
 
-if (!SUPABASE) {
-    loginMessage.textContent = "Supabase did not initialize. Check supabase-config.js and script order.";
-    throw new Error("Supabase client is missing.");
-}
+{
+    name: "On-Page SEO Optimization",
+    category: "SEO",
+    image: "images/on-page-seo.png",
+    description: "We improve website page elements to make your content easier for search engines and visitors to understand.",
+    price: "₹999 onwards",
+    features: [
+        "SEO title optimization",
+        "Meta description improvement",
+        "Heading structure review (H1, H2, H3)",
+        "Keyword placement recommendations",
+        "Image alt text suggestions",
+        "Internal linking recommendations",
+        "Optimization for up to 5 pages"
+    ],
+    keywords: [
+    "On-Page SEO Optimization",
+    "On-Page SEO Services",
+    "Website Content Optimization",
+    "Meta Title Optimization",
+    "Meta Description Optimization",
+    "Keyword Placement",
+    "Header Tag Optimization",
+    "Internal Linking",
+    "Image Alt Text Optimization",
+    "SEO-Friendly URLs"
+]
+},
 
-function showLogin(messageText = "") {
-    loginSection.hidden = false;
-    adminSection.hidden = true;
-    logoutBtn.hidden = true;
-    loginMessage.textContent = messageText;
-}
+{
+    name: "Technical SEO Management",
+    category: "SEO",
+    image: "images/technical-seo.png",
+    description: "We identify technical issues that may affect your website's crawling, indexing and search performance.",
+    price: "₹2,499 onwards",
+    features: [
+        "Website technical SEO audit",
+        "Broken links and crawlability checks",
+        "XML sitemap and robots.txt review",
+        "Indexing issue identification",
+        "Mobile usability and page speed checks",
+        "Prioritized technical improvement report"
+    ],
+    keywords: [
+    "Technical SEO Management",
+    "Technical SEO Services",
+    "Website Technical Audit",
+    "Website Crawlability",
+    "Website Indexing",
+    "XML Sitemap Optimization",
+    "Robots.txt Optimization",
+    "Core Web Vitals",
+    "Website Speed Optimization",
+    "Structured Data Optimization"
+]},
 
-function showAdmin() {
-    loginSection.hidden = true;
-    adminSection.hidden = false;
-    logoutBtn.hidden = false;
-}
+{
+    name: "High-Quality Backlink Building",
+    category: "SEO",
+    image: "images/backlink-building.png",
+    description: "We help improve your website's backlink profile through relevant link-building opportunities.",
+    price: "₹999 onwards",
+    features: [
+        "Up to 150 backlink opportunities or placements, depending on availability",
+        "Research for relevant websites and link sources",
+        "Focus on relevance and link quality rather than quantity alone",
+        "Delivery report with available backlink details",
+        "No guaranteed rankings or fixed SEO results"
+    ],
+keywords: [
+    "High-Quality Backlink Building",
+    "Backlink Building Services",
+    "Quality Link Building",
+    "White-Hat Link Building",
+    "SEO Link Building",
+    "Website Authority Building",
+    "High-Authority Backlinks",
+    "Relevant Website Backlinks",
+    "Off-Page SEO",
+    "Link Profile Analysis"
+]},
 
-async function checkSession() {
-    const { data, error } = await SUPABASE.auth.getSession();
-    if (error) {
-        showLogin("Could not check login: " + error.message);
-        return;
-    }
-    const user = data.session?.user;
-    if (!user) {
-        showLogin();
-        return;
-    }
-    if (user.id !== ADMIN_USER_ID) {
-        await SUPABASE.auth.signOut();
-        showLogin("This account is not authorized as the DigitalMAFA admin.");
-        return;
-    }
-    showAdmin();
-    await loadServices();
-}
+{
+    name: "Competitor SEO Analysis",
+    category: "SEO",
+    image: "images/Competitor SEO Analysis Infographic.png",
+    description: "We analyze competitor websites to identify their visible SEO strategies and potential opportunities for your business.",
+    price: "₹999 onwards",
+    features: [
+        "Analysis of up to 3 competitor websites",
+        "Competitor content and page structure review",
+        "Keyword opportunity comparison",
+        "Backlink profile observations where data is available",
+        "Content gap identification",
+        "Actionable recommendations to improve your website"
+    ],
+keywords: [
+    "Competitor SEO Analysis",
+    "SEO Competitor Analysis",
+    "Competitor Keyword Research",
+    "Competitor Backlink Analysis",
+    "SEO Competitor Audit",
+    "Competitor Ranking Analysis",
+    "Keyword Gap Analysis",
+    "Competitor Website Analysis",
+    "SERP Competitor Research",
+    "SEO Competitive Analysis"
+]},
 
-loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const button = document.getElementById("loginBtn");
-    button.disabled = true;
-    loginMessage.textContent = "Signing in...";
-    const email = document.getElementById("adminEmail").value.trim();
-    const password = document.getElementById("adminPassword").value;
+{
+    name: "Local SEO Optimization",
+    category: "SEO",
+    image: "images/Local SEO Optimization Banner.png",
+    description: "We help eligible local businesses improve their visibility in location-based searches.",
+    price: "₹999 onwards",
+    features: [
+        "Local keyword research",
+        "Business information consistency review",
+        "Google Business Profile optimization guidance",
+        "Local landing-page recommendations",
+        "Local search visibility checklist",
+        "Recommendations for improving local discovery"
+    ],
+keywords: [
+    "Local SEO Optimization",
+    "Local SEO Services",
+    "Google Business Profile Optimization",
+    "Local Search Ranking",
+    "Local Keyword Research",
+    "Google Maps SEO",
+    "Local Business Listings",
+    "NAP Consistency",
+    "Local Citation Building",
+    "Near Me SEO"
+]},
+
+{
+    name: "SEO Blog Writing",
+    category: "SEO",
+    image: "images/SEO Blog Writing Service Infographic.png",
+    description: "We create useful, search-focused blog content based on your business and target audience.",
+    price: "₹799 onwards",
+    features: [
+        "One original article up to 1,000 words",
+        "SEO-friendly title and heading structure",
+        "Relevant keyword integration",
+        "Meta description suggestion",
+        "Readable paragraphs and content formatting",
+        "One revision round"
+    ],
+keywords: [
+    "SEO Blog Writing",
+    "SEO Content Writing",
+    "Blog Writing Services",
+    "SEO-Friendly Blog Posts",
+    "Keyword-Optimized Content",
+    "Website Blog Content",
+    "Blog Content Strategy",
+    "Organic Traffic Growth",
+    "Content Optimization",
+    "Search Engine Friendly Articles"
+]},
+
+{
+    name: "Website Content Optimization",
+    category: "Web Development",
+    image: "images/Website Content Optimization Infographic.png",
+    description: "We review existing website content and suggest improvements to make it clearer, more engaging and more relevant.",
+    price: "₹999 onwards",
+    features: [
+        "Review of up to 5 website pages",
+        "Grammar, spelling and readability suggestions",
+        "Content structure improvement",
+        "Keyword relevance review",
+        "Call-to-action improvement suggestions",
+        "Updated content recommendations"
+    ],
+keywords: [
+    "Website Content Optimization",
+    "Website Content Writing",
+    "SEO Content Optimization",
+    "Keyword Optimization",
+    "Website Copywriting",
+    "Content Readability",
+    "SEO-Friendly Content",
+    "Meta Title Optimization",
+    "Meta Description Optimization",
+    "Website Content Audit"
+]},
+
+{
+    name: "Google Search Console Setup",
+    category: "SEO",
+    image: "images/Google Search Console Setup Guide.png",
+    description: "We help connect your website to Google Search Console and review its search performance.",
+    price: "₹799 onwards",
+    features: [
+        "Website ownership verification assistance",
+        "XML sitemap submission guidance",
+        "Indexing status review",
+        "Search clicks and impressions analysis",
+        "Top search queries and pages review",
+        "Basic search performance report"
+    ],
+keywords: [
+    "Google Search Console Setup",
+    "Google Search Console Services",
+    "Google Search Console Configuration",
+    "Website Verification",
+    "Search Console Integration",
+    "Website Indexing Setup",
+    "Sitemap Submission",
+    "Indexing Issues Monitoring",
+    "Search Performance Tracking",
+    "Google Search Visibility"
+]},
+
+{
+    name: "Google Analytics Setup",
+    category: "SEO",
+    image: "images/Google Analytics Setup Dashboard Infographic.png",
+    description: "We help you understand how visitors reach and interact with your website.",
+    price: "₹999 onwards",
+    features: [
+        "Google Analytics 4 setup or review",
+        "Website tracking configuration assistance",
+        "Traffic source analysis",
+        "User engagement overview",
+        "Basic event tracking for agreed actions, where supported",
+        "Initial analytics testing and report"
+    ],
+keywords: [
+    "Google Analytics Setup",
+    "Google Analytics 4 Setup",
+    "GA4 Configuration",
+    "Website Analytics Integration",
+    "Google Analytics Tracking",
+    "Website Traffic Analysis",
+    "User Behavior Tracking",
+    "Conversion Tracking Setup",
+    "Google Analytics Reporting",
+    "Website Performance Monitoring"
+]},
+
+
+{
+    name: "Landing Page Design",
+    category: "Web Development",
+    image: "images/Landing Page Design Showcase.png",
+    description: "We design a focused landing page to present your offer and encourage visitors to take action.",
+    price: "₹1,999 onwards",
+    features: [
+        "Custom layout for one landing page",
+        "Attractive headline and service sections",
+        "Benefits and features presentation",
+        "Call-to-action placement",
+        "Mobile-friendly design planning",
+        "Up to 2 design revision rounds"
+    ],
+keywords: [
+    "Landing Page Design",
+    "Landing Page Development",
+    "Responsive Landing Page",
+    "Business Landing Page",
+    "Lead Generation Landing Page",
+    "Conversion-Focused Design",
+    "Website UI Design",
+    "Mobile-Friendly Landing Page",
+    "Landing Page Optimization",
+    "Custom Landing Page Design"
+]},
+
+{
+    name: "Website UI/UX Improvement",
+    category: "Web Development",
+    image: "images/Website UI_UX Improvement Banner.png",
+    description: "We review your website's design and user journey to identify opportunities for a better browsing experience.",
+    price: "₹1,499 onwards",
+    features: [
+        "Review of up to 3 website pages",
+        "Navigation and layout evaluation",
+        "Mobile responsiveness review",
+        "Readability and visual hierarchy suggestions",
+        "Button and call-to-action improvement ideas",
+        "Prioritized UI/UX improvement report"
+    ],
+keywords: [
+    "Website UI UX Improvement",
+    "UI UX Design Services",
+    "Website User Experience",
+    "Website Interface Design",
+    "User-Friendly Website Design",
+    "Website Usability Improvement",
+    "Responsive UI Design",
+    "Website Navigation Optimization",
+    "Website Layout Improvement",
+    "Conversion Rate Optimization"
+]},
+
+
+{
+    name: "Social Media Content Management",
+    category: "Social Media",
+    image: "images/Social Media Content Management Strategy.png",
+    description: "We help businesses plan consistent social media content for their target audience.",
+    price: "₹1,999 onwards",
+    features: [
+        "7-day content calendar",
+        "Up to 7 post topics and captions",
+        "Content ideas based on your business",
+        "Suggested posting schedule",
+        "Brand tone and messaging guidance",
+        "Platform-specific content recommendations"
+    ],
+keywords: [
+    "Social Media Content Management",
+    "Social Media Management Services",
+    "Social Media Content Planning",
+    "Content Calendar Management",
+    "Facebook Content Management",
+    "Instagram Content Management",
+    "Social Media Post Scheduling",
+    "Brand Content Strategy",
+    "Audience Engagement",
+    "Social Media Marketing"
+]},
+
+{
+    name: "Social Media Post Design",
+    category: "Social Media",
+    image: "images/Social Media Post Design Services.png",
+    description: "We create branded graphics to help communicate your business message professionally.",
+    price: "₹699 onwards",
+    features: [
+        "3 custom static post designs",
+        "Brand colors and logo integration",
+        "Promotional or informative post layouts",
+        "Platform-appropriate dimensions",
+        "High-quality digital files",
+        "One revision round"
+    ],
+keywords: [
+    "Social Media Post Design",
+    "Social Media Graphic Design",
+    "Instagram Post Design",
+    "Facebook Post Design",
+    "Custom Social Media Graphics",
+    "Creative Post Design",
+    "Branded Social Media Posts",
+    "Promotional Post Design",
+    "Social Media Banner Design",
+    "Business Social Media Design"
+]},
+
+{
+    name: "Google Ads Copywriting",
+    category: "Advertising",
+    image: "images/Google Ads Copywriting Service Infographic.png",
+    description: "We prepare advertising copy designed around your product, audience and campaign objective.",
+    price: "₹599 onwards",
+    features: [
+        "Multiple headline variations",
+        "Ad description writing",
+        "Clear calls to action",
+        "Benefit-focused messaging",
+        "Suggested keyword themes",
+        "Copy recommendations for one campaign",
+        "Ad account management and advertising budget are not included"
+    ],
+keywords: [
+    "Google Ads Copywriting",
+    "Google Ads Copywriting Services",
+    "PPC Ad Copywriting",
+    "Google Search Ads",
+    "High-Converting Ad Copy",
+    "Google Ads Headlines",
+    "Paid Search Advertising",
+    "Ad Description Writing",
+    "Pay Per Click Marketing",
+    "Conversion-Focused Ad Copy"
+]},
+
+{
+    name: "Email Marketing Template Design",
+    category: "Advertising",
+    image: "images/Email Marketing Template Design.png",
+    description: "We create a branded email template for business announcements, promotions or newsletters.",
+    price: "₹799 onwards",
+    features: [
+        "One custom email template",
+        "Brand colors, logo and typography",
+        "Clear headline and message structure",
+        "Call-to-action button design",
+        "Mobile-friendly layout recommendations",
+        "One revision round"
+    ],
+keywords: [
+    "Email Marketing Template Design",
+    "Email Template Design Services",
+    "Responsive Email Design",
+    "Promotional Email Templates",
+    "Newsletter Template Design",
+    "Custom Email Templates",
+    "Email Campaign Design",
+    "HTML Email Templates",
+    "Business Email Design",
+    "Email Newsletter Design"
+]},
+
+{
+    name: "Website Maintenance & Health Check",
+    category: "Web Development",
+    image: "images/Website Maintenance Health Check Infographic.png",
+    description: "We review your website for common issues and provide a practical maintenance checklist.",
+    price: "₹999 onwards",
+    features: [
+        "Broken link checks",
+        "Page loading and usability review",
+        "Missing content or page element checks",
+        "Basic mobile display review",
+        "Visible website issues report",
+        "Prioritized maintenance recommendations"
+    ],
+keywords: [
+    "Website Maintenance",
+    "Website Health Check",
+    "Website Maintenance Services",
+    "Website Error Fixing",
+    "Website Security Check",
+    "Website Performance Optimization",
+    "Website Bug Fixing",
+    "Website Speed Check",
+    "Website Technical Audit",
+    "Website Troubleshooting"
+]},
+
+{
+    name: "SEO & Website Performance Report",
+    category: "SEO",
+    image: "images/SEO Performance Report Infographic.png",
+    description: "We turn available website data into a straightforward report that helps you understand performance and plan improvements.",
+    price: "₹699 onwards",
+    features: [
+        "Website traffic overview, if analytics is available",
+        "Search clicks and impressions, if Search Console is connected",
+        "Top-performing pages and search queries",
+        "Traffic source observations",
+        "Important performance trends",
+        "Recommended next steps for improvement"
+    ],
+keywords: [
+    "SEO Performance Report",
+    "Website Performance Report",
+    "SEO Audit Report",
+    "Website SEO Analysis",
+    "Organic Traffic Analysis",
+    "Google Search Performance",
+    "Keyword Ranking Report",
+    "Website Speed Analysis",
+    "Technical SEO Report",
+    "Website Analytics Report"
+]},
+
+        {
+    name: "Basic Website Development",
+    category: "Web Development",
+    image: "images/Basic Website Development Banner.png",
+    description: "Get a simple, professional website for your business with essential pages, a clean layout, and mobile-friendly design.",
+    price: "₹2,999 onwards",
+    features: [
+    "Home, About, and Contact pages",
+    "Mobile-friendly responsive design",
+    "Modern and clean UI",
+    "Contact form integration",
+    "Basic on-page SEO setup",
+    "Social media links integration",
+    "Basic speed optimization"
+],
+    keywords: [
+    "Basic Website Development",
+    "Website Development Services",
+    "Small Business Website",
+    "Responsive Website Design",
+    "Business Website Development",
+    "Custom Website Design",
+    "Mobile-Friendly Website",
+    "Professional Website Design",
+    "Website Design for Startups",
+    "Affordable Website Development"
+]
+},
+        {
+    name: "Google Ads",
+    category: "Advertising",
+    image: "images/Google Ads Growth Campaign.png",
+    description: "Reach potential customers through targeted Google Ads campaigns designed to increase website traffic, generate leads, and promote your business.",
+    price: "₹999 onwards",
+    features: [
+        "Google Ads campaign setup",
+        "Keyword research",
+        "Audience targeting",
+        "Ad copy optimization",
+        "Campaign performance monitoring"
+    ],
+    keywords: [
+    "Google Ads",
+    "Google Ads Management",
+    "Google Ads Services",
+    "Google PPC Advertising",
+    "Google Search Ads",
+    "Pay Per Click Advertising",
+    "Google Ads Campaign Setup",
+    "Keyword Research for Google Ads",
+    "Google Ads Optimization",
+    "Google Ads Lead Generation"
+]
+},
+{
+    name: "Meta Ads",
+    category: "Advertising",
+    image: "images/Meta Ads_ Grow Your Business.png",
+    description: "Promote your business on Facebook and Instagram with targeted Meta Ads campaigns designed to increase brand awareness, generate leads, and drive conversions.",
+    price: "₹999",
+    features: [
+        "Meta Ads campaign setup",
+        "Facebook and Instagram audience targeting",
+        "Ad copy and creative recommendations",
+        "Campaign optimization",
+        "Performance monitoring and reporting"
+    ],
+    keywords: [
+    "Meta Ads",
+    "Meta Ads Management",
+    "Facebook Ads",
+    "Instagram Ads",
+    "Meta Advertising Services",
+    "Facebook Ads Campaign Setup",
+    "Instagram Advertising",
+    "Social Media Advertising",
+    "Meta Ads Optimization",
+    "Meta Ads Lead Generation"
+]
+},
+       {
+    name: "Content Marketing",
+    category: "Social Media",
+    image: "images/Content Marketing Growth Blueprint.png",
+    description: "Build brand awareness and attract your target audience with valuable, engaging content designed to support your digital marketing goals.",
+    price: "₹799",
+    features: [
+        "Content marketing strategy",
+        "Target audience research",
+        "Content topic planning",
+        "Brand awareness improvement",
+        "Content performance recommendations"
+    ],
+    keywords: [
+    "Content Marketing",
+    "Content Marketing Strategy",
+    "Content Creation Services",
+    "Content Marketing Services",
+    "Brand Content Strategy",
+    "Content Planning",
+    "Audience Engagement",
+    "Content Distribution",
+    "Digital Content Marketing",
+    "Content Marketing for Businesses"
+]
+},
+       {
+    name: "Digital Marketing Strategy",
+    category: "Advertising",
+    image: "images/Digital Marketing Strategy Blueprint.png",
+    description: "Build a practical digital marketing strategy to strengthen your online presence, reach your target audience, and support business growth.",
+    price: "₹1,499",
+    features: [
+        "Digital marketing plan",
+        "Target audience research",
+        "Marketing channel recommendations",
+        "Campaign planning",
+        "Performance tracking recommendations"
+    ],
+  keywords: [
+    "Digital Marketing Strategy",
+    "Digital Marketing Services",
+    "Online Marketing Strategy",
+    "Digital Marketing Plan",
+    "Marketing Strategy Consulting",
+    "Target Audience Research",
+    "Marketing Channel Strategy",
+    "Lead Generation Strategy",
+    "Business Growth Strategy",
+    "Digital Campaign Planning"
+]
+},
+
+ 
+{
+    name: "Stater",
+    category: "Premium",
+    image: "images/Stater SEO Package Banner.png",
+    description: "Perfect for beginners and small websites looking to improve their search engine rankings.",
+    price: "₹2,999",
+    features: [
+        "Basic website SEO audit",
+        "Keyword research — up to 5 keywords",
+        "On-page SEO for up to 3 pages",
+        "Title tags & meta descriptions",
+        "Heading structure review",
+        "Internal linking recommendations",
+        "Basic sitemap & indexing checks",
+        "SEO audit summary report"
+    ],
+    keywords: [
+        "Basic SEO Services",
+        "Website SEO Audit",
+        "Keyword Research",
+        "On-Page SEO",
+        "SEO for Small Businesses",
+        "Title Tags Optimization",
+        "Meta Description Optimization",
+        "Heading Structure Review",
+        "Internal Linking Optimization",
+        "Sitemap and Indexing Checks",
+        "SEO Audit Report",
+        "Small Website SEO"
+    ]
+},
+
+
+{
+    name: "Growth",
+    category: "Premium",
+    image: "images/SEO Growth Package Infographic.png",
+    description: "For brands ready to grow their online presence and improve search engine rankings.",
+    price: "₹5,999",
+    features: [
+        "Keyword research — up to 15 keywords",
+        "On-page SEO for up to 7 pages",
+        "Competitor analysis — 2 competitors",
+        "Technical SEO checks & recommendations",
+        "Image alt-text and optimization review",
+        "Google Search Console review (if connected)",
+        "Internal linking improvement plan",
+        "Backlink profile review",
+        "Performance & SEO recommendations report"
+    ],
+    keywords: [
+        "Growth SEO Services",
+        "SEO for Growing Businesses",
+        "Keyword Research up to 15 Keywords",
+        "On-Page SEO Optimization",
+        "Competitor SEO Analysis",
+        "Technical SEO Audit",
+        "Image Alt Text Optimization",
+        "Google Search Console Review",
+        "Internal Linking Strategy",
+        "Backlink Profile Analysis",
+        "SEO Performance Report",
+        "Organic Traffic Growth"
+    ]
+},
+
+
+{
+    name: "Premium",
+    category: "Premium",
+    image: "images/Premium SEO Growth Package.png",
+    description: "For ambitious brands targeting bigger growth through comprehensive SEO optimization and strategic search engine marketing.",
+    price: "₹9,999 / month",
+    features: [
+        "Keyword research — up to 30 keywords",
+        "On-page SEO for up to 10 pages",
+        "Competitor analysis — 3 competitors",
+        "Comprehensive technical SEO audit",
+        "Core Web Vitals & mobile usability review",
+        "Sitemap, robots.txt & indexing review",
+        "Content gap analysis and topic suggestions",
+        "Backlink quality review & link-building plan",
+        "GA4 & Search Console performance review (if connected)",
+        "Priority action plan and final SEO report"
+    ],
+    keywords: [
+        "Premium SEO Services",
+        "Advanced SEO Strategy",
+        "Keyword Research up to 30 Keywords",
+        "On-Page SEO Optimization",
+        "Competitor Analysis",
+        "Comprehensive Technical SEO Audit",
+        "Core Web Vitals Optimization",
+        "Mobile Usability SEO",
+        "Sitemap and Robots.txt Optimization",
+        "Content Gap Analysis",
+        "Backlink Quality Analysis",
+        "Link Building Strategy",
+        "Google Analytics 4 SEO Reporting",
+        "Google Search Console Analysis",
+        "Organic Traffic Growth",
+        "Premium SEO Reporting"
+    ]
+},
+
+
+    ];
+
+// =====================================
+// DIGITALMAFA ADMIN SERVICES
+// =====================================
+
+// Admin-created services are loaded from Supabase (publicly published rows only).
+async function loadAdminServicesFromSupabase() {
     try {
-        const { data, error } = await SUPABASE.auth.signInWithPassword({ email, password });
+        if (!window.supabaseClient) {
+            throw new Error("Supabase client is not initialized.");
+        }
+        const { data, error } = await window.supabaseClient
+            .from("services")
+            .select("id, name, category, description, price, features, keywords, image, published, created_at")
+            .eq("published", true)
+            .order("created_at", { ascending: false });
         if (error) throw error;
-        if (data.user?.id !== ADMIN_USER_ID) {
-            await SUPABASE.auth.signOut();
-            throw new Error("This account is not authorized as the DigitalMAFA admin.");
-        }
-        loginForm.reset();
-        showAdmin();
-        await loadServices();
+        shopServices.push(...(data || []).map(service => ({
+            ...service,
+            createdAt: service.created_at,
+            features: Array.isArray(service.features) ? service.features : [],
+            keywords: Array.isArray(service.keywords) ? service.keywords : []
+        })));
     } catch (error) {
-        loginMessage.textContent = error.message;
-    } finally {
-        button.disabled = false;
+        console.error("Could not load admin services from Supabase:", error);
     }
-});
+    renderShop();
+}
 
-logoutBtn.addEventListener("click", async () => {
-    const { error } = await SUPABASE.auth.signOut();
-    if (error) {
-        alert("Logout failed: " + error.message);
+    // =====================================
+    // 2. GET HTML ELEMENTS
+    // =====================================
+
+    const $ = id => document.getElementById(id);
+
+    const shopGrid = $("shopGrid");
+    const shopSearch = $("shopSearch");
+    const searchSuggestions = $("searchSuggestions");
+    const shopSearchBtn = $("shopSearchBtn");
+    const shopFilters = document.querySelectorAll(".shop-filter");
+
+    const serviceModal = $("serviceModal");
+    const modalClose = $("modalClose");
+    const modalCategory = $("modalCategory");
+    const modalTitle = $("modalTitle");
+    const modalDescription = $("modalDescription");
+    const modalContactBtn = $("modalContactBtn");
+    const modalPrice = $("modalPrice");
+const modalFeatures = $("modalFeatures");
+
+    const reviewsDrawer = $("reviewsDrawer");
+    const reviewsList = $("reviewsList");
+    const reviewForm = $("reviewForm");
+    const reviewName = $("reviewName");
+    const reviewFeedback = $("reviewFeedback");
+    const starRating = $("starRating");
+    const reviewFormTitle = $("reviewFormTitle");
+    const reviewSubmit = $("reviewSubmit");
+    const reviewCancel = $("reviewCancel");
+
+    if (
+        !shopGrid || !shopSearch || !shopSearchBtn ||
+        !serviceModal || !modalClose || !modalTitle ||
+        !reviewsDrawer || !reviewsList || !reviewForm ||
+        !reviewName || !reviewFeedback || !starRating ||
+        !reviewFormTitle || !reviewSubmit || !reviewCancel
+    ) {
+        console.error(
+            "DigitalMAFA: Required HTML element missing. Check your element IDs."
+        );
         return;
     }
-    services = [];
-    showLogin("You have been logged out.");
-});
 
-imageInput.addEventListener("change", () => {
-    const file = imageInput.files[0];
-    if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = "block";
-    } else if (editingImage) {
-        preview.src = editingImage;
-        preview.style.display = "block";
+    // Firebase Compat objects from firebase-config.js
+    const auth = window.auth;
+    const db = window.db;
+
+    if (!auth || !db) {
+        console.error(
+            "Firebase is not initialized. Check Firebase scripts and firebase-config.js."
+        );
+        return;
     }
-});
 
-async function migrateLegacyLocalServices() {
-    // Preserve services previously saved in this browser's Local Storage.
-    const legacy = JSON.parse(localStorage.getItem("digitalmafaServices") || "[]");
-    if (!Array.isArray(legacy) || legacy.length === 0) return;
-    const rows = legacy.map(service => ({
-        id: service.id || crypto.randomUUID(),
-        name: service.name || "Untitled service",
-        category: service.category || "Other",
-        description: service.description || "",
-        price: service.price || "",
-        features: Array.isArray(service.features) ? service.features : [],
-        keywords: Array.isArray(service.keywords) ? service.keywords : [],
-        image: service.image || "",
-        published: service.published === true,
-        created_at: service.createdAt || new Date().toISOString()
-    }));
-    const { error } = await SUPABASE.from("services").upsert(rows, {
-        onConflict: "id",
-        ignoreDuplicates: true
+    let activeShopCategory = "All";
+    let currentReviewService = "";
+    let selectedRating = 0;
+    let editingReviewId = null;
+    let currentUser = null;
+    let serviceReviews = [];
+    let unsubscribeReviews = null;
+    let reviewRequestInProgress = false;
+
+
+    
+    // =====================================
+    // LIVE SEARCH SUGGESTIONS
+    // =====================================
+
+    if (shopSearch && searchSuggestions) {
+        shopSearch.setAttribute("autocomplete", "off");
+
+        shopSearch.addEventListener("input", function () {
+            
+const query = shopSearch.value.trim().toLowerCase();
+searchSuggestions.replaceChildren();
+
+if (!query) {
+    searchSuggestions.style.display = "none";
+    return;
+}
+
+const matches = shopServices.filter(service => {
+    const searchableText = [
+        service.name,
+        service.category,
+        service.description,
+        ...(service.keywords || []),
+        ...(service.features || [])
+    ].join(" ").toLowerCase();
+
+    return searchableText.includes(query);
+}).slice(0, 6);
+
+if (matches.length === 0) {
+    searchSuggestions.style.display = "none";
+    return;
+}
+
+
+matches.forEach(service => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "search-suggestion-item";
+
+    const matchedKeyword = (service.keywords || []).find(keyword =>
+        keyword.toLowerCase().includes(query)
+    );
+
+    const title = document.createElement("span");
+    title.className = "suggestion-service-name";
+    title.textContent = service.name;
+
+    item.appendChild(title);
+
+    if (matchedKeyword) {
+        const keywordText = document.createElement("small");
+        keywordText.className = "suggestion-keyword";
+        keywordText.textContent = "Keyword: " + matchedKeyword;
+        item.appendChild(keywordText);
+    }
+
+    item.addEventListener("click", function () {
+        shopSearch.value = service.name;
+        searchSuggestions.style.display = "none";
+        renderShop();
     });
-    if (error) {
-        console.error("Legacy service migration did not complete:", error);
-        return;
-    }
-    localStorage.removeItem("digitalmafaServices");
-}
 
-async function loadServices() {
-    serviceList.textContent = "Loading services...";
-    await migrateLegacyLocalServices();
-    const { data, error } = await SUPABASE
-        .from("services")
-        .select("*")
-        .order("created_at", { ascending: false });
-    if (error) {
-        serviceList.textContent = "Could not load services: " + error.message;
-        console.error(error);
-        return;
-    }
-    services = data || [];
-    showServices();
-}
+    searchSuggestions.appendChild(item);
+});
 
-function showServices() {
-    serviceList.innerHTML = "";
-    if (!services.length) {
-        serviceList.textContent = "No services added yet.";
-        return;
-    }
-    services.forEach((service) => {
-        const card = document.createElement("div");
-        card.className = "service";
-        const img = document.createElement("img");
-        img.src = service.image || "";
-        img.alt = service.name || "Service image";
-        const info = document.createElement("div");
-        info.className = "service-info";
-        const title = document.createElement("b");
-        title.textContent = service.name;
-        const details = document.createElement("p");
-        details.textContent = `${service.category} | ${service.price || "Price on request"}`;
-        const status = document.createElement("p");
-        status.textContent = service.published ? "Published" : "Draft";
 
-        const edit = document.createElement("button");
-        edit.textContent = "Edit";
-        edit.addEventListener("click", () => startEdit(service));
+searchSuggestions.style.display = "block";
 
-        const toggle = document.createElement("button");
-        toggle.className = "status-btn";
-        toggle.textContent = service.published ? "Unpublish" : "Publish";
-        toggle.addEventListener("click", async () => {
-            const { error } = await SUPABASE.from("services")
-                .update({ published: !service.published })
-                .eq("id", service.id);
-            if (error) return alert("Could not update publish status: " + error.message);
-            await loadServices();
+
+            searchSuggestions.style.display = "block";
         });
 
-        const remove = document.createElement("button");
-        remove.className = "delete-btn";
-        remove.textContent = "Delete";
-        remove.addEventListener("click", async () => {
-            if (!confirm("Delete this service? This cannot be undone.")) return;
-            const { error } = await SUPABASE.from("services").delete().eq("id", service.id);
-            if (error) return alert("Could not delete service: " + error.message);
-            await loadServices();
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".search-box-wrapper")) {
+                searchSuggestions.style.display = "none";
+            }
         });
-        info.append(title, details, status, edit, toggle, remove);
-        card.append(img, info);
-        serviceList.appendChild(card);
-    });
-}
 
-function startEdit(service) {
-    editingId = service.id;
-    editingImage = service.image || "";
-    document.getElementById("name").value = service.name || "";
-    document.getElementById("category").value = service.category || "";
-    document.getElementById("description").value = service.description || "";
-    document.getElementById("price").value = service.price || "";
-    document.getElementById("features").value = (service.features || []).join("\n");
-    document.getElementById("keywords").value = (service.keywords || []).join(", ");
-    preview.src = editingImage;
-    preview.style.display = editingImage ? "block" : "none";
-    submitButton.textContent = "Save Changes";
-    cancelEditBtn.hidden = false;
-    message.textContent = "Editing: " + service.name;
-    form.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function resetEditor() {
-    editingId = null;
-    editingImage = "";
-    form.reset();
-    preview.removeAttribute("src");
-    preview.style.display = "none";
-    submitButton.textContent = "Upload Service";
-    cancelEditBtn.hidden = true;
-    message.textContent = "";
-}
-
-cancelEditBtn.addEventListener("click", resetEditor);
-
-async function uploadImage(file) {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", UPLOAD_PRESET);
-    data.append("folder", "digitalmafa/services");
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-        method: "POST",
-        body: data
-    });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error?.message || "Cloudinary upload failed");
-    return result.secure_url;
-}
-
-form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const file = imageInput.files[0];
-    if (!editingId && !file) {
-        message.textContent = "Please select an image.";
-        return;
-    }
-    if (file && !file.type.startsWith("image/")) {
-        message.textContent = "Please select an image file.";
-        return;
-    }
-    if (file && file.size > 10 * 1024 * 1024) {
-        message.textContent = "Image must be under 10 MB.";
-        return;
+        shopSearch.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                searchSuggestions.style.display = "none";
+            }
+        });
     }
 
-    submitButton.disabled = true;
-    submitButton.textContent = file ? "Uploading..." : "Saving...";
-    message.textContent = "";
-    try {
-        const imageUrl = file ? await uploadImage(file) : editingImage;
-        const service = {
-            name: document.getElementById("name").value.trim(),
-            category: document.getElementById("category").value,
-            description: document.getElementById("description").value.trim(),
-            price: document.getElementById("price").value.trim(),
-            features: document.getElementById("features").value.split("\n").map(x => x.trim()).filter(Boolean),
-            keywords: document.getElementById("keywords").value.split(",").map(x => x.trim()).filter(Boolean),
-            image: imageUrl
-        };
-        let result;
-        if (editingId) {
-            result = await SUPABASE.from("services").update(service).eq("id", editingId);
-        } else {
-            result = await SUPABASE.from("services").insert({
-                id: crypto.randomUUID(),
-                ...service,
-                published: false
+    // =====================================
+    // 3. SERVICE SEARCH AND CARDS
+    // =====================================
+
+    function renderShop() {
+        const query = shopSearch.value.trim().toLowerCase();
+
+        const filtered = shopServices.filter(service => {
+            const categoryMatch =
+                activeShopCategory === "All" ||
+                service.category === activeShopCategory;
+
+            const searchableText = (
+                service.name + " " +
+                service.category + " " +
+                service.description + " " +
+                service.keywords
+            ).toLowerCase();
+
+            return categoryMatch && searchableText.includes(query);
+        });
+
+        shopGrid.replaceChildren();
+
+        if (filtered.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "shop-empty";
+            empty.textContent =
+                "No matching services found. Try another search.";
+            shopGrid.appendChild(empty);
+            return;
+        }
+
+        filtered.forEach(service => {
+            const card = document.createElement("article");
+            card.className = "shop-card";
+
+            const top = document.createElement("div");
+            top.className = "shop-card-top";
+
+            
+if (service.image) {
+    const image = document.createElement("img");
+    image.src = service.image;
+    image.alt = service.name;
+    image.className = "shop-card-image";
+    image.loading = "lazy";
+    top.appendChild(image);
+} else {
+    const icon = document.createElement("i");
+    icon.className = "fa-solid " + service.icon;
+    icon.setAttribute("aria-hidden", "true");
+    top.appendChild(icon);
+}
+
+
+            const body = document.createElement("div");
+            body.className = "shop-card-body";
+
+            const category = document.createElement("span");
+            category.className = "shop-card-category";
+            category.textContent = service.category;
+
+            const title = document.createElement("h3");
+            title.textContent = service.name;
+
+            
+const description = document.createElement("p");
+description.textContent = service.description;
+
+// Show service price
+const price = document.createElement("p");
+price.className = "shop-card-price";
+price.textContent = service.price
+    ? "Price: " + service.price
+    : "Price: Contact for pricing";
+
+// Show service features
+const featuresList = document.createElement("ul");
+featuresList.className = "shop-card-features";
+
+(service.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    featuresList.appendChild(item);
+});
+
+const detailsBtn = document.createElement("button");
+
+            detailsBtn.type = "button";
+            detailsBtn.className = "view-details-btn";
+            detailsBtn.textContent = "View Details →";
+
+            detailsBtn.addEventListener("click", () => {
+                modalCategory.textContent = service.category;
+                modalTitle.textContent = service.name;
+                modalDescription.textContent = service.description;
+                // Show service price in popup
+modalPrice.textContent = service.price
+    ? "Price: " + service.price
+    : "Price: Contact for pricing";
+
+// Show service features in popup
+modalFeatures.replaceChildren();
+
+(service.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    modalFeatures.appendChild(item);
+});
+
+                const params = new URLSearchParams({
+    service: service.name,
+    category: service.category,
+    description: service.description,
+    price: service.price || "",
+    features: (service.features || []).join("|")
+});
+
+modalContactBtn.href = "contact.html?" + params.toString();
+
+                modalContactBtn.href =
+                    "contact.html?" + params.toString();
+
+                setCurrentReviewService(service.name);
+                serviceModal.classList.add("show");
             });
+
+            
+const shareBtn = document.createElement("button");
+shareBtn.type = "button";
+
+shareBtn.className = "share-service-btn";
+shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes" aria-hidden="true"></i>';
+
+shareBtn.setAttribute("aria-label", "Share " + service.name);
+
+shareBtn.addEventListener("click", async () => {
+    const params = new URLSearchParams({
+        service: service.name,
+        category: service.category,
+        description: service.description
+    });
+
+    const shareURL =
+    new URL("search.html", window.location.href).href +
+    "?" + params.toString();
+
+    const shareText =
+        service.name + "\n\n" +
+        service.description + "\n\n" +
+        "Explore this service at DigitalMAFA:\n" +
+        shareURL;
+
+        // Use Android's native share menu inside the Android app.
+if (
+    window.AndroidShare &&
+    typeof window.AndroidShare.share === "function"
+) {
+    window.AndroidShare.share(
+        service.name + " | DigitalMAFA",
+        service.description,
+        shareURL
+    );
+    return;
+}
+    try {
+        
+if (
+  window.DesktopShare &&
+  typeof window.DesktopShare.share === "function"
+) {
+  window.DesktopShare.share(
+    service.name + " | DigitalMAFA",
+    service.description,
+    shareURL
+  );
+  return;
+}
+
+        if (navigator.share) {
+            await navigator.share({
+                title: service.name + " | DigitalMAFA",
+                text: service.description,
+                url: shareURL
+            });
+        } else if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(shareText);
+            alert("Service details and link copied successfully!");
+        } else {
+            window.prompt("Copy this service link and share it:", shareText);
         }
-        if (result.error) throw result.error;
-        resetEditor();
-        message.textContent = editingId ? "Service updated successfully." : "Service saved as draft. Click Publish to show it publicly.";
-        await loadServices();
-        // loadServices changes service list only; preserve the confirmation text.
-        message.textContent = "Service saved successfully. Use Publish to make it visible on search.html.";
     } catch (error) {
-        console.error(error);
-        message.textContent = "Error: " + error.message;
-    } finally {
-        submitButton.disabled = false;
-        if (!editingId) submitButton.textContent = "Upload Service";
+        if (error.name !== "AbortError") {
+            console.error("Unable to share service:", error);
+            alert("Unable to share right now. Please try again.");
+        }
     }
 });
 
-checkSession();
+body.append(
+    category,
+    title,
+    description,
+    price,
+    featuresList,
+    detailsBtn,
+    shareBtn
+);
+
+            card.append(top, body);
+            shopGrid.appendChild(card);
+            
+        });
+    }
+
+    shopSearch.addEventListener("input", renderShop);
+    shopSearchBtn.addEventListener("click", renderShop);
+
+    shopSearch.addEventListener("keydown", event => {
+        if (event.key === "Enter") renderShop();
+    });
+
+    shopFilters.forEach(button => {
+        button.addEventListener("click", () => {
+            activeShopCategory = button.dataset.category;
+
+            shopFilters.forEach(filter => {
+                filter.classList.toggle("active", filter === button);
+            });
+
+            renderShop();
+        });
+    });
+
+    // =====================================
+    // 4. SERVICE MODAL
+    // =====================================
+
+    function closeServiceModal() {
+        serviceModal.classList.remove("show");
+    }
+
+    modalClose.addEventListener("click", closeServiceModal);
+
+    serviceModal.addEventListener("click", event => {
+        if (event.target === serviceModal) {
+            closeServiceModal();
+        }
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            closeServiceModal();
+            reviewsDrawer.classList.remove("active");
+        }
+    });
+
+    // =====================================
+    // 5. FIRESTORE REVIEW STORAGE
+    // =====================================
+
+    function setCurrentReviewService(serviceName) {
+        currentReviewService = serviceName;
+        resetReviewForm();
+        listenForReviews();
+    }
+
+    function listenForReviews() {
+        if (unsubscribeReviews) {
+            unsubscribeReviews();
+            unsubscribeReviews = null;
+        }
+
+        serviceReviews = [];
+        renderReviews();
+
+        if (!currentReviewService) return;
+
+        unsubscribeReviews = db.collection("reviews")
+            .where("serviceName", "==", currentReviewService)
+            .onSnapshot(snapshot => {
+                serviceReviews = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                serviceReviews.sort((a, b) => {
+                    const timeA = a.createdAt &&
+                        typeof a.createdAt.toMillis === "function"
+                        ? a.createdAt.toMillis() : 0;
+
+                    const timeB = b.createdAt &&
+                        typeof b.createdAt.toMillis === "function"
+                        ? b.createdAt.toMillis() : 0;
+
+                    return timeB - timeA;
+                });
+
+                renderReviews();
+            }, error => {
+                console.error("Unable to load reviews:", error);
+                reviewsList.textContent =
+                    "Reviews load nahi ho paaye. Please try again.";
+            });
+    }
+
+    window.toggleReviews = function () {
+        if (!currentReviewService) {
+            alert("Please select a service first.");
+            return;
+        }
+
+        reviewsDrawer.classList.toggle("active");
+        renderReviews();
+    };
+
+    // =====================================
+    // 6. STAR RATING
+    // =====================================
+
+    const starButtons =
+        starRating.querySelectorAll("button[data-rating]");
+
+    function setRating(rating) {
+        selectedRating = rating;
+
+        starButtons.forEach(star => {
+            const value = Number(star.dataset.rating);
+            const selected = value <= rating;
+
+            star.classList.toggle("selected", selected);
+            star.classList.toggle("active", selected);
+            star.setAttribute(
+                "aria-pressed",
+                value === rating ? "true" : "false"
+            );
+        });
+    }
+
+    starButtons.forEach(star => {
+        star.addEventListener("click", () => {
+            if (!currentUser) {
+                if (confirm("You must sign in to write a review. Go to the sign-in page?")) {
+    window.location.href = "sign-in.html";
+}
+                return;
+            }
+
+            setRating(Number(star.dataset.rating));
+        });
+    });
+
+    // =====================================
+    // 7. RESET REVIEW FORM
+    // =====================================
+
+    function resetReviewForm() {
+        reviewForm.reset();
+        editingReviewId = null;
+        setRating(0);
+
+        reviewFormTitle.textContent = "Write a Review";
+        reviewSubmit.textContent = "Submit Review";
+        reviewCancel.hidden = true;
+        reviewName.readOnly = false;
+        reviewSubmit.disabled = false;
+    }
+
+    reviewCancel.addEventListener("click", resetReviewForm);
+
+    // =====================================
+    // 8. DISPLAY REVIEWS
+    // =====================================
+
+    function renderReviews() {
+        reviewsList.replaceChildren();
+
+        if (!currentReviewService) {
+            const message = document.createElement("p");
+            message.textContent =
+                "Select a service to view its reviews.";
+            reviewsList.appendChild(message);
+            return;
+        }
+
+        const loginMessage = document.createElement("p");
+        loginMessage.className = "review-login-message";
+        loginMessage.textContent = currentUser
+            ? "Signed in as " +
+                (currentUser.displayName || currentUser.email || "User")
+            :"";
+
+        reviewsList.appendChild(loginMessage);
+
+        if (serviceReviews.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "no-reviews";
+            empty.textContent =
+                "No reviews yet for " + currentReviewService +
+                ". Be the first to write one!";
+            reviewsList.appendChild(empty);
+            return;
+        }
+
+        serviceReviews.forEach(review => {
+            const card = document.createElement("article");
+            card.className = "review-card";
+
+            const name = document.createElement("h4");
+            name.textContent = review.name || "User";
+
+            const stars = document.createElement("div");
+            stars.className = "review-stars";
+
+            const rating = Math.max(
+                0,
+                Math.min(5, Number(review.rating) || 0)
+            );
+
+            stars.textContent =
+                "★".repeat(rating) + "☆".repeat(5 - rating);
+
+            const feedback = document.createElement("p");
+            feedback.textContent = review.feedback || "";
+
+            const date = document.createElement("small");
+            date.textContent = review.date || "";
+
+            card.append(name, stars, feedback, date);
+
+            // Only the owner sees the Edit/Delete buttons.
+            if (currentUser && currentUser.uid === review.uid) {
+                const actions = document.createElement("div");
+                actions.className = "review-actions";
+
+                const editButton = document.createElement("button");
+                editButton.type = "button";
+                editButton.className = "review-edit-btn";
+                editButton.textContent = "✏️ Edit";
+
+                editButton.addEventListener("click", () => {
+                    if (
+                        !currentUser ||
+                        currentUser.uid !== review.uid
+                    ) {
+                        alert("Sirf apna review edit kar sakte hain.");
+                        return;
+                    }
+
+                    reviewName.value = review.name || "";
+                    reviewFeedback.value = review.feedback || "";
+                    editingReviewId = review.id;
+
+                    setRating(Number(review.rating) || 0);
+
+                    reviewFormTitle.textContent = "Edit Your Review";
+                    reviewSubmit.textContent = "Update Review";
+                    reviewCancel.hidden = false;
+
+                    // Name is tied to the signed-in account.
+                    reviewName.readOnly = true;
+
+                    reviewForm.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                });
+
+               
+const deleteButton = document.createElement("button");
+deleteButton.type = "button";
+deleteButton.className = "review-delete-btn";
+deleteButton.textContent = "🗑️ Delete";
+
+deleteButton.addEventListener("click", async () => {
+    if (!currentUser) {
+        alert("Please sign in to delete your review.");
+        return;
+    }
+
+    if (currentUser.uid !== review.uid) {
+        alert("Aap sirf apna review delete kar sakte hain.");
+        return;
+    }
+
+    const confirmed = confirm(
+        "Kya aap apna review delete karna chahte hain?"
+    );
+
+    if (!confirmed) return;
+
+    deleteButton.disabled = true;
+    deleteButton.textContent = "Deleting...";
+
+    try {
+        const reviewRef = db.collection("reviews").doc(review.id);
+
+        // Verify the review still exists and belongs to this user.
+        const reviewDoc = await reviewRef.get();
+
+        if (!reviewDoc.exists) {
+            alert("Ye review pehle hi delete ho chuka hai.");
+            return;
+        }
+
+        if (reviewDoc.data().uid !== currentUser.uid) {
+            alert("Aap sirf apna review delete kar sakte hain.");
+            return;
+        }
+
+        await reviewRef.delete();
+
+        if (editingReviewId === review.id) {
+            resetReviewForm();
+        }
+
+        alert("Review successfully deleted!");
+    } catch (error) {
+        console.error("Review delete failed:", error);
+
+        if (error.code === "permission-denied") {
+            alert(
+                "Delete permission nahi hai. Firebase Firestore Rules check karein."
+            );
+        } else {
+            alert(
+                "Review delete nahi hua. Internet connection aur Firebase login check karein."
+            );
+        }
+    } finally {
+        deleteButton.disabled = false;
+        deleteButton.textContent = "🗑️ Delete";
+    }
+});
+
+
+                actions.append(editButton, deleteButton);
+                card.appendChild(actions);
+            }
+
+            reviewsList.appendChild(card);
+        });
+    }
+
+    // =====================================
+    // 9. SUBMIT AND EDIT REVIEW
+    // =====================================
+
+    reviewForm.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        if (reviewRequestInProgress) return;
+
+        if (!currentUser) {
+            if (confirm("You must sign in to submit a review. Go to the sign-in page?")) {
+    window.location.href = "sign-in.html";
+}
+return;
+        }
+
+        if (!currentReviewService) {
+            alert("Please select a service first.");
+            return;
+        }
+
+        if (!reviewForm.reportValidity()) return;
+
+        const feedback = reviewFeedback.value.trim();
+
+        if (!feedback) {
+            alert("Please enter your feedback.");
+            return;
+        }
+
+        if (selectedRating < 1 || selectedRating > 5) {
+            alert("Please select a star rating.");
+            return;
+        }
+
+        reviewRequestInProgress = true;
+        reviewSubmit.disabled = true;
+
+        try {
+            if (editingReviewId !== null) {
+                const reviewRef = db.collection("reviews")
+                    .doc(editingReviewId);
+
+                const reviewDoc = await reviewRef.get();
+
+                if (!reviewDoc.exists) {
+                    alert("Review nahi mila. Please dobara try karein.");
+                    resetReviewForm();
+                    return;
+                }
+
+                const existingReview = reviewDoc.data();
+
+                if (existingReview.uid !== currentUser.uid) {
+                    alert("Aap sirf apna review edit kar sakte hain.");
+                    resetReviewForm();
+                    return;
+                }
+
+                await reviewRef.update({
+                    rating: selectedRating,
+                    feedback: feedback,
+                    date: new Date().toLocaleDateString()
+                });
+            } else {
+                await db.collection("reviews").add({
+                    serviceName: currentReviewService,
+                    uid: currentUser.uid,
+                    name: currentUser.displayName ||
+                        currentUser.email ||
+                        "User",
+                    rating: selectedRating,
+                    feedback: feedback,
+                    date: new Date().toLocaleDateString(),
+                    createdAt:
+                        firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
+            resetReviewForm();
+            alert("Review successfully saved!");
+        } catch (error) {
+            console.error("Review save failed:", error);
+            alert(
+                "Review save nahi hua. Firestore Rules aur connection check karein."
+            );
+        } finally {
+            reviewRequestInProgress = false;
+            reviewSubmit.disabled = false;
+        }
+    });
+
+    // =====================================
+    // 10. AUTH STATE + INITIALIZE
+    // =====================================
+
+    auth.onAuthStateChanged(user => {
+        currentUser = user;
+
+        // If the current form is editing a review, reset it on
+        // account changes to prevent stale edit state.
+        if (!user && editingReviewId !== null) {
+            resetReviewForm();
+        }
+
+        renderReviews();
+    });
+
+
+loadAdminServicesFromSupabase();
+renderReviews();
+
+// Open the service popup when someone visits a shared link.
+const sharedParams = new URLSearchParams(window.location.search);
+const sharedServiceName = sharedParams.get("service");
+
+if (sharedServiceName) {
+    const matchedService = shopServices.find(
+        service => service.name.toLowerCase() === sharedServiceName.toLowerCase()
+    );
+
+    if (matchedService) {
+        // Clear search and show all service cards.
+        shopSearch.value = "";
+        activeShopCategory = "All";
+
+        shopFilters.forEach(filter => {
+            filter.classList.toggle(
+                "active",
+                filter.dataset.category === "All"
+            );
+        });
+
+        renderShop();
+
+        // Fill and open the matching service popup.
+        modalCategory.textContent = matchedService.category;
+        modalTitle.textContent = matchedService.name;
+        modalDescription.textContent = matchedService.description;
+
+        // Show service price in shared-link popup
+modalPrice.textContent = matchedService.price
+    ? "Price: " + matchedService.price
+    : "Price: Contact for pricing";
+
+// Show service features in shared-link popup
+modalFeatures.replaceChildren();
+
+(matchedService.features || []).forEach(feature => {
+    const item = document.createElement("li");
+    item.textContent = feature;
+    modalFeatures.appendChild(item);
+});
+
+        const params = new URLSearchParams({
+            service: matchedService.name,
+            category: matchedService.category,
+            description: matchedService.description
+        });
+
+        modalContactBtn.href = "contact.html?" + params.toString();
+
+        setCurrentReviewService(matchedService.name);
+        serviceModal.classList.add("show");
+    }
+}
+
+})();
+
+
