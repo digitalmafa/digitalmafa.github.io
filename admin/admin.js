@@ -19,6 +19,7 @@ const cancelEditBtn = document.getElementById("cancelEditBtn");
 let services = [];
 let editingId = null;
 let editingImage = "";
+let isSavingService = false;
 
 // Keep the rupee symbol automatic, even if an admin pastes it into the field.
 function formatRupeePrice(value) {
@@ -68,6 +69,7 @@ async function checkSession() {
 
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+        if (isSavingService) return;
     const button = document.getElementById("loginBtn");
     button.disabled = true;
     loginMessage.textContent = "Signing in...";
@@ -275,6 +277,7 @@ form.addEventListener("submit", async (event) => {
         return;
     }
 
+    isSavingService = true;
     submitButton.disabled = true;
     submitButton.textContent = file ? "Uploading..." : "Saving...";
     message.textContent = "";
@@ -311,7 +314,8 @@ form.addEventListener("submit", async (event) => {
         console.error(error);
         message.textContent = "Error: " + error.message;
     } finally {
-        submitButton.disabled = false;
+    isSavingService = false;
+    submitButton.disabled = false;
         if (!editingId) submitButton.textContent = "Upload Service";
     }
 });
